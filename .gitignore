@@ -1,0 +1,74 @@
+# =============== #
+# Unity generated #
+# =============== #
+[Tt]emp/
+[Oo]bj/
+[Bb]uild
+/[Bb]uilds/
+/[Ll]ibrary/
+sysinfo.txt
+*.stackdump
+/Assets/AssetStoreTools*
+*.apk
+*.unitypackage
+ 
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+[Ee]xported[Oo]bj/
+.vs/
+.vscode/
+/*.userprefs
+/*.csproj
+/*.pidb
+*.pidb.meta
+/*.suo
+/*.sln*
+/*.user
+/*.unityproj
+/*.booproj
+.consulo/
+/*.tmp
+/*.svd
+ 
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+[Tt]humbs.db
+[Dd]esktop.ini
+Corridor/Library/ShaderCache/
+Corridor/Library/metadata/
+/Assets/AdditionalAssets/JsonDotNet.meta
+/Assets/AdditionalAssets/JsonDotNet/Assemblies.meta
+/Assets/AdditionalAssets/JsonDotNet/Assemblies/Windows.meta
+/Assets/AdditionalAssets/JsonDotNet/Assemblies/Windows/Newtonsoft.Json.dll.meta
+/Assets/AdditionalAssets/JsonDotNet/Assemblies/Windows/Newtonsoft.Json.dll
+/Assets/AdditionalAssets/JsonDotNet/Assemblies/Windows
+/Assets/AdditionalAssets/JsonDotNet/Assemblies/Standalone.meta
+/Assets/AdditionalAssets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll.meta
+/Assets/AdditionalAssets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll
+/Assets/AdditionalAssets/JsonDotNet/Assemblies/Standalone
+/Assets/AdditionalAssets/JsonDotNet/Assemblies/AOT.meta
+/Assets/AdditionalAssets/JsonDotNet/Assemblies/AOT/Newtonsoft.Json.dll.meta
+/Assets/AdditionalAssets/JsonDotNet/Assemblies/AOT/Newtonsoft.Json.dll
+/Assets/AdditionalAssets/JsonDotNet/Assemblies/AOT
+/Assets/AdditionalAssets/JsonDotNet/Assemblies
+/Assets/AdditionalAssets/JsonDotNet
+/Assets/AdditionalAssets/FadeObstructions/Reyn/Visual.meta
+/Assets/AdditionalAssets/FadeObstructions/Reyn/Visual/Fade.meta
+/Assets/AdditionalAssets/FadeObstructions/Reyn/Visual
+/Assets/AdditionalAssets/FadeObstructions/Reyn
+/Assets/AdditionalAssets
+Corridor/Library/metadata/
+Recordings/
+Logs/
+Assets/Additional/Malbers Animations/Common/Shaders/HDRP_MalbersShaders 2019 LTS.unitypackage.meta
+Assets/Additional/Malbers Animations/Common/Shaders/HDRP_MalbersShaders 2020.unitypackage.meta
+Assets/Additional/Malbers Animations/Common/Shaders/URP_MalbersShaders.unitypackage.meta
+Assets/Additional/Malbers Animations/Animals Packs/01 Forest Pack/_Forest Pack (AC)/Boar AC 3.4.unitypackage.meta
