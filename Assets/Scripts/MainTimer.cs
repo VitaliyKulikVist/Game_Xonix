@@ -3,7 +3,6 @@ using System.Collections;
 using Assets.Scripts.Common;
 using Assets.Scripts.Player;
 using UnityEngine;
-using static Unity.Burst.Intrinsics.X86;
 
 namespace Assets.Scripts {
 	public class MainTimer : MonoBehaviour {

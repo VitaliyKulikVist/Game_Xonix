@@ -6,8 +6,18 @@
         Win = 1,
         Lose = 2
     }
+	public enum EnemyType {
+		None,
+		Land,
+		Sea
+	}
+	public enum ButtonType {
+		None,
+		Play,
+		Pause
+	}
 
-    public enum DragState
+	public enum DragState
     {
         Continue,
         Canceled,

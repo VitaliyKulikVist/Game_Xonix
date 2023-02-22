@@ -22,17 +22,11 @@ namespace Assets.Scripts.Common {
 		public static Action PausedLevelAction = default;
 		public static Action PlayLevelAction = default;
 		#endregion
-
-		#region Variables
-		private float _startLevelTime = default;
-		#endregion
-
 		private void Start() {
 			_playerStorageSO?.LoadPlayer();
 		}
 
 		private void OnEnable() {
-			LevelStartAction += StartLevel;
 			LevelFinishAction += FinishLevel;
 
 			DOTween.SetTweensCapacity(2500, 100);
@@ -41,10 +35,7 @@ namespace Assets.Scripts.Common {
 		}
 
 		private void OnDisable() {
-			LevelStartAction -= StartLevel;
 			LevelFinishAction -= FinishLevel;
-
-			
 
 			_playerStorageSO.SavePlayer();
 		}
@@ -75,10 +66,6 @@ namespace Assets.Scripts.Common {
 			}
 		}
 		#endregion
-
-		private void StartLevel() {
-			_startLevelTime = Time.time;
-		}
 
 		private void FinishLevel(LevelResult _levelResult) {
 			if (_levelResult == LevelResult.Win) {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Assets.Scripts.Common;
 using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Player;
@@ -28,14 +27,13 @@ namespace Assets.Scripts.Ui {
 		[Header("level Components")]
 		[SerializeField] private TMP_Text _currencyLevel = default;
 
+		[Header("Progress Components")]
+		[SerializeField] private Slider _sliderProgress = default;
+		[SerializeField] private TMP_Text _textProgress = default;
+
 		#region Variable 
 		private ButtonType _currentButtonType = ButtonType.Pause;
 		#endregion
-
-#if UNITY_EDITOR
-		[Header("OnValidate")]
-		[SerializeField] private bool _isValidate = false;
-#endif
 
 		private void Awake() {
 			PrepareButtons();
@@ -48,7 +46,7 @@ namespace Assets.Scripts.Ui {
 			Player.Player.PlayerChangeLevelAction += SetCurrencyLevel;
 
 			GameManager.LevelFinishAction += FinishGame;
-			//GameManager.PausedLevelAction += PausedGame;
+			GameManager.PausedLevelAction += PausedGame;
 			GameManager.LevelStartAction += StartGameReaction;
 
 			MainTimer.ReturnMinSecString += PrepareTextTimer;
@@ -60,7 +58,7 @@ namespace Assets.Scripts.Ui {
 			Player.Player.PlayerChangeLevelAction -= SetCurrencyLevel;
 
 			GameManager.LevelFinishAction -= FinishGame;
-			//GameManager.PausedLevelAction -= PausedGame;
+			GameManager.PausedLevelAction -= PausedGame;
 			GameManager.LevelStartAction -= StartGameReaction;
 
 			MainTimer.ReturnMinSecString -= PrepareTextTimer;
@@ -92,9 +90,9 @@ namespace Assets.Scripts.Ui {
 		private void PrepareButtons() {
 			_pausedButton.onClick.RemoveAllListeners();
 			_pausedButton.onClick.AddListener(() => {
-				
-				if(_currentButtonType == ButtonType.Play) {
-					_currentButtonType= ButtonType.Pause;
+
+				if (_currentButtonType == ButtonType.Play) {
+					_currentButtonType = ButtonType.Pause;
 					GameManager.PlayLevelAction?.Invoke();
 				}
 
@@ -136,39 +134,15 @@ namespace Assets.Scripts.Ui {
 
 		#region Button controll
 		private Sprite GetSpriteByType(ButtonType buttonType) {
-			return  _pausedControl.Find(sel => sel.ButtonType == buttonType).Sprite;
+			return _pausedControl.Find(sel => sel.ButtonType == buttonType).Sprite;
 		}
 		private void SwitchSprite(ButtonType buttonType) {
-			if(buttonType == ButtonType.None) {
+			if (buttonType == ButtonType.None) {
 				return;
 			}
 
 			_pausedButtonimage.sprite = GetSpriteByType(buttonType);
 		}
 		#endregion
-#if UNITY_EDITOR
-		private void OnValidate() {
-			if(_isValidate) {
-				SwitchSprite(_currentButtonType);
-			}
-		}
-#endif
-	}
-	[Serializable]
-	public class ButtonControll {
-		
-		[SerializeField]private ButtonType buttonType = ButtonType.None;
-		[SerializeField] private Sprite buttonSprite = default;
-
-		#region Get\Set
-		public ButtonType ButtonType { get => buttonType; }
-		public Sprite Sprite { get => buttonSprite; }
-		#endregion
-	}
-
-	public enum ButtonType {
-		None,
-		Play,
-		Pause
 	}
 }

@@ -4,11 +4,11 @@ using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Player;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Ui {
 	public class GameWindow : MonoBehaviour {
 		[Header("Base")]
+		[SerializeField] private DependencyInjections _dependencyInjections = default;
 		[SerializeField] private PlayerStorage _playerStorage = default;
 
 		[Header("Components")]
@@ -17,12 +17,11 @@ namespace Assets.Scripts.Ui {
 		[SerializeField] private TMP_Text _reactionText = default;
 
 		[Header("Settings")]
-		[SerializeField] private float _mobileSensivityMultiplier = .01f;
 		[SerializeField] private string _textWin = "You WIN!!";
 		[SerializeField] private string _textLose = "You Lose(";
 
-		[Header("Swipe Settings")]
-		[SerializeField] private EventTrigger _eventTriggerSwipe = default;
+		[Header("Controll Settings")]
+		[SerializeField] private DynamicJoystick _dynamicJoystick = default;
 
 		#region Actions
 		public static Action<float, float> OnDragHorizontalDeltaAction = default;
@@ -34,24 +33,12 @@ namespace Assets.Scripts.Ui {
 		public static Action<bool> OnHoldAction = default;
 		#endregion
 
-		#region Validate
-		private float _mouseDragDelta = default;
-		private float _inputStartTime = default;
-		private float _inputStartHeight = default;
-		private Vector3 _inputStartPosition = default;
-
-		private Vector3 _startPointSwipe = default;
-		private Vector3 _endPointSwipe = default;
-
-		private bool canMove = false;
-		#endregion
-
 		#region Get\Set
 		public DragState CurrencyDragState { get; private set; } = default;
 		#endregion
 
 		private void Awake() {
-			PrepareSwipe();
+			_dependencyInjections.DynamicJoystick = _dynamicJoystick;
 		}
 
 		private void OnEnable() {
@@ -64,14 +51,11 @@ namespace Assets.Scripts.Ui {
 		}
 
 		private void ReactiononStartGame() {
-			ControllReactionContainer(false, () => {
-				canMove = true;
-			});
+			ControllReactionContainer(false);
 		}
 
 		private void ReactionFinishGame(LevelResult levelResult) {
 			if (levelResult == LevelResult.Win) {
-				canMove = false;
 				ControllReactionContainer(true);
 				PrepareTextReaction(LevelResult.Win);
 			}
@@ -82,81 +66,6 @@ namespace Assets.Scripts.Ui {
 			}
 		}
 
-		private void PrepareSwipe() {
-			_eventTriggerSwipe.triggers.Clear();
-			EventTrigger.Entry down = new EventTrigger.Entry {
-				eventID = EventTriggerType.PointerDown
-			};
-			down.callback.AddListener((data) => {
-				_startPointSwipe = Input.mousePosition;
-				PointerDownAction?.Invoke(_startPointSwipe);
-				OnHoldAction?.Invoke(true);
-			});
-			EventTrigger.Entry up = new EventTrigger.Entry {
-				eventID = EventTriggerType.PointerUp
-			};
-			up.callback.AddListener((data) => {
-				_endPointSwipe = Input.mousePosition;
-				PointerUpAction?.Invoke(_endPointSwipe);
-				OnHoldAction?.Invoke(false);
-			});
-			EventTrigger.Entry drag = new EventTrigger.Entry {
-				eventID = EventTriggerType.Drag
-			};
-			drag.callback.AddListener((data) => {
-				OnDragAction?.Invoke(_startPointSwipe, Input.mousePosition);
-			});
-
-			_eventTriggerSwipe.triggers.Add(down);
-			_eventTriggerSwipe.triggers.Add(up);
-			_eventTriggerSwipe.triggers.Add(drag);
-		}
-
-
-		private void Update() {
-			if (canMove) {
-#if UNITY_EDITOR
-
-				if (Input.GetMouseButton(0)) {
-					_mouseDragDelta = Input.GetAxis("Mouse X");
-				}
-#else
-            if (Input.touchCount > 0)
-            {
-                mouseDragDelta = Input.GetTouch(0).deltaPosition.x * _mobileSensivityMultiplier;
-            }     
-#endif
-
-				if (Input.GetMouseButtonDown(0)) {
-					_inputStartTime = Time.time;
-					CurrencyDragState = DragState.Wait;
-					_inputStartHeight = Input.mousePosition.y;
-					_inputStartPosition = Input.mousePosition;
-				}
-
-				if (Input.GetMouseButton(0)) {
-					if (CurrencyDragState == DragState.Wait) {
-						if (Vector3.Distance(_inputStartPosition, Input.mousePosition) < 5f && Time.time - _inputStartTime > .1f) {
-							CurrencyDragState = DragState.Canceled;
-						}
-						if (Vector3.Distance(_inputStartPosition, Input.mousePosition) > 5f && Time.time - _inputStartTime < .1f) {
-							CurrencyDragState = DragState.Continue;
-						}
-					}
-				}
-
-				if (Input.GetMouseButtonUp(0)) {
-					_mouseDragDelta = 0;
-					CurrencyDragState = DragState.Canceled;
-					OnEndDragHorizontalAction?.Invoke();
-				}
-
-
-				if (CurrencyDragState == DragState.Continue) {
-					OnDragHorizontalDeltaAction?.Invoke(_mouseDragDelta, _inputStartHeight);
-				}
-			}
-		}
 		#region Controll
 		private void Hide() {
 			AnimationUiWindow.AnimationWindowControll(_panelContainer, AnimationUiWindow.PositionMoveType.OY, false, 0.3f);
