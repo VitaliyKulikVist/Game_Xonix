@@ -20,6 +20,7 @@ namespace Assets.Scripts.Character {
 
 		private void Awake() {
 			ResetPlayer();
+			PrepareCamera();
 			_dependencyInjections.PlayerPosition = _container;
 		}
 		private void Start() {
@@ -71,5 +72,15 @@ namespace Assets.Scripts.Character {
 			_canMove = true;
 		}
 		#endregion
+
+		private void PrepareCamera() {
+			var canvas = gameObject.GetComponent<Canvas>();
+
+			if (canvas != null
+				&& canvas.renderMode == RenderMode.ScreenSpaceCamera || canvas.renderMode == RenderMode.WorldSpace
+				&& canvas.worldCamera == null) {
+				canvas.worldCamera = Camera.main;
+			}
+		}
 	}
 }

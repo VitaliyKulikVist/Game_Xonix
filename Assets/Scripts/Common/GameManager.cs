@@ -6,6 +6,7 @@ using UnityEngine;
 namespace Assets.Scripts.Common {
 	public class GameManager : MonoBehaviour {
 		[Header("Base")]
+		[SerializeField] private DependencyInjections _dependencyInjections = default;
 		[SerializeField] private PlayerStorage _playerStorageSO = default;
 
 		[Header("Settings")]
@@ -22,6 +23,7 @@ namespace Assets.Scripts.Common {
 		public static Action PausedLevelAction = default;
 		public static Action PlayLevelAction = default;
 		#endregion
+
 		private void Start() {
 			_playerStorageSO?.LoadPlayer();
 		}

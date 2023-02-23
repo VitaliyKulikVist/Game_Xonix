@@ -11,6 +11,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: spaceship_2
       objectReference: {fileID: 0}
+    - target: {fileID: 21296622, guid: e2a563409f05b26429e07cb45c0d2ea2, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 21296622, guid: e2a563409f05b26429e07cb45c0d2ea2, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1289569035
+      objectReference: {fileID: 0}
     - target: {fileID: 4347043086707741077, guid: e2a563409f05b26429e07cb45c0d2ea2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -46,6 +54,14 @@ PrefabInstance:
     - target: {fileID: 4347043086707741077, guid: e2a563409f05b26429e07cb45c0d2ea2, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347043086707741077, guid: e2a563409f05b26429e07cb45c0d2ea2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347043086707741077, guid: e2a563409f05b26429e07cb45c0d2ea2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 4347043086707741077, guid: e2a563409f05b26429e07cb45c0d2ea2, type: 3}
       propertyPath: m_LocalPosition.x

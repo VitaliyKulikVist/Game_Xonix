@@ -43,6 +43,7 @@ namespace Assets.Scripts.Enemies {
 
 		private void Awake() {
 			PrepareEnemys();
+			PrepareCamera();
 		}
 
 		private void OnEnable() {
@@ -169,6 +170,16 @@ namespace Assets.Scripts.Enemies {
 		private void EnemyRichPlayer(EnemyControllerAbstract _controller) {
 			if (_enemies.Contains(_controller)) {
 				_enemies.Remove(_controller);
+			}
+		}
+
+		private void PrepareCamera() {
+			var canvas = gameObject.GetComponent<Canvas>();
+
+			if (canvas != null 
+				&& canvas.renderMode == RenderMode.ScreenSpaceCamera || canvas.renderMode == RenderMode.WorldSpace 
+				&& canvas.worldCamera == null) {
+				canvas.worldCamera = Camera.main;
 			}
 		}
 	}

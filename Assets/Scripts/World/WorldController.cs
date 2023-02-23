@@ -14,6 +14,9 @@ namespace Assets.Scripts.World {
 		[Header("Images")]
 		[SerializeField]private Image _imageSea = default;
 		[SerializeField] private Image _imageLand = default;
+		private void Awake() {
+			PrepareCamera();
+		}
 
 		private void OnEnable() {
 			GameManager.LevelStartAction += ReactionStartLevel;
@@ -32,6 +35,16 @@ namespace Assets.Scripts.World {
 		}
 		private void PrepareLandImage() {
 			_imageLand.sprite = _levelStorageSO.BaseLevelSettings.GetRandomLandSprite;
+		}
+
+		private void PrepareCamera() {
+			var canvas = gameObject.GetComponent<Canvas>();
+
+			if (canvas != null
+				&& canvas.renderMode == RenderMode.ScreenSpaceCamera || canvas.renderMode == RenderMode.WorldSpace
+				&& canvas.worldCamera == null) {
+				canvas.worldCamera = Camera.main;
+			}
 		}
 	}
 }

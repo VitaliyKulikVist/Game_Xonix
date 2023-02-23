@@ -89,9 +89,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9e2d0002590a9441966135a5e88edac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dependencyInjections: {fileID: 0}
   enemyStorageSO: {fileID: 11400000, guid: 06538aed6c921f94ca0345113b5d5651, type: 2}
   _enemyType: 1
   _enemySpeed: 0
+  _attackDistance: 3
   enemyContainer: {fileID: 4544183104255318821}
 --- !u!223 &7929080988466373759
 Canvas:
@@ -100,7 +102,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3534822097997080624}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -121,7 +123,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3534822097997080624}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
@@ -144,7 +146,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3534822097997080624}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
