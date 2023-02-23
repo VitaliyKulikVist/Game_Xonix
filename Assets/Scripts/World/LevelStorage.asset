@@ -13,23 +13,38 @@ MonoBehaviour:
   m_Name: LevelStorage
   m_EditorClassIdentifier: 
   _baseLevelSettings:
-    _seaSprite:
-    - {fileID: 21300000, guid: 9488c2c4c7b28574bb28b1f60e5c5dfb, type: 3}
-    - {fileID: 21300000, guid: dabdc4ec295b4bd4a941c915fc853a84, type: 3}
-    - {fileID: 21300000, guid: cd060594a144d3144a90883d3312acc0, type: 3}
-    - {fileID: 21300000, guid: ae6e3659dd9291246b7eeab8e2ef3633, type: 3}
-    - {fileID: 21300000, guid: dfd7e5ac3e21951419669cf2db1999e1, type: 3}
-    - {fileID: 21300000, guid: 787769490d07b5741872a253201d1c50, type: 3}
-    _landSprite:
-    - {fileID: 21300000, guid: 440e2dc3f9483694295ab2b068701b49, type: 3}
-    - {fileID: 21300000, guid: d985e991d3466d74ca3fe724819581f6, type: 3}
-    - {fileID: 21300000, guid: f43eec1336aef114cac569d7865cbb67, type: 3}
-    - {fileID: 21300000, guid: 7fe855d1778077344b7dfb8d20bf1fc5, type: 3}
-    - {fileID: 21300000, guid: 7efaea4e41febd442ac70b851a54e4e0, type: 3}
-    - {fileID: 21300000, guid: 8d831724a1865684b81775aaf4258a62, type: 3}
-    - {fileID: 21300000, guid: b99c94adcfb150442a9e281bcc483694, type: 3}
-    - {fileID: 21300000, guid: a8e535c8a46b53041b314637600a2e2d, type: 3}
-    - {fileID: 21300000, guid: fc37d72dbeac15d4885a272a4adaf95a, type: 3}
+    _seaGridUnits:
+    - <GridUnitSeaType>k__BackingField: 0
+      <GridUnit>k__BackingField: {fileID: 3487035599892686295, guid: 0371845e0f9720e458e1caf69866cd1c, type: 3}
+    - <GridUnitSeaType>k__BackingField: 1
+      <GridUnit>k__BackingField: {fileID: 4428312815635960035, guid: 8d75365fe511bd94cba3f7e94ce57951, type: 3}
+    - <GridUnitSeaType>k__BackingField: 2
+      <GridUnit>k__BackingField: {fileID: 7130086235656701237, guid: 27b9560f637ea1742993c7ab5f0c9993, type: 3}
+    - <GridUnitSeaType>k__BackingField: 3
+      <GridUnit>k__BackingField: {fileID: 6776776374649156931, guid: b755b6d22017a2848a86f8e5aeaa27cb, type: 3}
+    - <GridUnitSeaType>k__BackingField: 4
+      <GridUnit>k__BackingField: {fileID: 7115288389346131137, guid: bcd199fc6deb45248b8a1f1b537d3998, type: 3}
+    - <GridUnitSeaType>k__BackingField: 5
+      <GridUnit>k__BackingField: {fileID: 4642970317244305055, guid: dcb98a1305d46af47a3c29ec60250090, type: 3}
+    _landGridUnits:
+    - <GridUnitLandType>k__BackingField: 0
+      <GridUnit>k__BackingField: {fileID: 4602468491324107066, guid: f3f064a68aef07f4da9291801d5699fe, type: 3}
+    - <GridUnitLandType>k__BackingField: 1
+      <GridUnit>k__BackingField: {fileID: 4220832385203192599, guid: d66135b00e2648f42ae03e759c145ce8, type: 3}
+    - <GridUnitLandType>k__BackingField: 2
+      <GridUnit>k__BackingField: {fileID: 8005924476714744220, guid: 161b06d207edf0e4e86554cf9861a398, type: 3}
+    - <GridUnitLandType>k__BackingField: 3
+      <GridUnit>k__BackingField: {fileID: 1533057975988086631, guid: ac8ea0935464ee246b258f15f58eb049, type: 3}
+    - <GridUnitLandType>k__BackingField: 4
+      <GridUnit>k__BackingField: {fileID: 5730399428173898494, guid: d2df1a8cbc3d07543bac32bd743e48ee, type: 3}
+    - <GridUnitLandType>k__BackingField: 5
+      <GridUnit>k__BackingField: {fileID: 6186360321045490272, guid: 4796687d71ff3c1409f4673976a728c7, type: 3}
+    - <GridUnitLandType>k__BackingField: 6
+      <GridUnit>k__BackingField: {fileID: 8422251970235989507, guid: c16951f52cc93ba41b6aec57b87a3ede, type: 3}
+    - <GridUnitLandType>k__BackingField: 7
+      <GridUnit>k__BackingField: {fileID: 496241274460071566, guid: b99430cd94dc56849af3d4f48d0d0fbb, type: 3}
+    - <GridUnitLandType>k__BackingField: 8
+      <GridUnit>k__BackingField: {fileID: 5977361639618693990, guid: 376f982e8c687d64e946c06afe3dbbe0, type: 3}
   _gameLevels:
   - _enemies: 01000000
     _maxEnemies: 1
@@ -70,3 +85,4 @@ MonoBehaviour:
   - _enemies: 0100000002000000
     _maxEnemies: 10
     _timeSpawnEnemies: 0.5
+  <IsValidate>k__BackingField: 0

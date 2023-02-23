@@ -1,9 +1,8 @@
-﻿using Assets.Scripts.Common;
+﻿using Assets.Scripts.Common.Helpers;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.World {
-	public class WorldController : MonoBehaviour {
+	public class WorldController : MonoBehaviour, IValidateHalper {
 
 		[Header("Base")]
 		[SerializeField] private LevelStorage _levelStorageSO = default;
@@ -11,30 +10,11 @@ namespace Assets.Scripts.World {
 		[Header("Components")]
 		[SerializeField] private Transform _container = default;
 
-		[Header("Images")]
-		[SerializeField]private Image _imageSea = default;
-		[SerializeField] private Image _imageLand = default;
+		[field: Header("On Validate")]
+		[field: SerializeField] public bool IsValidate { get; set; }
+
 		private void Awake() {
 			PrepareCamera();
-		}
-
-		private void OnEnable() {
-			GameManager.LevelStartAction += ReactionStartLevel;
-		}
-		private void OnDisable() {
-			GameManager.LevelStartAction -= ReactionStartLevel;
-		}
-
-		private void ReactionStartLevel() {
-			PrepareSeaImage();
-			PrepareLandImage();
-		}
-
-		private void PrepareSeaImage() {
-			_imageSea.sprite = _levelStorageSO.BaseLevelSettings.GetRandomSeaSprite;
-		}
-		private void PrepareLandImage() {
-			_imageLand.sprite = _levelStorageSO.BaseLevelSettings.GetRandomLandSprite;
 		}
 
 		private void PrepareCamera() {
@@ -44,6 +24,12 @@ namespace Assets.Scripts.World {
 				&& canvas.renderMode == RenderMode.ScreenSpaceCamera || canvas.renderMode == RenderMode.WorldSpace
 				&& canvas.worldCamera == null) {
 				canvas.worldCamera = Camera.main;
+			}
+		}
+
+		public void OnValidate() {
+			if (IsValidate) {
+				PrepareCamera();
 			}
 		}
 	}

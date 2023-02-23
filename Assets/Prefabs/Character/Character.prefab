@@ -70,6 +70,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 681701373719946479}
+  - {fileID: 8902860578402938672}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -92,8 +93,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dependencyInjections: {fileID: 11400000, guid: 988b77d34458286428988d1576184ae5, type: 2}
   _container: {fileID: 681701373719946479}
-  _rigidbody2D: {fileID: 6687167045089363589}
-  _speedMove: 5
+  _speedMoveCharacter: 900
+  _speedMovePoint: 90
+  _distanceMove: 0.05
+  _rotationModif: -90
+  _rotationSpeed: 20
+  _distanceDontControllRotation: 0.5
+  _movePoint: {fileID: 8902860578402938672}
+  <IsValidate>k__BackingField: 0
 --- !u!223 &681701375063696808
 Canvas:
   m_ObjectHideFlags: 0
@@ -112,7 +119,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 84992121
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &681701375063696809
@@ -153,6 +160,42 @@ MonoBehaviour:
   ConformX: 1
   ConformY: 1
   Logging: 0
+--- !u!1 &3668457097562005349
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8902860578402938672}
+  m_Layer: 3
+  m_Name: MovePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8902860578402938672
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3668457097562005349}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 681701375063696815}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -19}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &5987919320502096856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -224,54 +267,8 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 21260466, guid: d096b2e176fd8744bb6feb2dd2b160bf, type: 3}
-      propertyPath: m_SortingLayerID
-      value: 84992121
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d096b2e176fd8744bb6feb2dd2b160bf, type: 3}
---- !u!1 &5987919320502192044 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 169076, guid: d096b2e176fd8744bb6feb2dd2b160bf, type: 3}
-  m_PrefabInstance: {fileID: 5987919320502096856}
-  m_PrefabAsset: {fileID: 0}
---- !u!50 &6687167045089363589
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5987919320502192044}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.001
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!58 &3261852221376449689
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5987919320502192044}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.03}
-  serializedVersion: 2
-  m_Radius: 0.14
 --- !u!4 &5987919320502488494 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 401014, guid: d096b2e176fd8744bb6feb2dd2b160bf, type: 3}

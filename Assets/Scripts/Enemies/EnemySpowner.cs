@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Common;
+using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Enemies.Storage;
 using Assets.Scripts.Player;
 using Assets.Scripts.World;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemies {
-	public class EnemySpowner : MonoBehaviour {
+	public class EnemySpowner : MonoBehaviour, IValidateHalper {
 		[Header("Base")]
 		[SerializeField] private DependencyInjections _dependencyInjections = default;
 		[SerializeField] private EnemyStorage _enemyStorageSO = default;
@@ -23,6 +24,9 @@ namespace Assets.Scripts.Enemies {
 
 		[Header("Pool settings")]
 		[SerializeField] private int _startingEnemiesCountPool = 30;
+
+		[field: Header("On Validate")]
+		[field: SerializeField] public bool IsValidate { get; set; }
 
 		#region Variables
 		private Coroutine _spownEnemiesCoroutine = null;
@@ -180,6 +184,12 @@ namespace Assets.Scripts.Enemies {
 				&& canvas.renderMode == RenderMode.ScreenSpaceCamera || canvas.renderMode == RenderMode.WorldSpace 
 				&& canvas.worldCamera == null) {
 				canvas.worldCamera = Camera.main;
+			}
+		}
+
+		public void OnValidate() {
+			if(IsValidate) {
+				PrepareCamera();
 			}
 		}
 	}
