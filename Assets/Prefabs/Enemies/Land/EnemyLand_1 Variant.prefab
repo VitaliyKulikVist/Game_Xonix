@@ -11,6 +11,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: spaceship_2
       objectReference: {fileID: 0}
+    - target: {fileID: 147846, guid: e2a563409f05b26429e07cb45c0d2ea2, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 147846, guid: e2a563409f05b26429e07cb45c0d2ea2, type: 3}
+      propertyPath: m_TagString
+      value: EnemyLand
+      objectReference: {fileID: 0}
     - target: {fileID: 21296622, guid: e2a563409f05b26429e07cb45c0d2ea2, type: 3}
       propertyPath: m_SortingLayer
       value: 2
@@ -113,6 +121,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2a563409f05b26429e07cb45c0d2ea2, type: 3}
+--- !u!1 &13741591293095077 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 147846, guid: e2a563409f05b26429e07cb45c0d2ea2, type: 3}
+  m_PrefabInstance: {fileID: 13741591293209891}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &2995373922971059073
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13741591293095077}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.4, y: 0.4}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.275, y: 0.4}
+  m_EdgeRadius: 0
+--- !u!114 &1304673168920009721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13741591293095077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e70fc1dd5b5e034398452f165a59d21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3989171777205447277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -120,10 +171,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 249317175501311644, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}
-      propertyPath: _enemyType
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3534822097997080624, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}
       propertyPath: m_Name
       value: EnemyLand_1 Variant
@@ -162,18 +209,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6715785315646734582, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6715785315646734582, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6715785315646734582, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6715785315646734582, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}
-      propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6715785315646734582, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}

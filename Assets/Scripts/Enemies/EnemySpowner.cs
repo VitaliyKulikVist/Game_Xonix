@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Assets.Scripts.Common;
 using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Enemies.Storage;
@@ -31,18 +29,14 @@ namespace Assets.Scripts.Enemies {
 		#region Variables
 		private Coroutine _spownEnemiesCoroutine = null;
 		private Coroutine _selectNearTargetCoroutine = null;
-		private List<EnemyControllerAbstract> _enemys = new List<EnemyControllerAbstract>();
-		[SerializeField] private List<EnemyControllerAbstract> _enemies = new List<EnemyControllerAbstract>();
-		[SerializeField] private Level _currentLevel = default;
-		private int spownerNumber = 0;
+		private List<EnemyControllerAbstract<EnemySeaType>> _enemysSea = 
+			new List<EnemyControllerAbstract<EnemySeaType>>();
+		private List<EnemyControllerAbstract<EnemyLandType>> _enemysLand = 
+			new List<EnemyControllerAbstract<EnemyLandType>>();
 		#endregion
 
 		#region Get\Set
 		public bool LevelStarted { get; set; } = false;
-		#endregion
-
-		#region Actions
-		public static Action<Vector3, Vector3, EnemyType> SpawnEnemyAction = default;
 		#endregion
 
 		private void Awake() {
@@ -51,130 +45,74 @@ namespace Assets.Scripts.Enemies {
 		}
 
 		private void OnEnable() {
-			GameManager.LevelStartAction += StartSpownEnemies;
-			GameManager.LevelFinishAction += StopSpownEnemies;
-			EnemyControllerAbstract.EnemyKilledAction += EnemyKillReaction;
-			EnemyControllerAbstract.EnemyRichPlayerAction += EnemyRichPlayer;
-
-			SpawnEnemyAction += SpawnEnemy;
+			GameManager.LevelStartAction += ReactionStartLevel;
+			GameManager.LevelFinishAction += ReactionFinishLevel;
 		}
 
 		private void OnDisable() {
-			GameManager.LevelStartAction -= StartSpownEnemies;
-			GameManager.LevelFinishAction -= StopSpownEnemies;
-			EnemyControllerAbstract.EnemyKilledAction -= EnemyKillReaction;
-			EnemyControllerAbstract.EnemyRichPlayerAction -= EnemyRichPlayer;
-
-			SpawnEnemyAction -= SpawnEnemy;
+			GameManager.LevelStartAction -= ReactionStartLevel;
+			GameManager.LevelFinishAction -= ReactionFinishLevel;
 		}
 
-		private void StartSpownEnemies() {
-			_currentLevel = _levelStorageSO.GetNextLevel(_playerStorageSO.ConcretePlayer.PlayerLevel);
-
-			//Change texture
-
+		#region Reaction
+		private void ReactionStartLevel() {
 			LevelStarted = true;
-
-			if (_spownEnemiesCoroutine != null) {
-				StopCoroutine(_spownEnemiesCoroutine);
-			}
-			_spownEnemiesCoroutine = StartCoroutine(SpownEnemies());
-
-			if (_selectNearTargetCoroutine != null) {
-				StopCoroutine(_selectNearTargetCoroutine);
-			}
-			_selectNearTargetCoroutine = StartCoroutine(SelectNearEnemy());
 		}
-
-		private void StopSpownEnemies(LevelResult _levelResult) {
-			LevelStarted = false;
-
-			if (_spownEnemiesCoroutine != null) {
-				StopCoroutine(_spownEnemiesCoroutine);
-				_spownEnemiesCoroutine = null;
-			}
-
-			if (_selectNearTargetCoroutine != null) {
-				StopCoroutine(_selectNearTargetCoroutine);
-			}
-			_selectNearTargetCoroutine = null;
-
-			EnemyControllerAbstract.KillEnemies?.Invoke();
-		}
-
-		private IEnumerator SelectNearEnemy() {
-			while (LevelStarted) {
-
-				yield return null;
+		private void ReactionFinishLevel(LevelResult levelResult) {
+			if(levelResult == LevelResult.Win) {
+				LevelStarted = true;
 			}
 		}
-
-		private IEnumerator SpownEnemies() {
-			while (LevelStarted) {
-				if (_enemies.Count + spownerNumber < _currentLevel.MaximumEnemies) {
-					SpownEnemy();
-				}
-				yield return new WaitForSeconds(_currentLevel.GetTimeSpawnEnemies);
-			}
-		}
-
-		private void SpownEnemy() {
-			
-		}
+		#endregion
 
 		private void PrepareEnemys() {
 			for (int i = 0; i < _startingEnemiesCountPool; i++) {
-				for (int j = 0; j < typeof(EnemyType).GetEnumValues().Length; j++) {
-					if((EnemyType)j != EnemyType.None) {
-						AddEnemy((EnemyType)j);
+				
+				for (int j = 0; j < typeof(EnemySeaType).GetEnumValues().Length; j++) {
+					if((EnemySeaType)j != EnemySeaType.None) {
+						AddSeaEnemy((EnemySeaType)j);
+					}
+				}
+
+				for (int j = 0; j < typeof(EnemyLandType).GetEnumValues().Length; j++) {
+					if ((EnemyLandType)j != EnemyLandType.None) {
+						AddLandEnemy((EnemyLandType)j);
 					}
 				}
 			}
 		}
+		private void AddSeaEnemy(EnemySeaType seaEnemyType) {
+			var enemyControllerAbstract = _enemyStorageSO.GetSeaEnemyByType(seaEnemyType).EnemyController;
 
-		private void AddEnemy(EnemyType enemyType) {
-			var enemyControllerAbstract = _enemyStorageSO.GetEnemyByType(enemyType).GetEnemyController;
-
-			Transform containerSpawn = null;
-			if(enemyType == EnemyType.Land) {
-				containerSpawn = _containerLand;
-			}
-
-			else if(enemyType == EnemyType.Sea) {
-				containerSpawn = _containerSea;
-			}
-			var enemy = Instantiate(enemyControllerAbstract, containerSpawn);
+			var enemy = Instantiate(enemyControllerAbstract, _containerSea);
 			enemy.ResetEnemy();
 
-			_enemys.Add(enemy);
+			_enemysSea.Add(enemy);
 		}
 
-		private void SpawnEnemy(Vector3 _startPosition, Vector3 _direction, EnemyType enemyType) {
-			if (_enemys.Find(enem => enem.IsFree && enem.EnemyType == enemyType) == null) {
-				AddEnemy(enemyType);
-			}
+		private void AddLandEnemy(EnemyLandType enemyLandType) {
+			var enemyControllerAbstract = _enemyStorageSO.GetLandEnemyByType(enemyLandType).EnemyController;
 
-			_enemys.Find(someEnemy => someEnemy.IsFree).ShowEnemy(_startPosition, _direction, enemyType);
+			var enemy = Instantiate(enemyControllerAbstract, _containerLand);
+			enemy.ResetEnemy();
+
+			_enemysLand.Add(enemy);
 		}
 
-		private void EnemyKillReaction(EnemyControllerAbstract _controller) {
-			if (_enemies.Contains(_controller)) {
-				_enemies.Remove(_controller);
+		private void SpawnSeaEnemy(Vector3 _startPosition, Vector3 _direction, EnemySeaType enemyType) {
+			if (_enemysSea.Find(enem => enem.IsFree && enem.EnemyType == enemyType) == null) {
+				AddSeaEnemy(enemyType);
 			}
 
-			if (_controller.IsKilled && _currentLevel.GetLevelEnemies.FindAll(someEnemy => someEnemy == _controller.EnemyType).Count > 0) {
-				_currentLevel.GetLevelEnemies.Remove(_currentLevel.GetLevelEnemies.Find(someEnemy => someEnemy == _controller.EnemyType));
-			}
-
-			if (LevelStarted && _currentLevel.GetLevelEnemies.Count == 0) {
-				GameManager.LevelFinishAction?.Invoke(LevelResult.Win);
-			}
+			_enemysSea.Find(someEnemy => someEnemy.IsFree).ShowEnemy(_startPosition, _direction, enemyType);
 		}
 
-		private void EnemyRichPlayer(EnemyControllerAbstract _controller) {
-			if (_enemies.Contains(_controller)) {
-				_enemies.Remove(_controller);
+		private void SpawnLandEnemy(Vector3 _startPosition, Vector3 _direction, EnemyLandType enemyType) {
+			if (_enemysLand.Find(enem => enem.IsFree && enem.EnemyType == enemyType) == null) {
+				AddLandEnemy(enemyType);
 			}
+
+			_enemysLand.Find(someEnemy => someEnemy.IsFree).ShowEnemy(_startPosition, _direction, enemyType);
 		}
 
 		private void PrepareCamera() {

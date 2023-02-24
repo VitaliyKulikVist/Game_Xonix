@@ -6,24 +6,14 @@ using UnityEngine;
 namespace Assets.Scripts.World {
 	[Serializable]
 	public class Level : ICloneable {
-		[Header("Enemies type at this level")]
-		[SerializeField] private List<EnemyType> _enemies = new List<EnemyType>();
-
-		[Header("Maximum enemies on the level")]
-		[SerializeField] private int _maxEnemies = 5;
-		[SerializeField] private float _timeSpawnEnemies = 0.5f;
-
-		#region Geter/Seter
-		public List<EnemyType> GetLevelEnemies { get => _enemies; }
-
-		public float GetTimeSpawnEnemies { get => _timeSpawnEnemies; }
-		public int MaximumEnemies { get => _maxEnemies; }
-		#endregion
+		[field: Header("Enemies type at this level")]
+		[field: SerializeField] public List<EnemySeaType> EnemiesSea { get; set; } = new List<EnemySeaType>();
+		[field: SerializeField] public List<EnemyLandType> EnemiesLand { get; set; } = new List<EnemyLandType>();
 
 		public object Clone() {
 			Level copyLevel = new Level();
-			copyLevel._maxEnemies = this._maxEnemies;
-			copyLevel._enemies = new List<EnemyType>(this._enemies);
+			copyLevel.EnemiesSea = this.EnemiesSea;
+			copyLevel.EnemiesLand = this.EnemiesLand;
 
 			return copyLevel;
 		}

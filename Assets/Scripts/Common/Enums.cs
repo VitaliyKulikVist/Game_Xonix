@@ -6,11 +6,20 @@
         Win = 1,
         Lose = 2
     }
-	public enum EnemyType {
+	public enum EnemySeaType {
 		None,
-		Land,
-		Sea
+		Enemy_Sea_1,
+		Enemy_Sea_2,
+		Enemy_Sea_3
 	}
+
+	public enum EnemyLandType {
+		None,
+		Enemy_Land_1,
+		Enemy_Land_2,
+		Enemy_Land_3
+	}
+
 	public enum ButtonType {
 		None,
 		Play,

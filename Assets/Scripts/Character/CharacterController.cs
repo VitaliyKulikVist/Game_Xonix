@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Common;
 using Assets.Scripts.Common.Helpers;
+using Assets.Scripts.Enemies;
+using Assets.Scripts.World.Grid;
 using UnityEngine;
 
 namespace Assets.Scripts.Character {
@@ -87,7 +89,6 @@ namespace Assets.Scripts.Character {
 			}
 		}
 
-
 		#region Resets
 		private void ResetPlayer() {
 			transform.position = Vector3.zero;
@@ -111,7 +112,6 @@ namespace Assets.Scripts.Character {
 
 		#endregion
 
-
 		#region Reaction to Action
 		private void ReactionStartGame() {
 			_canMove = true;
@@ -126,6 +126,23 @@ namespace Assets.Scripts.Character {
 
 		private void ReactionPlay() {
 			_canMove = true;
+		}
+		#endregion
+
+		#region hit reaction
+		public void HitLandUnit(GridUnit<GridUnitLandType> gridUnit) {
+			Debug.Log($"Character hit to land\t{gridUnit.gameObject.name}");
+
+		}
+
+		public void HitSeaUnit(GridUnit<GridUnitSeaType> gridUnit) {
+			Debug.Log($"Character hit to Sea\t{gridUnit.gameObject.name}");
+
+		}
+
+		public void HitEnemt<TEnum>(EnemyControllerAbstract<TEnum> enemy)
+			where TEnum : System.Enum {
+			Debug.Log($"Character hit to Enemy\t{enemy.gameObject.name}");
 		}
 		#endregion
 

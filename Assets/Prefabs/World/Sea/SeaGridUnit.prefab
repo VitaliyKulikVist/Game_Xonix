@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 542222282696347048}
   - component: {fileID: 542222282696347049}
-  m_Layer: 0
+  - component: {fileID: 3202323808111628191}
+  - component: {fileID: 2288699442377314811}
+  m_Layer: 7
   m_Name: SquareSea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,6 +91,44 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &3202323808111628191
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542222282696347063}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 64, y: 64}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 1
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 64, y: 64}
+  m_EdgeRadius: 0
+--- !u!114 &2288699442377314811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542222282696347063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b103a4951c601c44b295c5d4d8ac386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &542222283058462891
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 542222283058462892}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,9 +176,9 @@ GameObject:
   m_Component:
   - component: {fileID: 542222283636519595}
   - component: {fileID: 6012679103824318390}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SeaGridUnit
-  m_TagString: Untagged
+  m_TagString: Sea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -179,5 +219,5 @@ MonoBehaviour:
   _gridUnitType: 0
   _container: {fileID: 542222283058462892}
   _spriteRendererUnit: {fileID: 542222282696347049}
-  _seaColor: {r: 0, g: 0, b: 1, a: 1}
-  _landColor: {r: 1, g: 0, b: 0, a: 1}
+  _defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  _activeColor: {r: 1, g: 0, b: 0, a: 1}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.Common;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.World.Grid {
@@ -19,12 +20,23 @@ namespace Assets.Scripts.World.Grid {
 		[SerializeField] private Transform _poolSeaContainer = default;
 		[SerializeField] private Transform _poolLandContainer = default;
 
+#if UNITY_EDITOR
+		[Header("On Draw Gizmos settings")]
+		[SerializeField] private bool _onHandles = false;
+#endif
+
 		#region Variable 
 		private Dictionary<Vector3, GridUnitSea> _unitsSeaDictionary = default;
 		private Dictionary<Vector3, GridUnitLand> _unitsLandDictionary = default;
 
 		private List<GridUnitSea> _gridUnitSeaList = new List<GridUnitSea>();
 		private List<GridUnitLand> _gridUnitLandList = new List<GridUnitLand>();
+
+		private Vector3 _tempStartPosition = Vector3.zero;
+		private bool _tempOffset = false;
+		private GridUnitLand _tempGridUnitLand = null!;
+
+		private GridUnitSea _tempGridUnitSea = null!;
 		#endregion
 
 		private void Awake() {
@@ -42,11 +54,13 @@ namespace Assets.Scripts.World.Grid {
 
 		#region Reaction
 		private void ReactionStartGame() {
+			ResetAllVariable();
 			GenerateGrid();
+			
 		}
 
 		private void ReactionFinishgame(LevelResult levelResult) {
-
+			ResetAllVariable();
 		}
 		#endregion
 
@@ -56,30 +70,27 @@ namespace Assets.Scripts.World.Grid {
 
 			for (int x = 0; x < _width; x++) {
 				for (int y = 0; y < _height; y++) {
-					bool offset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
-					if (offset) {
 
-						Vector3 startPos = new Vector3(_offsetFirstUnit.x + x + x * _offsetByWidthAndHeigth, _offsetFirstUnit.y + y + y * _offsetByWidthAndHeigth);
+					_tempStartPosition = new Vector3(_offsetFirstUnit.x + x + x * _offsetByWidthAndHeigth, _offsetFirstUnit.y + y + y * _offsetByWidthAndHeigth);
 
-						var unitGridLand = ShowLandUnit(startPos, GridUnitLandType.Land_1, $"Unit Land {x} {y}");
-						if (unitGridLand == null) {
-							throw new ArgumentNullException(nameof(unitGridLand));
+					_tempOffset = (x == _width - 1 || y == _height - 1) || (x == 0 || y == 0);
+
+					if (_tempOffset) {
+
+						_tempGridUnitLand = ShowLandUnit(_tempStartPosition, GridUnitLandType.Land_1, $"Land {x} {y}");
+						if (_tempGridUnitLand == null) {
+							throw new ArgumentNullException(nameof(_tempGridUnitLand));
 						}
-						unitGridLand.ChangeColor(offset);
-
-						_unitsLandDictionary[startPos] = unitGridLand;
+						_unitsLandDictionary[_tempStartPosition] = _tempGridUnitLand;
 					}
 
 					else {
-						Vector3 startPos = new Vector3(_offsetFirstUnit.x + x + x * _offsetByWidthAndHeigth, _offsetFirstUnit.y + y + y * _offsetByWidthAndHeigth);
-
-						var unitGridSea = ShowSeaUnit(startPos, GridUnitSeaType.Sea_1, $"Unit Sea {x} {y}");
-						if(unitGridSea == null) {
-							throw new ArgumentNullException(nameof(unitGridSea));
+						_tempGridUnitSea = ShowSeaUnit(_tempStartPosition, GridUnitSeaType.Sea_1, $"Sea {x} {y}");
+						if (_tempGridUnitSea == null) {
+							throw new ArgumentNullException(nameof(_tempGridUnitSea));
 						}
-						unitGridSea.ChangeColor(offset);
 
-						_unitsSeaDictionary[startPos] = unitGridSea;
+						_unitsSeaDictionary[_tempStartPosition] = _tempGridUnitSea;
 					}
 				}
 			}
@@ -103,12 +114,17 @@ namespace Assets.Scripts.World.Grid {
 
 		#region pool Controller
 		private void PrepareUnits() {
-			for (int j = 0; j < typeof(GridUnitSeaType).GetEnumValues().Length; j++) {
-				AddGridSeaByType((GridUnitSeaType)j);
-			}
 
-			for (int i = 0; i < typeof(GridUnitLandType).GetEnumValues().Length; i++) {
-				AddGridLandByType((GridUnitLandType)i);
+			int min = _width * _height;
+
+			for (int calc = 0; calc < min; calc++) {
+				for (int j = 0; j < typeof(GridUnitSeaType).GetEnumValues().Length; j++) {
+					AddGridSeaByType((GridUnitSeaType)j);
+				}
+
+				for (int i = 0; i < typeof(GridUnitLandType).GetEnumValues().Length; i++) {
+					AddGridLandByType((GridUnitLandType)i);
+				}
 			}
 		}
 
@@ -159,5 +175,27 @@ namespace Assets.Scripts.World.Grid {
 		}
 
 		#endregion
+
+		private void ResetAllVariable() {
+			_tempStartPosition = Vector3.zero;
+			_tempOffset = false;
+			_tempGridUnitLand = null!;
+			_tempGridUnitSea = null!;
+		}
+
+#if UNITY_EDITOR
+		private void OnDrawGizmos() {
+			if (_onHandles) {
+				foreach (var land in _unitsLandDictionary) {
+					Handles.color = Color.blue;
+					Handles.Label(land.Key, land.Value.gameObject.name);
+				}
+				foreach (var sea in _unitsSeaDictionary) {
+					Handles.color = Color.green;
+					Handles.Label(sea.Key, sea.Value.gameObject.name);
+				}
+			}
+		}
+#endif
 	}
 }

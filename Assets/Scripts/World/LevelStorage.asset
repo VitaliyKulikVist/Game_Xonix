@@ -46,43 +46,28 @@ MonoBehaviour:
     - <GridUnitLandType>k__BackingField: 8
       <GridUnit>k__BackingField: {fileID: 5977361639618693990, guid: 376f982e8c687d64e946c06afe3dbbe0, type: 3}
   _gameLevels:
-  - _enemies: 01000000
-    _maxEnemies: 1
-    _timeSpawnEnemies: 0.5
-  - _enemies: 01000000
-    _maxEnemies: 2
-    _timeSpawnEnemies: 0.5
-  - _enemies: 01000000
-    _maxEnemies: 3
-    _timeSpawnEnemies: 0.5
-  - _enemies: 01000000
-    _maxEnemies: 4
-    _timeSpawnEnemies: 0.5
-  - _enemies: 01000000
-    _maxEnemies: 5
-    _timeSpawnEnemies: 0.5
-  - _enemies: 0100000002000000
-    _maxEnemies: 3
-    _timeSpawnEnemies: 0.5
-  - _enemies: 0100000002000000
-    _maxEnemies: 4
-    _timeSpawnEnemies: 0.5
-  - _enemies: 0100000002000000
-    _maxEnemies: 5
-    _timeSpawnEnemies: 0.5
-  - _enemies: 0100000002000000
-    _maxEnemies: 6
-    _timeSpawnEnemies: 0.5
-  - _enemies: 0100000002000000
-    _maxEnemies: 7
-    _timeSpawnEnemies: 0.5
-  - _enemies: 0100000002000000
-    _maxEnemies: 8
-    _timeSpawnEnemies: 0.5
-  - _enemies: 0100000002000000
-    _maxEnemies: 9
-    _timeSpawnEnemies: 0.5
-  - _enemies: 0100000002000000
-    _maxEnemies: 10
-    _timeSpawnEnemies: 0.5
+  - <EnemiesSea>k__BackingField: 
+    <EnemiesLand>k__BackingField: 01000000
+  - <EnemiesSea>k__BackingField: 
+    <EnemiesLand>k__BackingField: 0100000001000000
+  - <EnemiesSea>k__BackingField: 
+    <EnemiesLand>k__BackingField: 010000000100000002000000
+  - <EnemiesSea>k__BackingField: 
+    <EnemiesLand>k__BackingField: 01000000010000000200000002000000
+  - <EnemiesSea>k__BackingField: 
+    <EnemiesLand>k__BackingField: 0100000001000000010000000200000002000000
+  - <EnemiesSea>k__BackingField: 
+    <EnemiesLand>k__BackingField: 010000000100000002000000020000000200000003000000
+  - <EnemiesSea>k__BackingField: 01000000
+    <EnemiesLand>k__BackingField: 0100000001000000020000000200000003000000
+  - <EnemiesSea>k__BackingField: 0100000001000000
+    <EnemiesLand>k__BackingField: 010000000100000001000000020000000300000003000000
+  - <EnemiesSea>k__BackingField: 010000000000000000000000
+    <EnemiesLand>k__BackingField: 00000000000000000000000000000000000000000000000000000000
+  - <EnemiesSea>k__BackingField: 01000000010000000100000002000000
+    <EnemiesLand>k__BackingField: 0100000001000000010000000200000002000000020000000300000003000000
+  - <EnemiesSea>k__BackingField: 0100000001000000020000000200000003000000
+    <EnemiesLand>k__BackingField: 010000000100000001000000020000000200000002000000030000000300000003000000
+  - <EnemiesSea>k__BackingField: 010000000100000001000000020000000300000003000000
+    <EnemiesLand>k__BackingField: 02000000020000000200000002000000020000000300000003000000030000000300000003000000
   <IsValidate>k__BackingField: 0

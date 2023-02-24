@@ -8,30 +8,42 @@ namespace Assets.Scripts.Enemies.Storage {
 	public class EnemyStorage : ScriptableObject {
 
 		[Header("Enemys")]
-		[SerializeField] private List<EnemyUnit> _enemyUnits = new List<EnemyUnit>();
+		[SerializeField] private List<EnemySeaUnit> _enemySeaUnits = new List<EnemySeaUnit>();
+		[SerializeField] private List<EnemylandUnit> _enemyLandUnits = new List<EnemylandUnit>();
 
 #if UNITY_EDITOR
 		[Header("OnValidate")]
 		[SerializeField] private bool _SetEnemyControllerType = false;
 		[SerializeField] private bool _SetEnemyControllerSpeed = false;
+		[SerializeField] private bool _SetEnemyAttackDistance = false;
 #endif
 
 		#region Get/Set
-		public List<EnemyUnit> GetEnemyUnits { get => _enemyUnits; }
+		public List<EnemySeaUnit> GetEnemySeaUnits { get => _enemySeaUnits; }
+		public List<EnemylandUnit> GetEnemyLandUnits { get => _enemyLandUnits; }
 		#endregion
 
-		public EnemyUnit GetEnemyByType(EnemyType _enemyType) {
-			return _enemyUnits.Find(someUnit => someUnit.GetEnemyType == _enemyType);
+		public EnemySeaUnit GetSeaEnemyByType(EnemySeaType _enemyType) {
+			return _enemySeaUnits.Find(someUnit => someUnit.GetEnemyType.Equals(_enemyType));
+		}
+		public EnemylandUnit GetLandEnemyByType(EnemyLandType _enemyType) {
+			return _enemyLandUnits.Find(someUnit => someUnit.GetEnemyType.Equals(_enemyType));
 		}
 
 #if UNITY_EDITOR
 		private void OnValidate() {
 			if (_SetEnemyControllerType) {
-				_enemyUnits.ForEach(en => en.SetEnemyControllerType());
+				_enemySeaUnits.ForEach(en => en.SetEnemyControllerType());
+				_enemyLandUnits.ForEach(en => en.SetEnemyControllerType());
 			}
 
 			if(_SetEnemyControllerSpeed) {
-				_enemyUnits.ForEach(en => en.SetEnemyControllerSpeed());
+				_enemySeaUnits.ForEach(en => en.SetEnemyMoveSpeed());
+				_enemyLandUnits.ForEach(en => en.SetEnemyMoveSpeed());
+			}
+			if(_SetEnemyAttackDistance) {
+				_enemySeaUnits.ForEach(en => en.SetEnemyAttackDistance());
+				_enemyLandUnits.ForEach(en => en.SetEnemyAttackDistance());
 			}
 		}
 #endif

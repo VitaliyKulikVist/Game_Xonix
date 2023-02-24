@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Common;
+﻿using Assets.Scripts.Character.Trigger;
+using Assets.Scripts.Common;
+using UnityEngine;
 
 namespace Assets.Scripts.World.Grid {
 	public class GridUnitLand : GridUnit<GridUnitLandType> {
@@ -8,6 +10,12 @@ namespace Assets.Scripts.World.Grid {
 			if (_gridUnitType != enemyType) {
 				return;
 			}
+		}
+
+		public override void ReactionToHitCharacter(Collider colliderHitObject, GridUnit<GridUnitLandType> gridUnit) {
+			base.ReactionToHitCharacter(colliderHitObject, gridUnit);
+
+			colliderHitObject.gameObject.GetComponent<CharacterTrigger>().HitLandUnit(gridUnit);
 		}
 	}
 }

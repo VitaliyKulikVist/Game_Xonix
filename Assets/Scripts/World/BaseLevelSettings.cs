@@ -4,8 +4,6 @@ using Assets.Scripts.Common;
 using Assets.Scripts.World.Grid;
 using UnityEngine;
 
-using Random = UnityEngine.Random;
-
 namespace Assets.Scripts.World {
 	[Serializable]
 	public class BaseLevelSettings {
@@ -13,20 +11,19 @@ namespace Assets.Scripts.World {
 		[SerializeField] private List<GuidUnitSeaSettings> _seaGridUnits = default;
 		[SerializeField] private List<GuidUnitLandSettings> _landGridUnits = default;
 
-		#region Get/Set
-		public GridUnitSea GetRandomSeaGridUnit { get => _seaGridUnits[Random.Range(0, _seaGridUnits.Count)].GridUnit; }
-		public GridUnitLand GetRandomLandGridUnit { get => _landGridUnits[Random.Range(0, _landGridUnits.Count)].GridUnit; }
-		#endregion
-
 		#region Set Enum
 		public void SetSeaGridUnitsEnum() {
 			foreach (var sea in _seaGridUnits) {
-				sea.GridUnit.SetType(sea.GridUnitSeaType);
+				var gridUnitSea = sea.GridUnit;
+				gridUnitSea.SetType(sea.GridUnitSeaType);
+				//PrefabUtility.SavePrefabAsset(gridUnitSea.gameObject);
 			}
 		}
 		public void SetLandGridUnitsEnum() {
 			foreach (var land in _landGridUnits) {
-				land.GridUnit.SetType(land.GridUnitLandType);
+				var gridUnitLand = land.GridUnit;
+				gridUnitLand.SetType(land.GridUnitLandType);
+				//PrefabUtility.SavePrefabAsset(gridUnitLand.gameObject);
 			}
 		}
 		#endregion

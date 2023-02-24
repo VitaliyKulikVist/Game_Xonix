@@ -1,5 +1,8 @@
-﻿namespace Assets.Scripts.Enemies.Current {
-	public class EnemyLand : EnemyControllerAbstract {
+﻿using Assets.Scripts.Common;
+using UnityEngine;
+
+namespace Assets.Scripts.Enemies.Current {
+	public class EnemyLand : EnemyControllerAbstract<EnemyLandType> {
 
 		public override void OnEnable() {
 			base.OnEnable();
@@ -28,6 +31,21 @@
 			base.DestroyEnemy();
 
 		}
+
+		#region Trigger reaction
+		public override void ReactionOnCharacter(Collider collider) {
+			base.ReactionOnCharacter(collider);
+
+		}
+		public override void ReactionOnLand(Collider collider) {
+			base.ReactionOnLand(collider);
+
+		}
+		public override void ReactionOnSea(Collider collider) {
+			base.ReactionOnSea(collider);
+
+		}
+		#endregion
 
 		public override void GetDamage() {
 			base.GetDamage();

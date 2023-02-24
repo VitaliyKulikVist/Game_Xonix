@@ -1,9 +1,10 @@
-﻿using Assets.Scripts.Common;
+﻿using Assets.Scripts.Character.Trigger;
 using DG.Tweening;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemies {
-	public abstract class EnemyControllerAbstract : Enemy, IEnemyController {
+	public abstract class EnemyControllerAbstract<TEnum> : Enemy<TEnum>, IEnemyController 
+		where TEnum : System.Enum{
 
 		public virtual void OnEnable() {
 
@@ -27,8 +28,8 @@ namespace Assets.Scripts.Enemies {
 			enemyContainer.gameObject.SetActive(false);
 		}
 
-		public void ShowEnemy(Vector3 _startPosition, Vector3 _direction, EnemyType enemyType) {
-			if(enemyType != _enemyType) {
+		public void ShowEnemy(Vector3 _startPosition, Vector3 _direction, TEnum enemyType) {
+			if(!enemyType.Equals(_enemyType)) {
 				return;
 			}
 
@@ -62,7 +63,7 @@ namespace Assets.Scripts.Enemies {
 		}
 
 		public virtual void MoveAfterAttack(float _yTarget) {
-			EnemyRichPlayerAction?.Invoke(this);
+			//EnemyRichPlayerAction?.Invoke(this);
 			Vector3 target = transform.TransformPoint(Vector3.forward * 40f);
 			target.y = _yTarget;
 			transform.DORotateQuaternion(Quaternion.LookRotation(target - transform.position), 1f);
@@ -72,10 +73,22 @@ namespace Assets.Scripts.Enemies {
 		}
 
 		public virtual void DestroyEnemy() {
-			EnemyKilledAction?.Invoke(this);
+			//EnemyKilledAction?.Invoke(this);
 				enemyContainer.gameObject.SetActive(false);
 				Destroy(gameObject);
 		}
+
+		#region Trigger reaction
+		public virtual void ReactionOnCharacter(Collider collider) {
+			collider.gameObject.GetComponent<CharacterTrigger>().HitEnemy(this);
+		}
+		public virtual void ReactionOnLand(Collider collider) {
+
+		}
+		public virtual void ReactionOnSea(Collider collider) {
+
+		}
+		#endregion
 
 		public virtual void GetDamage() {
 				IsKilled = true;

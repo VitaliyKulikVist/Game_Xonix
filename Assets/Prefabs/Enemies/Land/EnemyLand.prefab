@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4544183104255318821}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,9 +46,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6715785315646734582}
   - component: {fileID: 249317175501311644}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyLand
-  m_TagString: Untagged
+  m_TagString: EnemyLand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

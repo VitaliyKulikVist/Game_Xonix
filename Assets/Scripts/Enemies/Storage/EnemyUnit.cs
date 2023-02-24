@@ -1,39 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using Assets.Scripts.Common;
 using UnityEngine;
-
-using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Enemies.Storage {
 	[Serializable]
-	public class EnemyUnit {
+	public abstract class EnemyUnit<TEnums>
+		where TEnums : System.Enum {
 		[Header("Enemy parameters")]
-		[SerializeField] private EnemyType _enemyType = EnemyType.None;
+		[SerializeField] protected TEnums _enemyType = default;
+		[SerializeField] protected float _enemySpeed = 0f;
+		[SerializeField] protected float _attackDistance = 0f;
 
-		[Header("Enemy components")]
-		[SerializeField] private List<EnemyControllerSettings> _enemyControllers = new List<EnemyControllerSettings>();
+		[field: Header("Enemy components")]
+		[field: SerializeField] public EnemyControllerAbstract<TEnums> EnemyController { get; private set; }
+
 
 		#region Get/Set
-		public EnemyType GetEnemyType { get => _enemyType; }
-		public EnemyControllerAbstract GetEnemyController { get => _enemyControllers[Random.Range(0, _enemyControllers.Count)].EnemyController; }
+		public TEnums GetEnemyType { get => _enemyType; }
+		public float EnemySpeed { get => _enemySpeed; }
+		public float AttackDistance { get => _attackDistance; }
 		#endregion
 
-		public void SetEnemyControllerType() {
-			_enemyControllers.ForEach(all => all.EnemyController.SetEnemyType(_enemyType));
+		public virtual void SetEnemyControllerType() {
+			EnemyController.SetEnemyType(_enemyType);
+			//PrefabUtility.SavePrefabAsset(EnemyController.gameObject);
 		}
 
-		public void SetEnemyControllerSpeed() {
-
-			foreach (var settings in _enemyControllers) {
-				settings.EnemyController.SetEnemySpeed(settings.EnemySpeed);
-			}
+		public virtual void SetEnemyMoveSpeed() {
+			EnemyController.SetEnemySpeed(_enemySpeed);
 		}
-	}
 
-	[Serializable]
-	public class EnemyControllerSettings {
-		[field:SerializeField] public EnemyControllerAbstract EnemyController { get;private set; }
-		[field: SerializeField] public float EnemySpeed { get; private set; }
+		public virtual void SetEnemyAttackDistance() {
+			EnemyController.SetEnemyAttackDistance(_attackDistance);
+		}
 	}
 }
