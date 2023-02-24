@@ -7,6 +7,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2400889913526386696, guid: cc3673e0617653c45a7bce8ac64e121f, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2400889913526386696, guid: cc3673e0617653c45a7bce8ac64e121f, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7097368317258639407, guid: cc3673e0617653c45a7bce8ac64e121f, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -97,7 +105,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7097368318065740799, guid: cc3673e0617653c45a7bce8ac64e121f, type: 3}
       propertyPath: m_Name
-      value: LandGridUnit_9
+      value: LandGridUnit_9 Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7392999167816695052, guid: cc3673e0617653c45a7bce8ac64e121f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cc3673e0617653c45a7bce8ac64e121f, type: 3}

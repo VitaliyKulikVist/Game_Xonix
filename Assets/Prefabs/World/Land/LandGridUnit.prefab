@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 7097368317258639404}
   - component: {fileID: 7097368317258639407}
   - component: {fileID: 2400889913526386696}
-  - component: {fileID: 7392999167816695052}
+  - component: {fileID: 8646823362148484020}
   m_Layer: 7
   m_Name: SquareLand
   m_TagString: Untagged
@@ -154,7 +154,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 64, y: 64}
   m_EdgeRadius: 0
---- !u!114 &7392999167816695052
+--- !u!114 &8646823362148484020
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7097368317258639405}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a17db5e20ef9d2541aef4a38f2825b6d, type: 3}
+  m_Script: {fileID: 11500000, guid: 37096df14b0018e4c93f51cbbe0927fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7097368318065740799

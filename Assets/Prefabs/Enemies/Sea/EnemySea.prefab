@@ -88,7 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dependencyInjections: {fileID: 11400000, guid: 988b77d34458286428988d1576184ae5, type: 2}
   enemyStorageSO: {fileID: 11400000, guid: 06538aed6c921f94ca0345113b5d5651, type: 2}
-  _enemyType: 2
+  _enemyType: 0
   _enemySpeed: 0
   _attackDistance: 3
   enemyContainer: {fileID: 8426007884238382264}

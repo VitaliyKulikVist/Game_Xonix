@@ -1023,5 +1023,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: World
       objectReference: {fileID: 0}
+    - target: {fileID: 7987579983464689446, guid: 804124c8bcc28b443acab1f5b0bdb869, type: 3}
+      propertyPath: _offsetByWidthAndHeigth
+      value: 63
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 804124c8bcc28b443acab1f5b0bdb869, type: 3}

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: c601d89ed99d8eb42b015cfba1e28194
+  m_SerializeEntries:
+  - m_GUID: e0ce96ee4fc20c6458a1e08e46109c57
+    m_Address: Assets/Additional/spaceship_sprites
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 20bbcd41616477d4fa495c8895b6352a
+    m_Address: Assets/Sprites/Land
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 9e12ed2bfebba38468477ba820de3b9b
+    m_Address: Assets/Sprites/Sea
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1ea2c3e252c38cc459bf1a5c19e2801f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 6da913ebd647762479fb255337572489, type: 2}
+    - {fileID: 11400000, guid: 02a5832eada80e24cab320873ceb60d0, type: 2}

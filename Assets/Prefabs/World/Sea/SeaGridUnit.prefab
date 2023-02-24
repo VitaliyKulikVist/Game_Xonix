@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 542222282696347048}
   - component: {fileID: 542222282696347049}
   - component: {fileID: 3202323808111628191}
-  - component: {fileID: 2288699442377314811}
+  - component: {fileID: 7862502171010828778}
   m_Layer: 7
   m_Name: SquareSea
   m_TagString: Untagged
@@ -117,7 +117,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 64, y: 64}
   m_EdgeRadius: 0
---- !u!114 &2288699442377314811
+--- !u!114 &7862502171010828778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 542222282696347063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b103a4951c601c44b295c5d4d8ac386, type: 3}
+  m_Script: {fileID: 11500000, guid: d2ca8a14b9cf30e4fa2ccaa89944fbc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &542222283058462891

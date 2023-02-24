@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using Assets.Scripts.Common;
 using Assets.Scripts.World.Grid;
+using Assets.Scripts.World.Grid.AssetReference;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Assets.Scripts.World {
 	[Serializable]
@@ -35,6 +37,13 @@ namespace Assets.Scripts.World {
 
 		public GridUnitLand GetGridUnitLandByType(GridUnitLandType gridUnitLandType) {
 			return _landGridUnits.Find(unit => unit.GridUnitLandType == gridUnitLandType).GridUnit;
+		}
+
+		public AssetReferenceGridSea GetAssetReferenceSeaByType(GridUnitSeaType gridUnitSeaType) {
+			return _seaGridUnits.Find(unit => unit.GridUnitSeaType == gridUnitSeaType).AssetReference;
+		}
+		public AssetReferenceGridLand GetAssetReferenceLandByType(GridUnitLandType gridUnitLandType) {
+			return _landGridUnits.Find(unit => unit.GridUnitLandType == gridUnitLandType).AssetReference;
 		}
 		#endregion
 	}

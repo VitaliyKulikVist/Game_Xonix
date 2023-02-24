@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: EnemySea
+  m_EditorClassIdentifier: 
+  m_GroupName: EnemySea
+  m_Data:
+    m_SerializedData: []
+  m_GUID: df3573443b0a87e4999ec80be702b19f
+  m_SerializeEntries:
+  - m_GUID: 4fc4937068561d9479829ffa4f9640fc
+    m_Address: EnemySea_1Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemySea
+  - m_GUID: 7d9537be99ddc2f47bf611fc6a503ea3
+    m_Address: EnemySea_2Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemySea
+  - m_GUID: 2a606945f9f668a4dac2bddc815c4c1a
+    m_Address: EnemySea_3Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemySea
+  - m_GUID: 274250d0111de8e47aeab1e5a943839e
+    m_Address: EnemySea.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemySea
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1ea2c3e252c38cc459bf1a5c19e2801f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 3719a4167aac3c640b31ffd8b0fefafd, type: 2}
+    - {fileID: 11400000, guid: 546e079714b59184f975cb76397fe921, type: 2}

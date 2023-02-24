@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Common;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Assets.Scripts.World.Grid {
 	public class GridManager : MonoBehaviour {
@@ -35,12 +37,13 @@ namespace Assets.Scripts.World.Grid {
 		private Vector3 _tempStartPosition = Vector3.zero;
 		private bool _tempOffset = false;
 		private GridUnitLand _tempGridUnitLand = null!;
-
 		private GridUnitSea _tempGridUnitSea = null!;
+
+		private Coroutine _spawnGridCorotine = null!;
 		#endregion
 
 		private void Awake() {
-			PrepareUnits();
+			_spawnGridCorotine = StartCoroutine(PrepareUnits());
 		}
 
 		private void OnEnable() {
@@ -50,13 +53,19 @@ namespace Assets.Scripts.World.Grid {
 		private void OnDisable() {
 			GameManager.LevelStartAction -= ReactionStartGame;
 			GameManager.LevelFinishAction -= ReactionFinishgame;
+
+			ResetSpawnGridCorotine();
+		}
+
+		private void OnDestroy() {
+			ResetSpawnGridCorotine();
 		}
 
 		#region Reaction
 		private void ReactionStartGame() {
 			ResetAllVariable();
 			GenerateGrid();
-			
+
 		}
 
 		private void ReactionFinishgame(LevelResult levelResult) {
@@ -113,19 +122,21 @@ namespace Assets.Scripts.World.Grid {
 		}
 
 		#region pool Controller
-		private void PrepareUnits() {
+		private IEnumerator PrepareUnits() {
 
 			int min = _width * _height;
 
 			for (int calc = 0; calc < min; calc++) {
 				for (int j = 0; j < typeof(GridUnitSeaType).GetEnumValues().Length; j++) {
-					AddGridSeaByType((GridUnitSeaType)j);
+					yield return AddGridSeaByTypeAsync((GridUnitSeaType)j);
 				}
 
 				for (int i = 0; i < typeof(GridUnitLandType).GetEnumValues().Length; i++) {
-					AddGridLandByType((GridUnitLandType)i);
+					yield return AddGridLandByTypeAsync((GridUnitLandType)i);
 				}
 			}
+
+			_spawnGridCorotine = null!;
 		}
 
 		private void AddGridSeaByType(GridUnitSeaType gridUnitSeaType) {
@@ -136,12 +147,40 @@ namespace Assets.Scripts.World.Grid {
 			_gridUnitSeaList.Add(unit);
 		}
 
+		private IEnumerator AddGridSeaByTypeAsync(GridUnitSeaType gridUnitSeaType) {
+			var gridUnitSea = _levelStorage.BaseLevelSettings.GetAssetReferenceSeaByType(gridUnitSeaType);
+			var unitTask = gridUnitSea.InstantiateAsync(_poolSeaContainer);
+
+			yield return unitTask;
+
+			if (unitTask.IsDone) {
+				var unit = unitTask.Result.GetComponent<GridUnitSea>();
+				unit.ResetUnit();
+
+				_gridUnitSeaList.Add(unit);
+			}
+		}
+
 		private void AddGridLandByType(GridUnitLandType gridUnitLandType) {
 			var gridUnitLand = _levelStorage.BaseLevelSettings.GetGridUnitLandByType(gridUnitLandType);
 			var unit = Instantiate(gridUnitLand, _poolLandContainer);
 			unit.ResetUnit();
 
 			_gridUnitLandList.Add(unit);
+		}
+
+		private IEnumerator AddGridLandByTypeAsync(GridUnitLandType gridUnitLandType) {
+			var gridUnitLand = _levelStorage.BaseLevelSettings.GetAssetReferenceLandByType(gridUnitLandType);
+			var unitTask = gridUnitLand.InstantiateAsync(_poolLandContainer);
+
+			yield return unitTask;
+
+			if (unitTask.IsDone) {
+				var unit = unitTask.Result.GetComponent<GridUnitLand>();
+				unit.ResetUnit();
+
+				_gridUnitLandList.Add(unit);
+			}
 		}
 
 		private GridUnitLand ShowLandUnit(Vector3 _startPosition, GridUnitLandType gridUnitLandType, string name) {
@@ -181,6 +220,12 @@ namespace Assets.Scripts.World.Grid {
 			_tempOffset = false;
 			_tempGridUnitLand = null!;
 			_tempGridUnitSea = null!;
+		}
+
+		private void ResetSpawnGridCorotine() {
+			if(_spawnGridCorotine != null) {
+				StopCoroutine(_spawnGridCorotine);
+			}
 		}
 
 #if UNITY_EDITOR

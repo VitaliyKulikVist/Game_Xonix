@@ -3,7 +3,7 @@ using Assets.Scripts.Common;
 
 namespace Assets.Scripts.Enemies.Storage {
 	[Serializable]
-	public class EnemylandUnit : EnemyUnit<EnemyLandType> {
+	public class EnemyLandUnit : EnemyUnit<EnemyLandType> {
 		public override void SetEnemyControllerType() {
 			base.SetEnemyControllerType();
 

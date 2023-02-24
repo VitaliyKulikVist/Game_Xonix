@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: WorldSeaUnit
+  m_EditorClassIdentifier: 
+  m_GroupName: WorldSeaUnit
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a64aa656dca27ef4984243fbcf99887d
+  m_SerializeEntries:
+  - m_GUID: 8d75365fe511bd94cba3f7e94ce57951
+    m_Address: SeaGridUnit_2Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SeaUnit
+  - m_GUID: 27b9560f637ea1742993c7ab5f0c9993
+    m_Address: SeaGridUnit_3Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SeaUnit
+  - m_GUID: b755b6d22017a2848a86f8e5aeaa27cb
+    m_Address: SeaGridUnit_4Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SeaUnit
+  - m_GUID: 0371845e0f9720e458e1caf69866cd1c
+    m_Address: SeaGridUnit_1Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SeaUnit
+  - m_GUID: dcb98a1305d46af47a3c29ec60250090
+    m_Address: SeaGridUnit_6Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SeaUnit
+  - m_GUID: bcd199fc6deb45248b8a1f1b537d3998
+    m_Address: SeaGridUnit_5Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SeaUnit
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1ea2c3e252c38cc459bf1a5c19e2801f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 52248e083a2396c4e83899d25d2c1e4d, type: 2}
+    - {fileID: 11400000, guid: ccc95c7dd5f48cb428850b95d2f739f7, type: 2}

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: EnemyLand
+  m_EditorClassIdentifier: 
+  m_GroupName: EnemyLand
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 21ad8fd0f0fcd4f4ea91f2433f91c685
+  m_SerializeEntries:
+  - m_GUID: 2cb389d010463964a80f68f2f3fd592b
+    m_Address: EnemyLand_3Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyLand
+  - m_GUID: 69e1fb6556aacf741b18722ad0ccd874
+    m_Address: EnemyLand_2Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyLand
+  - m_GUID: e82c54b2501f93e46bfdc0ac1f8c87aa
+    m_Address: EnemyLand_1Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyLand
+  - m_GUID: 0089f5fb84c02784b9ea0e9205cac81d
+    m_Address: EnemyLand.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyLand
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1ea2c3e252c38cc459bf1a5c19e2801f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: f9b4a13c28aa2d845a227f1dfec777e7, type: 2}
+    - {fileID: 11400000, guid: a6e4c4b6cda7831469da6a3ebd5c2ba6, type: 2}

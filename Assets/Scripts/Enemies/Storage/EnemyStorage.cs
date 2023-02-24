@@ -9,7 +9,7 @@ namespace Assets.Scripts.Enemies.Storage {
 
 		[Header("Enemys")]
 		[SerializeField] private List<EnemySeaUnit> _enemySeaUnits = new List<EnemySeaUnit>();
-		[SerializeField] private List<EnemylandUnit> _enemyLandUnits = new List<EnemylandUnit>();
+		[SerializeField] private List<EnemyLandUnit> _enemyLandUnits = new List<EnemyLandUnit>();
 
 #if UNITY_EDITOR
 		[Header("OnValidate")]
@@ -20,15 +20,22 @@ namespace Assets.Scripts.Enemies.Storage {
 
 		#region Get/Set
 		public List<EnemySeaUnit> GetEnemySeaUnits { get => _enemySeaUnits; }
-		public List<EnemylandUnit> GetEnemyLandUnits { get => _enemyLandUnits; }
+		public List<EnemyLandUnit> GetEnemyLandUnits { get => _enemyLandUnits; }
 		#endregion
 
 		public EnemySeaUnit GetSeaEnemyByType(EnemySeaType _enemyType) {
 			return _enemySeaUnits.Find(someUnit => someUnit.GetEnemyType.Equals(_enemyType));
 		}
-		public EnemylandUnit GetLandEnemyByType(EnemyLandType _enemyType) {
+		public EnemyLandUnit GetLandEnemyByType(EnemyLandType _enemyType) {
 			return _enemyLandUnits.Find(someUnit => someUnit.GetEnemyType.Equals(_enemyType));
 		}
+		public UnityEngine.AddressableAssets.AssetReference GetAssetReferenceSeaUnitByType(EnemySeaType enemySeaType) { 
+			return _enemySeaUnits.Find(someUnit => someUnit.GetEnemyType.Equals(enemySeaType)).AssetReferencec;
+		}
+		public UnityEngine.AddressableAssets.AssetReference GetAssetReferenceLandUnitByType(EnemyLandType enemyLandType) {
+			return _enemyLandUnits.Find(someUnit => someUnit.GetEnemyType.Equals(enemyLandType)).AssetReferencec;
+		}
+
 
 #if UNITY_EDITOR
 		private void OnValidate() {

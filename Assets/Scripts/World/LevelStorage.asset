@@ -15,35 +15,110 @@ MonoBehaviour:
   _baseLevelSettings:
     _seaGridUnits:
     - <GridUnitSeaType>k__BackingField: 0
+      <AssetReference>k__BackingField:
+        m_AssetGUID: 0371845e0f9720e458e1caf69866cd1c
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 3487035599892686295, guid: 0371845e0f9720e458e1caf69866cd1c, type: 3}
     - <GridUnitSeaType>k__BackingField: 1
+      <AssetReference>k__BackingField:
+        m_AssetGUID: 8d75365fe511bd94cba3f7e94ce57951
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 4428312815635960035, guid: 8d75365fe511bd94cba3f7e94ce57951, type: 3}
     - <GridUnitSeaType>k__BackingField: 2
+      <AssetReference>k__BackingField:
+        m_AssetGUID: 27b9560f637ea1742993c7ab5f0c9993
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 7130086235656701237, guid: 27b9560f637ea1742993c7ab5f0c9993, type: 3}
     - <GridUnitSeaType>k__BackingField: 3
+      <AssetReference>k__BackingField:
+        m_AssetGUID: b755b6d22017a2848a86f8e5aeaa27cb
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 6776776374649156931, guid: b755b6d22017a2848a86f8e5aeaa27cb, type: 3}
     - <GridUnitSeaType>k__BackingField: 4
+      <AssetReference>k__BackingField:
+        m_AssetGUID: bcd199fc6deb45248b8a1f1b537d3998
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 7115288389346131137, guid: bcd199fc6deb45248b8a1f1b537d3998, type: 3}
     - <GridUnitSeaType>k__BackingField: 5
+      <AssetReference>k__BackingField:
+        m_AssetGUID: dcb98a1305d46af47a3c29ec60250090
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 4642970317244305055, guid: dcb98a1305d46af47a3c29ec60250090, type: 3}
     _landGridUnits:
     - <GridUnitLandType>k__BackingField: 0
+      <AssetReference>k__BackingField:
+        m_AssetGUID: f3f064a68aef07f4da9291801d5699fe
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 4602468491324107066, guid: f3f064a68aef07f4da9291801d5699fe, type: 3}
     - <GridUnitLandType>k__BackingField: 1
+      <AssetReference>k__BackingField:
+        m_AssetGUID: d66135b00e2648f42ae03e759c145ce8
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 4220832385203192599, guid: d66135b00e2648f42ae03e759c145ce8, type: 3}
     - <GridUnitLandType>k__BackingField: 2
+      <AssetReference>k__BackingField:
+        m_AssetGUID: 161b06d207edf0e4e86554cf9861a398
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 8005924476714744220, guid: 161b06d207edf0e4e86554cf9861a398, type: 3}
     - <GridUnitLandType>k__BackingField: 3
+      <AssetReference>k__BackingField:
+        m_AssetGUID: ac8ea0935464ee246b258f15f58eb049
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 1533057975988086631, guid: ac8ea0935464ee246b258f15f58eb049, type: 3}
     - <GridUnitLandType>k__BackingField: 4
+      <AssetReference>k__BackingField:
+        m_AssetGUID: d2df1a8cbc3d07543bac32bd743e48ee
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 5730399428173898494, guid: d2df1a8cbc3d07543bac32bd743e48ee, type: 3}
     - <GridUnitLandType>k__BackingField: 5
+      <AssetReference>k__BackingField:
+        m_AssetGUID: 4796687d71ff3c1409f4673976a728c7
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 6186360321045490272, guid: 4796687d71ff3c1409f4673976a728c7, type: 3}
     - <GridUnitLandType>k__BackingField: 6
+      <AssetReference>k__BackingField:
+        m_AssetGUID: c16951f52cc93ba41b6aec57b87a3ede
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 8422251970235989507, guid: c16951f52cc93ba41b6aec57b87a3ede, type: 3}
     - <GridUnitLandType>k__BackingField: 7
+      <AssetReference>k__BackingField:
+        m_AssetGUID: b99430cd94dc56849af3d4f48d0d0fbb
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 496241274460071566, guid: b99430cd94dc56849af3d4f48d0d0fbb, type: 3}
     - <GridUnitLandType>k__BackingField: 8
+      <AssetReference>k__BackingField:
+        m_AssetGUID: 376f982e8c687d64e946c06afe3dbbe0
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
       <GridUnit>k__BackingField: {fileID: 5977361639618693990, guid: 376f982e8c687d64e946c06afe3dbbe0, type: 3}
   _gameLevels:
   - <EnemiesSea>k__BackingField: 

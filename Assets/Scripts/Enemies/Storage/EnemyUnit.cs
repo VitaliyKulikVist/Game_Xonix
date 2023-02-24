@@ -12,7 +12,7 @@ namespace Assets.Scripts.Enemies.Storage {
 
 		[field: Header("Enemy components")]
 		[field: SerializeField] public EnemyControllerAbstract<TEnums> EnemyController { get; private set; }
-
+		[field: SerializeField] public UnityEngine.AddressableAssets.AssetReference AssetReferencec { get; private set; }
 
 		#region Get/Set
 		public TEnums GetEnemyType { get => _enemyType; }
