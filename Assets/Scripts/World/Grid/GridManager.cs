@@ -122,9 +122,12 @@ namespace Assets.Scripts.World.Grid {
 		}
 
 		public List<Vector3> GetListAllSeaPosition() {
-			List < Vector3 > tempList = new List<Vector3>();
-			foreach (var sea in _unitsSeaDictionary) {
-				tempList.Add(sea.Key);
+			List<Vector3> tempList = new List<Vector3>();
+
+			if (_unitsSeaDictionary != null && _unitsSeaDictionary.Count > 0) {
+				foreach (var sea in _unitsSeaDictionary) {
+					tempList.Add(sea.Key);
+				}
 			}
 
 			return tempList;
@@ -132,8 +135,11 @@ namespace Assets.Scripts.World.Grid {
 
 		public List<Vector3> GetListAllLandPosition() {
 			List<Vector3> tempList = new List<Vector3>();
-			foreach (var land in _unitsLandDictionary) {
-				tempList.Add(land.Key);
+
+			if (_unitsLandDictionary != null && _unitsLandDictionary.Count > 0) {
+				foreach (var land in _unitsLandDictionary) {
+					tempList.Add(land.Key);
+				}
 			}
 
 			return tempList;

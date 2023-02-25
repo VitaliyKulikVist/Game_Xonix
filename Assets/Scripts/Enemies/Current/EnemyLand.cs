@@ -22,11 +22,16 @@ namespace Assets.Scripts.Enemies.Current {
 
 		public override void ShowEnemy(Vector3 _startPosition, Vector3 _direction, EnemyLandType enemyType) {
 			base.ShowEnemy(_startPosition, _direction, enemyType);
-			if (enemyType != _enemyType) {
-				return;
-			}
+			if (enemyType == _enemyType) {
 
-			Debug.Log($"Show Enemy Land {enemyType}\t\t start = {_startPosition}\t\t move {_direction}");
+				IsFree = false;
+				transform.position = _startPosition;
+				gameObject.name = _tempName;
+
+				enemyContainer.gameObject.SetActive(true);
+
+				Debug.Log($"<Color=Green>Show Enemy Land</color>  {enemyType}\t\t start = {_startPosition}\t\t move {_direction}");
+			}
 		}
 
 		public override void LocalMotion() {

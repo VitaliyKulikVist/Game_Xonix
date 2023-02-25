@@ -35,12 +35,7 @@ namespace Assets.Scripts.Enemies {
 		}
 
 		public virtual void ShowEnemy(Vector3 _startPosition, Vector3 _direction, TEnum enemyType) {
-			Debug.Log($"Show Enemy {enemyType}\t\t start = {_startPosition}\t\t move {_direction}");
-
-			IsFree = false;
-			transform.position = _startPosition;
-			gameObject.name = _tempName;
-			enemyContainer.gameObject.SetActive(true);
+			Debug.Log($"<Color=red>Show Enemy</color> {enemyType}");
 		}
 
 		public void HitPlayer() {

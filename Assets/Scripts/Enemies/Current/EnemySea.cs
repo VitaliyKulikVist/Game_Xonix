@@ -19,11 +19,16 @@ namespace Assets.Scripts.Enemies.Current {
 
 		public override void ShowEnemy(Vector3 _startPosition, Vector3 _direction, EnemySeaType enemyType) {
 			base.ShowEnemy(_startPosition, _direction, enemyType);
-			if (enemyType != _enemyType) {
-				return;
-			}
+			if (enemyType == _enemyType) {
 
-			Debug.Log($"Show Enemy Sea {enemyType}\t\t start = {_startPosition}\t\t move {_direction}");
+				IsFree = false;
+				transform.position = _startPosition;
+				gameObject.name = _tempName;
+
+				enemyContainer.gameObject.SetActive(true);
+
+				Debug.Log($"<Color=Green>Show Enemy Sea</color>  {enemyType}\t\t start = {_startPosition}\t\t move {_direction}");
+			}
 		}
 
 		public override void LocalMotion() {

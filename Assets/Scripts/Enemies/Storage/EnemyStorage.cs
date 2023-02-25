@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Common;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Assets.Scripts.Enemies.Storage {
 
@@ -29,11 +30,11 @@ namespace Assets.Scripts.Enemies.Storage {
 		public EnemyLandUnit GetLandEnemyByType(EnemyLandType _enemyType) {
 			return _enemyLandUnits.Find(someUnit => someUnit.GetEnemyType == _enemyType);
 		}
-		public UnityEngine.AddressableAssets.AssetReference GetAssetReferenceSeaUnitByType(EnemySeaType enemySeaType) {
-			return _enemySeaUnits.Find(someUnit => someUnit.GetEnemyType == enemySeaType).AssetReferencec;
+		public AssetReference GetAssetReferenceSeaUnitByType(EnemySeaType enemySeaType) {
+			return _enemySeaUnits.Find(someUnit => Equals(someUnit.GetEnemyType, enemySeaType)).AssetReferencec;
 		}
-		public UnityEngine.AddressableAssets.AssetReference GetAssetReferenceLandUnitByType(EnemyLandType enemyLandType) {
-			return _enemyLandUnits.Find(someUnit => someUnit.GetEnemyType == enemyLandType).AssetReferencec;
+		public AssetReference GetAssetReferenceLandUnitByType(EnemyLandType enemyLandType) {
+			return _enemyLandUnits.Find(someUnit => Equals(someUnit.GetEnemyType, enemyLandType)).AssetReferencec;
 		}
 
 

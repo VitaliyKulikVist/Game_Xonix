@@ -7,14 +7,12 @@
         Lose = 2
     }
 	public enum EnemySeaType {
-		None,
 		Enemy_Sea_1,
 		Enemy_Sea_2,
 		Enemy_Sea_3
 	}
 
 	public enum EnemyLandType {
-		None,
 		Enemy_Land_1,
 		Enemy_Land_2,
 		Enemy_Land_3
