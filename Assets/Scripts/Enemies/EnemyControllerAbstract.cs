@@ -14,6 +14,10 @@ namespace Assets.Scripts.Enemies {
 			KillEnemies += DestroyEnemy;
 		}
 
+		protected override void Awake() {
+			base.Awake();
+
+		}
 		public virtual void OnDisable() {
 			enemyContainer.DOKill();
 			KillEnemies -= DestroyEnemy;
@@ -23,24 +27,20 @@ namespace Assets.Scripts.Enemies {
 			transform.DOKill();
 		}
 
-		private void HideEnemy() {
+		public void HideEnemy() {
 			IsFree = true;
 			enemyContainer.gameObject.SetActive(false);
+			gameObject.name = $"HIDDEN {_tempName}";
+			ResetEnemy();
 		}
 
-		public void ShowEnemy(Vector3 _startPosition, Vector3 _direction, TEnum enemyType) {
-			if(!enemyType.Equals(_enemyType)) {
-				return;
-			}
+		public virtual void ShowEnemy(Vector3 _startPosition, Vector3 _direction, TEnum enemyType) {
+			Debug.Log($"Show Enemy {enemyType}\t\t start = {_startPosition}\t\t move {_direction}");
 
 			IsFree = false;
-			target = _startPosition + _direction * 50f;
 			transform.position = _startPosition;
-			transform.forward = target - _startPosition;
+			gameObject.name = _tempName;
 			enemyContainer.gameObject.SetActive(true);
-			transform.DOMove(target + transform.forward * 5f, Vector3.Distance(_startPosition, target) / _enemySpeed).SetEase(Ease.Linear).OnComplete(() => {
-				HideEnemy();
-			});
 		}
 
 		public void HitPlayer() {

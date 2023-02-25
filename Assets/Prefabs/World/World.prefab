@@ -164,7 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baa21f4180ae1144fa0ba7c1b613e4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelStorageSO: {fileID: 11400000, guid: b11cf0d0b3a5cc648a271742e49aff70, type: 2}
   _container: {fileID: 6198200304908938191}
   <IsValidate>k__BackingField: 0
 --- !u!114 &7987579983464689446
@@ -180,12 +179,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelStorage: {fileID: 11400000, guid: b11cf0d0b3a5cc648a271742e49aff70, type: 2}
+  _dependencyInjections: {fileID: 11400000, guid: 988b77d34458286428988d1576184ae5, type: 2}
   _width: 17
   _height: 27
   _offsetFirstUnit: {x: 30, y: 20}
   _offsetByWidthAndHeigth: 64
   _poolSeaContainer: {fileID: 4882192210460348409}
   _poolLandContainer: {fileID: 1900490363359917471}
+  _onHandles: 0
 --- !u!223 &3331191526793046369
 Canvas:
   m_ObjectHideFlags: 0

@@ -34,6 +34,7 @@ namespace Assets.Scripts.Character {
 		private Vector3 _tempVectorDirection = default;
 		private float _tempAngleDirection = 0f;
 		private Quaternion tempAngleAxisDirection = default;
+		private GridManager _gridManager = null;
 		#endregion
 
 		private void Awake() {
@@ -45,6 +46,7 @@ namespace Assets.Scripts.Character {
 		}
 		private void Start() {
 			_dynamicJoystick = _dependencyInjections.DynamicJoystick;
+			_gridManager = _dependencyInjections.GridManager;
 		}
 		private void OnEnable() {
 			GameManager.LevelStartAction += ReactionStartGame;
@@ -114,6 +116,8 @@ namespace Assets.Scripts.Character {
 
 		#region Reaction to Action
 		private void ReactionStartGame() {
+			PreparePlayerPosition();
+
 			_canMove = true;
 		}
 
@@ -153,6 +157,24 @@ namespace Assets.Scripts.Character {
 				&& canvas.renderMode == RenderMode.ScreenSpaceCamera || canvas.renderMode == RenderMode.WorldSpace
 				&& canvas.worldCamera == null) {
 				canvas.worldCamera = Camera.main;
+			}
+		}
+		private void PreparePlayerPosition() {
+			ResetPlayer();
+			transform.position = GetRandomLandPosition();
+		}
+
+		private Vector3 GetRandomLandPosition() {
+			var ss = _gridManager.GetListAllLandPosition();
+			if (ss != null && ss.Count > 0) {
+
+				return ss[Random.Range(0, ss.Count)];
+			}
+
+			else {
+				Debug.LogError("Can`t take position spawn from player");
+
+				return Vector3.zero;
 			}
 		}
 

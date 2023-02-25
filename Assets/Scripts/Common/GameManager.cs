@@ -16,7 +16,6 @@ namespace Assets.Scripts.Common {
 
 		#region Global Actions
 		public static Action LevelStartAction = default;
-		public static Action RestartLevelAction = default;
 		public static Action<LevelResult> LevelFinishAction = default;
 
 		public static Action PausedLevelAction = default;
@@ -71,10 +70,6 @@ namespace Assets.Scripts.Common {
 		private void FinishLevel(LevelResult _levelResult) {
 			if (_levelResult == LevelResult.Win) {
 				_playerStorageSO.ConcretePlayer.AddPlayerLevel(1);
-			}
-			
-			else if (_levelResult == LevelResult.Lose && _playerStorageSO.ConcretePlayer.PlayerLive <= 0) {
-				RestartLevelAction?.Invoke();
 			}
 		}
 	}

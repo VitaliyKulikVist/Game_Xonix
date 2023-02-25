@@ -24,16 +24,16 @@ namespace Assets.Scripts.Enemies.Storage {
 		#endregion
 
 		public EnemySeaUnit GetSeaEnemyByType(EnemySeaType _enemyType) {
-			return _enemySeaUnits.Find(someUnit => someUnit.GetEnemyType.Equals(_enemyType));
+			return _enemySeaUnits.Find(someUnit => someUnit.GetEnemyType == _enemyType);
 		}
 		public EnemyLandUnit GetLandEnemyByType(EnemyLandType _enemyType) {
-			return _enemyLandUnits.Find(someUnit => someUnit.GetEnemyType.Equals(_enemyType));
+			return _enemyLandUnits.Find(someUnit => someUnit.GetEnemyType == _enemyType);
 		}
-		public UnityEngine.AddressableAssets.AssetReference GetAssetReferenceSeaUnitByType(EnemySeaType enemySeaType) { 
-			return _enemySeaUnits.Find(someUnit => someUnit.GetEnemyType.Equals(enemySeaType)).AssetReferencec;
+		public UnityEngine.AddressableAssets.AssetReference GetAssetReferenceSeaUnitByType(EnemySeaType enemySeaType) {
+			return _enemySeaUnits.Find(someUnit => someUnit.GetEnemyType == enemySeaType).AssetReferencec;
 		}
 		public UnityEngine.AddressableAssets.AssetReference GetAssetReferenceLandUnitByType(EnemyLandType enemyLandType) {
-			return _enemyLandUnits.Find(someUnit => someUnit.GetEnemyType.Equals(enemyLandType)).AssetReferencec;
+			return _enemyLandUnits.Find(someUnit => someUnit.GetEnemyType == enemyLandType).AssetReferencec;
 		}
 
 
@@ -44,11 +44,11 @@ namespace Assets.Scripts.Enemies.Storage {
 				_enemyLandUnits.ForEach(en => en.SetEnemyControllerType());
 			}
 
-			if(_SetEnemyControllerSpeed) {
+			if (_SetEnemyControllerSpeed) {
 				_enemySeaUnits.ForEach(en => en.SetEnemyMoveSpeed());
 				_enemyLandUnits.ForEach(en => en.SetEnemyMoveSpeed());
 			}
-			if(_SetEnemyAttackDistance) {
+			if (_SetEnemyAttackDistance) {
 				_enemySeaUnits.ForEach(en => en.SetEnemyAttackDistance());
 				_enemyLandUnits.ForEach(en => en.SetEnemyAttackDistance());
 			}

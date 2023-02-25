@@ -2,6 +2,7 @@
 using Assets.Scripts.Common;
 using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Player;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +17,7 @@ namespace Assets.Scripts.Ui {
 		[Header("Components")]
 		[SerializeField] private Button _pausedButton = default;
 		[SerializeField] private Image _pausedButtonimage = default;
-		[SerializeField] private List<ButtonControll> _pausedControl = default;
+		[SerializeField] private List<PlayPausedButtonControll> _pausedControl = default;
 
 		[Header("Time Components")]
 		[SerializeField] private TMP_Text _currencyTime = default;
@@ -131,6 +132,24 @@ namespace Assets.Scripts.Ui {
 			SetCurrencyLive();
 			SetCurrencyLevel();
 		}
+
+		#region Progress Controll
+		private void PrepareSliderProgress(float value) {
+			_sliderProgress.value = 0f;
+			if (value <= 1f) {
+				_sliderProgress.DOValue(value, 0.3f).OnUpdate(() => {
+					PrepareTextSliderProgress(_sliderProgress.value.ToString());
+				});
+			}
+
+			else {
+				Debug.LogError($"Incorrected progres slider value {value}");
+			}
+		}
+		private void PrepareTextSliderProgress(string textValue) {
+			_textProgress.text = $"{textValue}%";
+		}
+		#endregion
 
 		#region Button controll
 		private Sprite GetSpriteByType(ButtonType buttonType) {

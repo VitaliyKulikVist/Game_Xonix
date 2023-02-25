@@ -8,7 +8,6 @@ namespace Assets.Scripts {
 	public class MainTimer : MonoBehaviour {
 		[Header("Base")]
 		[SerializeField] private PlayerStorage _playerStorageSO = default;
-		[SerializeField] private GameStorageSettings _gameStorageSettingsSO = default;
 
 		[Header("Format")]
 		[SerializeField] private string _formatTime = "{0}:{1}";

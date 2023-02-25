@@ -15,9 +15,11 @@ namespace Assets.Scripts.Enemies {
 		[Header("Base")]
 		[SerializeField] private DependencyInjections _dependencyInjections = default;
 		[SerializeField] private EnemyStorage _enemyStorageSO = default;
-		[SerializeField] private GameStorageSettings _gameStorageSettingsSO = default;
 		[SerializeField] private LevelStorage _levelStorageSO = default;
 		[SerializeField] private PlayerStorage _playerStorageSO = default;
+
+		[Header("Settings")]
+		[SerializeField] private float _durationSpawnEnemy = 0.5f;
 
 		[Header("Enemy")]
 		[SerializeField] private Transform _enemiesContainer = default;
@@ -36,15 +38,24 @@ namespace Assets.Scripts.Enemies {
 			new List<EnemyControllerAbstract<EnemySeaType>>();
 		private List<EnemyControllerAbstract<EnemyLandType>> _enemysLand =
 			new List<EnemyControllerAbstract<EnemyLandType>>();
-		#endregion
 
-		#region Get\Set
-		public bool LevelStarted { get; set; } = false;
+		private Level _currentLevel = default;
+		private Coroutine _tempSpawnEnemyCoroutine = null;
+		private GridManager _tempGridManager = null;
+
+		private List<EnemySeaType> _tempListSeatype = default;
+		private List<EnemyLandType> _tempListLandtype = default;
+
+		private Vector3 _tempPlayerPosition = Vector3.zero;
+
 		#endregion
 
 		private void Awake() {
 			_spownEnemiesCoroutine = StartCoroutine(PrepareEnemys());
 			PrepareCamera();
+		}
+		private void Start() {
+			_tempGridManager = _dependencyInjections.GridManager;
 		}
 
 		private void OnEnable() {
@@ -63,13 +74,92 @@ namespace Assets.Scripts.Enemies {
 			ResetCoroutine();
 		}
 
+
 		#region Reaction
 		private void ReactionStartLevel() {
-			LevelStarted = true;
+			ControllVisabilityEnemy();
+
+			ResetCoroutine();
+			HideAllEnemy();
+
+			StartSpownEnemies();
 		}
 		private void ReactionFinishLevel(LevelResult levelResult) {
 			if (levelResult == LevelResult.Win) {
-				LevelStarted = true;
+
+			}
+		}
+
+		private void ControllVisabilityEnemy() {
+			if (!_enemiesContainer.gameObject.activeSelf) {
+				_enemiesContainer.gameObject.SetActive(true);
+			}
+		}
+		#endregion
+
+		#region Enemy spawn controll
+
+
+		private void StartSpownEnemies() {
+			_currentLevel = _levelStorageSO.GetNextLevel(_playerStorageSO.ConcretePlayer.PlayerLevel);
+
+			if (_tempSpawnEnemyCoroutine != null) {
+				StopCoroutine(_tempSpawnEnemyCoroutine);
+			}
+			_tempSpawnEnemyCoroutine = StartCoroutine(SpownEnemies());
+		}
+		private Vector3 GetRandomSeaPoints() {
+			List<Vector3> list = _tempGridManager.GetListAllSeaPosition();
+			if (list != null && list.Count > 0) {
+
+				return list[Random.Range(0, list.Count)];
+			}
+
+			else {
+				Debug.LogError("List Sea point is empty");
+			}
+
+			return Vector3.zero;
+		}
+
+		private Vector3 GetRandomLandPoints() {
+			List<Vector3> list = _tempGridManager.GetListAllLandPosition();
+			if (list != null && list.Count > 0) {
+
+				return list[Random.Range(0, list.Count)];
+			}
+
+			else {
+				Debug.LogError("List Land point is empty");
+			}
+
+			return Vector3.zero;
+		}
+		
+		private IEnumerator SpownEnemies() {
+			_tempListSeatype = new List<EnemySeaType>();
+			_tempListLandtype =	new List<EnemyLandType>();
+
+			_tempListSeatype = _currentLevel.EnemiesSea;
+			_tempListLandtype = _currentLevel.EnemiesLand;
+
+			_tempPlayerPosition = _dependencyInjections.PlayerPosition.position;
+			if (_tempListSeatype.Count > 0) {
+				foreach (var sea in _tempListSeatype) {
+					if (sea != EnemySeaType.None) {
+						SpawnSeaEnemy(GetRandomSeaPoints(), _tempPlayerPosition, sea);
+						yield return new WaitForSeconds(_durationSpawnEnemy);
+					}
+				}
+			}
+
+			if (_tempListLandtype.Count > 0) {
+				foreach (var land in _tempListLandtype) {
+					if (land != EnemyLandType.None) {
+						SpawnLandEnemy(GetRandomLandPoints(), _tempPlayerPosition, land);
+						yield return new WaitForSeconds(_durationSpawnEnemy);
+					}
+				}
 			}
 		}
 		#endregion
@@ -125,13 +215,13 @@ namespace Assets.Scripts.Enemies {
 						Debug.LogError($"Sea enemy can`t take component {nameof(EnemySea)} Error = {ex}");
 					}
 
-					if(unit != null) {
+					if (unit != null) {
 						unit.ResetEnemy();
 						_enemysSea.Add(unit);
 					}
 
 					else {
-							Debug.LogError($"Sea unit == null! \t\t {gridUnitSea?.Asset?.name}");
+						Debug.LogError($"Sea unit == null! \t\t {gridUnitSea?.Asset?.name}");
 					}
 				}
 			}
@@ -174,7 +264,7 @@ namespace Assets.Scripts.Enemies {
 						Debug.LogError($"Land enemy can`t take component {nameof(EnemyLand)} Error = {ex}");
 					}
 
-					if(unit != null) {
+					if (unit != null) {
 						unit.ResetEnemy();
 						_enemysLand.Add(unit);
 					}
@@ -206,6 +296,11 @@ namespace Assets.Scripts.Enemies {
 			_enemysLand.Find(someEnemy => someEnemy.IsFree).ShowEnemy(_startPosition, _direction, enemyType);
 		}
 
+		private void HideAllEnemy() {
+			_enemysSea.FindAll(enemy => !enemy.IsFree).ForEach(enemy => enemy.HideEnemy());
+			_enemysLand.FindAll(enemy => !enemy.IsFree).ForEach(enemy => enemy.HideEnemy());
+		}
+
 		private void PrepareCamera() {
 			var canvas = gameObject.GetComponent<Canvas>();
 
@@ -219,6 +314,10 @@ namespace Assets.Scripts.Enemies {
 		private void ResetCoroutine() {
 			if (_spownEnemiesCoroutine != null) {
 				StopCoroutine(_spownEnemiesCoroutine);
+			}
+
+			else if (_tempSpawnEnemyCoroutine != null) {
+				StopCoroutine(_tempSpawnEnemyCoroutine);
 			}
 		}
 

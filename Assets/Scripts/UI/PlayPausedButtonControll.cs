@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Ui {
 	[Serializable]
-	public class ButtonControll {
+	public class PlayPausedButtonControll {
 		
 		[SerializeField]private ButtonType buttonType = ButtonType.None;
 		[SerializeField] private Sprite buttonSprite = default;

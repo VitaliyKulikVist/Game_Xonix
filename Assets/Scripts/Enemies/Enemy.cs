@@ -21,7 +21,7 @@ namespace Assets.Scripts.Enemies {
 		[SerializeField] protected RectTransform enemyContainer = default;
 
 		#region Variables
-		protected Vector3 target = default;
+		protected string _tempName = null!;
 		#endregion
 
 		#region Get\Set
@@ -34,18 +34,23 @@ namespace Assets.Scripts.Enemies {
 		#region Action
 		public static Action KillEnemies = default;
 		#endregion
+		protected virtual void Awake() {
+			_tempName = gameObject.name;
+		}
 
 		public void ResetEnemy() {
 			transform.DOKill();
 			enemyContainer.DOKill();
 
-			transform.position= Vector3.zero;
-			transform.rotation= Quaternion.identity;
-			transform.localScale= Vector3.one;
+			transform.position = Vector3.zero;
+			transform.rotation = Quaternion.identity;
+			transform.localScale = Vector3.one;
 
-			enemyContainer.position= Vector3.zero;
-			enemyContainer.rotation= Quaternion.identity;
-			enemyContainer.localScale= Vector3.one;
+			enemyContainer.position = Vector3.zero;
+			enemyContainer.rotation = Quaternion.identity;
+			enemyContainer.localScale = Vector3.one;
+
+			gameObject.name = _tempName;
 		}
 
 		public void SetEnemyType(TEnum enemyType) {

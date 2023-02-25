@@ -1,12 +1,9 @@
-﻿using Assets.Scripts.Common.Helpers;
+﻿using Assets.Scripts.Common;
+using Assets.Scripts.Common.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.World {
 	public class WorldController : MonoBehaviour, IValidateHalper {
-
-		[Header("Base")]
-		[SerializeField] private LevelStorage _levelStorageSO = default;
-
 		[Header("Components")]
 		[SerializeField] private Transform _container = default;
 
@@ -15,6 +12,22 @@ namespace Assets.Scripts.World {
 
 		private void Awake() {
 			PrepareCamera();
+		}
+		private void OnEnable() {
+			GameManager.LevelStartAction += ReactionStartGame;
+		}
+		private void OnDisable() {
+			GameManager.LevelStartAction -= ReactionStartGame;
+		}
+
+		private void ReactionStartGame() {
+			ControllVisabilityWorld();
+		}
+
+		private void ControllVisabilityWorld() {
+			if(!_container.gameObject.activeSelf) {
+				_container.gameObject.SetActive(true);
+			}
 		}
 
 		private void PrepareCamera() {

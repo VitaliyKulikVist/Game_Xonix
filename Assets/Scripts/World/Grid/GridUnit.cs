@@ -24,7 +24,11 @@ namespace Assets.Scripts.World.Grid {
 
 		#region Variable
 		private Coroutine _tempCoroutine = null;
+		protected string _tempName = null!;
 		#endregion
+		private void Awake() {
+			_tempName = gameObject.name;
+		}
 
 		private void OnEnable() {
 			HideUnit();
@@ -64,18 +68,18 @@ namespace Assets.Scripts.World.Grid {
 		}
 
 		public virtual void ShowUnit(Vector3 _startPosition, TEnum enemyType) {
-			if (!Equals(_gridUnitType, enemyType)) {
-				return;
-			}
 
 			IsFree = false;
 			transform.position = _startPosition;
+
+			gameObject.name = _tempName;
 			_container.gameObject.SetActive(true);
 		}
 
-		private void HideUnit() {
+		public void HideUnit() {
 			IsFree = true;
 			_container.gameObject.SetActive(false);
+			gameObject.name = $"HIDDEN {_tempName}";
 		}
 		#region Trigger reaction
 		public void ReactionToHitSeaEnemy(Collider colliderHitObject) {

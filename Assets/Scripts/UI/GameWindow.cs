@@ -4,6 +4,7 @@ using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Player;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Ui {
 	public class GameWindow : MonoBehaviour {
@@ -13,10 +14,17 @@ namespace Assets.Scripts.Ui {
 
 		[Header("Components")]
 		[SerializeField] private RectTransform _panelContainer = default;
-		[SerializeField] private Transform _textContainer = default;
-		[SerializeField] private TMP_Text _reactionText = default;
 
-		[Header("Settings")]
+		[Header("Reaction Components and Settings")]
+		[SerializeField] private Transform _reactionContainer = default;
+		[SerializeField] private TMP_Text _reactionText = default;
+		[SerializeField] private Button _reactionButton = default;
+		[SerializeField] private Image _reactionButtonImage = default;
+		[SerializeField] private TMP_Text _reactionButtonText = default;
+		[SerializeField] private string _textButtonWining = "Next";
+		[SerializeField] private string _texButtontLosed = "Restart";
+		[SerializeField] private Color _colorButtonAfterWin = Color.green;
+		[SerializeField] private Color _colorButtonAfterLose = Color.red;
 		[SerializeField] private string _textWin = "You WIN!!";
 		[SerializeField] private string _textLose = "You Lose(";
 
@@ -39,6 +47,8 @@ namespace Assets.Scripts.Ui {
 
 		private void Awake() {
 			_dependencyInjections.DynamicJoystick = _dynamicJoystick;
+
+			PrepareButton();
 		}
 
 		private void OnEnable() {
@@ -50,6 +60,7 @@ namespace Assets.Scripts.Ui {
 			GameManager.LevelFinishAction -= ReactionFinishGame;
 		}
 
+		#region Reaction
 		private void ReactiononStartGame() {
 			ControllReactionContainer(false);
 		}
@@ -57,13 +68,30 @@ namespace Assets.Scripts.Ui {
 		private void ReactionFinishGame(LevelResult levelResult) {
 			if (levelResult == LevelResult.Win) {
 				ControllReactionContainer(true);
-				PrepareTextReaction(LevelResult.Win);
+				PrepareReaction(LevelResult.Win);
 			}
 
 			if (_playerStorage.ConcretePlayer.PlayerLive <= 0) {
 				ControllReactionContainer(true);
-				PrepareTextReaction(LevelResult.Lose);
+				PrepareReaction(LevelResult.Lose);
 			}
+		}
+
+		#endregion
+
+		private void PrepareButton() {
+
+			_reactionButton.onClick.RemoveAllListeners();
+			_reactionButton.onClick.AddListener(() => {
+				GameManager.LevelStartAction?.Invoke();
+			});
+		}
+
+		private void ChangeColorButton(bool _win) {
+			_reactionButtonImage.color = _win ? _colorButtonAfterWin : _colorButtonAfterLose;
+		}
+		private void ChangeTextButton(bool _win) {
+			_reactionButtonText.text = _win ? _textButtonWining : _texButtontLosed;
 		}
 
 		#region Controll
@@ -77,11 +105,10 @@ namespace Assets.Scripts.Ui {
 		}
 
 		private void ControllReactionContainer(bool switcher, Action callBack = null!) {
-			AnimationUiWindow.AnimationWindowControll(_textContainer, switcher, 0.3f, callBack);
+			AnimationUiWindow.AnimationWindowControll(_reactionContainer, switcher, 0.3f, callBack);
 		}
 
-		private void PrepareTextReaction(LevelResult levelResult) {
-
+		private void PrepareReaction(LevelResult levelResult) {
 			switch (levelResult) {
 				case LevelResult.None:
 					_reactionText.text = "Empty";
@@ -90,10 +117,14 @@ namespace Assets.Scripts.Ui {
 				case LevelResult.Win:
 					_reactionText.text = _textWin;
 					_reactionText.color = Color.green;
+					ChangeColorButton(true);
+					ChangeTextButton(true);
 					break;
 				case LevelResult.Lose:
 					_reactionText.text = _textLose;
 					_reactionText.color = Color.red;
+					ChangeColorButton(false);
+					ChangeTextButton(false);
 					break;
 				default:
 					_reactionText.text = "Default text";

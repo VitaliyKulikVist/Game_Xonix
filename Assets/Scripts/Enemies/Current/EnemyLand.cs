@@ -1,8 +1,14 @@
 ﻿using Assets.Scripts.Common;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemies.Current {
 	public class EnemyLand : EnemyControllerAbstract<EnemyLandType> {
+
+		protected override void Awake() {
+			base.Awake();
+
+		}
 
 		public override void OnEnable() {
 			base.OnEnable();
@@ -13,6 +19,16 @@ namespace Assets.Scripts.Enemies.Current {
 			base.OnDisable();
 
 		}
+
+		public override void ShowEnemy(Vector3 _startPosition, Vector3 _direction, EnemyLandType enemyType) {
+			base.ShowEnemy(_startPosition, _direction, enemyType);
+			if (enemyType != _enemyType) {
+				return;
+			}
+
+			Debug.Log($"Show Enemy Land {enemyType}\t\t start = {_startPosition}\t\t move {_direction}");
+		}
+
 		public override void LocalMotion() {
 			base.LocalMotion();
 		}

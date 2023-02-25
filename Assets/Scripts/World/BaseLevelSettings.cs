@@ -4,7 +4,6 @@ using Assets.Scripts.Common;
 using Assets.Scripts.World.Grid;
 using Assets.Scripts.World.Grid.AssetReference;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace Assets.Scripts.World {
 	[Serializable]

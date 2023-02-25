@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using Assets.Scripts.Common;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Assets.Scripts.World.Grid {
 	public class GridManager : MonoBehaviour {
 
 		[Header("Base")]
 		[SerializeField] private LevelStorage _levelStorage = default;
+		[SerializeField] private DependencyInjections _dependencyInjections = default;
 
 		[Header("Settings")]
 		[SerializeField] private int _width = 0;
@@ -43,6 +43,7 @@ namespace Assets.Scripts.World.Grid {
 		#endregion
 
 		private void Awake() {
+			_dependencyInjections.GridManager = this;
 			_spawnGridCorotine = StartCoroutine(PrepareUnits());
 		}
 
@@ -64,8 +65,8 @@ namespace Assets.Scripts.World.Grid {
 		#region Reaction
 		private void ReactionStartGame() {
 			ResetAllVariable();
+			HideAllunit();
 			GenerateGrid();
-
 		}
 
 		private void ReactionFinishgame(LevelResult levelResult) {
@@ -85,21 +86,20 @@ namespace Assets.Scripts.World.Grid {
 					_tempOffset = (x == _width - 1 || y == _height - 1) || (x == 0 || y == 0);
 
 					if (_tempOffset) {
-
-						_tempGridUnitLand = ShowLandUnit(_tempStartPosition, GridUnitLandType.Land_1, $"Land {x} {y}");
-						if (_tempGridUnitLand == null) {
-							throw new ArgumentNullException(nameof(_tempGridUnitLand));
-						}
-						_unitsLandDictionary[_tempStartPosition] = _tempGridUnitLand;
-					}
-
-					else {
 						_tempGridUnitSea = ShowSeaUnit(_tempStartPosition, GridUnitSeaType.Sea_1, $"Sea {x} {y}");
 						if (_tempGridUnitSea == null) {
 							throw new ArgumentNullException(nameof(_tempGridUnitSea));
 						}
 
 						_unitsSeaDictionary[_tempStartPosition] = _tempGridUnitSea;
+					}
+
+					else {
+						_tempGridUnitLand = ShowLandUnit(_tempStartPosition, GridUnitLandType.Land_1, $"Land {x} {y}");
+						if (_tempGridUnitLand == null) {
+							throw new ArgumentNullException(nameof(_tempGridUnitLand));
+						}
+						_unitsLandDictionary[_tempStartPosition] = _tempGridUnitLand;
 					}
 				}
 			}
@@ -119,6 +119,24 @@ namespace Assets.Scripts.World.Grid {
 			}
 
 			return null!;
+		}
+
+		public List<Vector3> GetListAllSeaPosition() {
+			List < Vector3 > tempList = new List<Vector3>();
+			foreach (var sea in _unitsSeaDictionary) {
+				tempList.Add(sea.Key);
+			}
+
+			return tempList;
+		}
+
+		public List<Vector3> GetListAllLandPosition() {
+			List<Vector3> tempList = new List<Vector3>();
+			foreach (var land in _unitsLandDictionary) {
+				tempList.Add(land.Key);
+			}
+
+			return tempList;
 		}
 
 		#region pool Controller
@@ -213,6 +231,11 @@ namespace Assets.Scripts.World.Grid {
 			return unit;
 		}
 
+		private void HideAllunit() {
+			_gridUnitSeaList.FindAll(unit => !unit.IsFree).ForEach(unit => unit.HideUnit());
+			_gridUnitLandList.FindAll(unit => !unit.IsFree).ForEach(unit => unit.HideUnit());
+		}
+
 		#endregion
 
 		private void ResetAllVariable() {
@@ -223,7 +246,7 @@ namespace Assets.Scripts.World.Grid {
 		}
 
 		private void ResetSpawnGridCorotine() {
-			if(_spawnGridCorotine != null) {
+			if (_spawnGridCorotine != null) {
 				StopCoroutine(_spawnGridCorotine);
 			}
 		}
