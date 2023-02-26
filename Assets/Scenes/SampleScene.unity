@@ -547,10 +547,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5514249946274009636, guid: 3f7c6723a755f43479b72ba3447faa25, type: 3}
-      propertyPath: _dependencyInjections
-      value: 
-      objectReference: {fileID: 11400000, guid: 988b77d34458286428988d1576184ae5, type: 2}
     - target: {fileID: 7707896250181566422, guid: 3f7c6723a755f43479b72ba3447faa25, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -672,10 +668,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 66023375958831309, guid: 0896c6f3aeaa11e44b7774922a3dc181, type: 3}
-      propertyPath: _durationSpawnEnemy
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 653488539527283514, guid: 0896c6f3aeaa11e44b7774922a3dc181, type: 3}
       propertyPath: m_Pivot.x
       value: 0

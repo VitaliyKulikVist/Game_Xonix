@@ -80,15 +80,15 @@ namespace Assets.Scripts.World.Grid {
 			gameObject.name = $"HIDDEN {_tempName}";
 		}
 		#region Trigger reaction
-		public void ReactionToHitSeaEnemy(Collider colliderHitObject) {
+		public void ReactionToHitSeaEnemy(Collider2D colliderHitObject) {
 			colliderHitObject.gameObject.GetComponent<EnemyTriger<EnemySeaType>>().Damage(colliderHitObject);
 		}
 
-		public void ReactionToHitLandEnemy(Collider colliderHitObject) {
+		public void ReactionToHitLandEnemy(Collider2D colliderHitObject) {
 			colliderHitObject.gameObject.GetComponent<EnemyTriger<EnemyLandType>>().Damage(colliderHitObject);
 		}
 
-		public virtual void ReactionToHitCharacter(Collider colliderHitObject, GridUnit<TEnum> gridUnit) {
+		public virtual void ReactionToHitCharacter(Collider2D colliderHitObject, GridUnit<TEnum> gridUnit) {
 			ChangeColor(true);
 		}
 		#endregion

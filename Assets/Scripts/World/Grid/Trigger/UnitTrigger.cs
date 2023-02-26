@@ -3,7 +3,11 @@ using UnityEngine;
 
 namespace Assets.Scripts.World.Grid.Trigger {
 	public abstract class UnitTrigger<TEnum> : MonoBehaviour
-		where TEnum: System.Enum{
+		where TEnum: Enum{
+
+		[Header("Debug")]
+		[SerializeField] protected bool _debug = false;
+
 		#region Variables
 		protected GridUnit<TEnum> _gridUnit = default;
 		#endregion
@@ -17,15 +21,24 @@ namespace Assets.Scripts.World.Grid.Trigger {
 		}
 
 		protected virtual void SwitchTag() {
-
+			if (_debug) {
+				Debug.Log($"<color=red>Switch unit Tag</color> {_gridUnit.GetGridUnitType}");
+			}
 		}
 
 		public virtual void ResetTagToDefault() {
-
+			if (_debug) {
+				Debug.Log($"<color=red>Reset Tag To Default</color> {_gridUnit.GetGridUnitType}");
+			}
 		}
 
-		protected virtual void OnTriggerEnter(Collider other) {
-
+		protected virtual void OnTriggerEnter2D(Collider2D other) {
+			if (_debug) {
+				Debug.Log($"<color=red>On Trigger Enter</color> {_gridUnit.GetGridUnitType}\t\t {other.gameObject.name}");
+			}
+		}
+		public void OnCollisionEnter2D(Collision2D collision) {
+			Debug.Log($"<color=red>On Trigger Enter</color> {_gridUnit.GetGridUnitType}\t\t {collision.gameObject.name}");
 		}
 	}
 }

@@ -37,7 +37,6 @@ namespace Assets.Scripts.Enemies.Storage {
 			return _enemyLandUnits.Find(someUnit => Equals(someUnit.GetEnemyType, enemyLandType)).AssetReferencec;
 		}
 
-
 #if UNITY_EDITOR
 		private void OnValidate() {
 			if (_SetEnemyControllerType) {

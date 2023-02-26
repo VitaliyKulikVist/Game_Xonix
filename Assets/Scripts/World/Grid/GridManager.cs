@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Common;
+using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Player;
 using UnityEditor;
 using UnityEngine;
@@ -52,11 +53,13 @@ namespace Assets.Scripts.World.Grid {
 		private int _tempRecurcyCalculationSea = 500;
 
 		private bool _onDestroyed = false;
+
+		
 		#endregion
 
 		private void Awake() {
 			_dependencyInjectionsSO.GridManager = this;
-			_spawnGridCorotine = StartCoroutine(PrepareUnits());
+			//_spawnGridCorotine = StartCoroutine(PrepareUnits());
 		}
 
 		private void OnEnable() {
@@ -70,11 +73,15 @@ namespace Assets.Scripts.World.Grid {
 			GameManager.LevelFinishAction -= ReactionFinishgame;
 
 			ResetSpawnGridCorotine();
+			ResetAllVariable();
 		}
 
 		private void OnDestroy() {
-			ResetSpawnGridCorotine();
-			_onDestroyed = true;
+			ResetAllVariable(() => 
+			{
+				ResetSpawnGridCorotine();
+				_onDestroyed = true;
+			});
 		}
 
 		#region Reaction
@@ -249,56 +256,57 @@ namespace Assets.Scripts.World.Grid {
 		}
 
 		private GridUnitLand ShowLandUnit(Vector3 _startPosition, GridUnitLandType gridUnitLandType, string name) {
-			_tempRecurcyCalculationLand--;
 			var tempLand = _gridUnitLandList.Find(unit => unit.IsFree && unit.GetGridUnitType == gridUnitLandType);
 
 			if (tempLand == null) {
+				_tempRecurcyCalculationLand--;
 				return AddGridLandByType(gridUnitLandType, () => {
 					if (_tempRecurcyCalculationLand > 0) {
 						return ShowLandUnit(_startPosition, gridUnitLandType, name);
 					}
 
-					else if (_tempRecurcyCalculationLand <= 0) {
+					else {
 						Debug.LogError($"Can`t Spasn Land Unit\t {gridUnitLandType}");
 
 						return null;
 					}
-
-					return null;
 				});
 			}
 
 			else if (tempLand != null) {
 				tempLand.SetName(name);
 				tempLand.ShowUnit(_startPosition, gridUnitLandType);
+				ResetRecurcy();
+
+				return tempLand;
 			}
 
-			return tempLand;
+			return null;
 		}
 
 		private GridUnitSea ShowSeaUnit(Vector3 _startPosition, GridUnitSeaType gridUnitSeaType, string name) {
-			_tempRecurcyCalculationSea--;
+
 			var tempSea = _gridUnitSeaList.FirstOrDefault(unit => unit.IsFree && unit.GetGridUnitType == gridUnitSeaType);
 
 			if (tempSea == null) {
+				_tempRecurcyCalculationSea--;
 				return AddGridSeaByType(gridUnitSeaType, () => {
 					if (_tempRecurcyCalculationSea > 0) {
 						return ShowSeaUnit(_startPosition, gridUnitSeaType, name);
 					}
 
-					else if (_tempRecurcyCalculationSea <= 0) {
+					else {
 						Debug.LogError($"Can`t Spasn Sea Unit\t {gridUnitSeaType}");
 
 						return null;
 					}
-
-					return null;
 				});
 			}
 
 			else if (tempSea != null) {
 				tempSea.SetName(name);
 				tempSea.ShowUnit(_startPosition, gridUnitSeaType);
+				ResetRecurcy();
 
 				return tempSea;
 			}

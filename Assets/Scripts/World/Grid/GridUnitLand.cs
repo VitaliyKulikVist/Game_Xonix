@@ -19,7 +19,7 @@ namespace Assets.Scripts.World.Grid {
 			}
 		}
 
-		public override void ReactionToHitCharacter(Collider colliderHitObject, GridUnit<GridUnitLandType> gridUnit) {
+		public override void ReactionToHitCharacter(Collider2D colliderHitObject, GridUnit<GridUnitLandType> gridUnit) {
 			base.ReactionToHitCharacter(colliderHitObject, gridUnit);
 
 			colliderHitObject.gameObject.GetComponent<CharacterTrigger>().HitLandUnit(gridUnit);

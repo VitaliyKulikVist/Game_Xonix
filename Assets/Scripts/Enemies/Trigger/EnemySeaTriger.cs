@@ -9,14 +9,18 @@ namespace Assets.Scripts.Enemies.Trigger {
 
 		}
 
-		protected override void OnTriggerEnter(Collider other) {
-			base.OnTriggerEnter(other);
+		protected override void OnTriggerEnter2D(Collider2D other) {
+			base.OnTriggerEnter2D(other);
 			if(isActiveAndEnabled && other.gameObject.tag.Equals(Tags.Land)) {
 				_enemyController.ReactionOnLand(other);
+
+				if (_debug) {
+					Debug.Log($"<color=yellow>Enemy trigger Land</color> {_enemyController.EnemyType} Hit {other.gameObject.name}");
+				}
 			}
 		}
 
-		public override void Damage(Collider collider) {
+		public override void Damage(Collider2D collider) {
 			base.Damage(collider);
 
 		}

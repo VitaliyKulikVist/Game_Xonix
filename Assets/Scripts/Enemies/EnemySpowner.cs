@@ -21,7 +21,7 @@ namespace Assets.Scripts.Enemies {
 		[SerializeField] private PlayerStorage _playerStorageSO = default;
 
 		[Header("Settings")]
-		[SerializeField] private float _durationSpawnEnemy = 0.5f;
+		[SerializeField] private Vector2 _durationRandomSpawnEnemy = new Vector2(0f, 0.5f);
 
 		[Header("Enemy")]
 		[SerializeField] private Transform _enemiesContainer = default;
@@ -153,14 +153,16 @@ namespace Assets.Scripts.Enemies {
 			if (_tempListSeatype.Count > 0) {
 				foreach (var sea in _tempListSeatype) {
 					SpawnSeaEnemy(GetRandomSeaPoints(), _tempPlayerPosition, sea);
-					yield return new WaitForSeconds(_durationSpawnEnemy);
+					yield return new WaitForSeconds(Random.Range(_durationRandomSpawnEnemy.x, _durationRandomSpawnEnemy.y));
+					ResetVariables();
 				}
 			}
 
 			if (_tempListLandtype.Count > 0) {
 				foreach (var land in _tempListLandtype) {
 					SpawnLandEnemy(GetRandomLandPoints(), _tempPlayerPosition, land);
-					yield return new WaitForSeconds(_durationSpawnEnemy);
+					yield return new WaitForSeconds(Random.Range(_durationRandomSpawnEnemy.x, _durationRandomSpawnEnemy.y));
+					ResetVariables();
 				}
 			}
 
@@ -298,10 +300,10 @@ namespace Assets.Scripts.Enemies {
 
 
 		private void SpawnSeaEnemy(Vector3 _startPosition, Vector3 _direction, EnemySeaType enemyType) {
-			_tempRecurcyCalculationEnemySea--;
 			var tempSea = _enemysSea.Find(enem => enem.IsFree && enem.EnemyType == enemyType);
 
 			if (tempSea == null) {
+				_tempRecurcyCalculationEnemySea--;
 				AddSeaEnemy(enemyType, () => {
 					if (_tempRecurcyCalculationEnemySea > 0) {
 						SpawnSeaEnemy(_startPosition, _direction, enemyType);
@@ -320,10 +322,10 @@ namespace Assets.Scripts.Enemies {
 		}
 
 		private void SpawnLandEnemy(Vector3 _startPosition, Vector3 _direction, EnemyLandType enemyType) {
-			_tempRecurcyCalculationEnemyLand--;
 			var tempLand = _enemysLand.Find(enem => enem.IsFree && enem.EnemyType == enemyType);
 
 			if (tempLand == null) {
+				_tempRecurcyCalculationEnemyLand--;
 				AddLandEnemy(enemyType, () => {
 					if (_tempRecurcyCalculationEnemyLand > 0) {
 						SpawnLandEnemy(_startPosition, _direction, enemyType);

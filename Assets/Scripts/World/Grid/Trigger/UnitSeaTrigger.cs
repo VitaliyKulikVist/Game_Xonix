@@ -11,9 +11,9 @@ namespace Assets.Scripts.World.Grid.Trigger {
 		protected override void SwitchTag() {
 			base.SwitchTag();
 
-			//if (gameObject.tag.Equals(Tags.Sea)) {
-			//	gameObject.tag = Tags.Land;
-			//}
+			if (gameObject.tag.Equals(Tags.Sea)) {
+				gameObject.tag = Tags.Land;
+			}
 		}
 
 		public override void ResetTagToDefault() {
@@ -23,8 +23,8 @@ namespace Assets.Scripts.World.Grid.Trigger {
 
 		#endregion
 
-		protected override void OnTriggerEnter(Collider other) {
-			base.OnTriggerEnter(other);
+		protected override void OnTriggerEnter2D(Collider2D other) {
+			base.OnTriggerEnter2D(other);
 			if (isActiveAndEnabled && other.gameObject.tag.Equals(Tags.EnemyLand)) {
 				_gridUnit.ReactionToHitLandEnemy(other);
 			}

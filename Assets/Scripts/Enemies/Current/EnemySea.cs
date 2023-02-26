@@ -53,14 +53,14 @@ namespace Assets.Scripts.Enemies.Current {
 		}
 
 		#region Trigger reaction
-		public override void ReactionOnCharacter(Collider collider) {
+		public override void ReactionOnCharacter(Collider2D collider) {
 			base.ReactionOnCharacter(collider);
 		}
-		public override void ReactionOnLand(Collider collider) {
+		public override void ReactionOnLand(Collider2D collider) {
 			base.ReactionOnLand(collider);
 
 		}
-		public override void ReactionOnSea(Collider collider) {
+		public override void ReactionOnSea(Collider2D collider) {
 			base.ReactionOnSea(collider);
 
 		}

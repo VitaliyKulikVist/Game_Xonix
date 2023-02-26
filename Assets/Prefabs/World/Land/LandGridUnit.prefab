@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7097368317111333166}
   m_Layer: 7
   m_Name: Container
-  m_TagString: Untagged
+  m_TagString: Land
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,9 +49,10 @@ GameObject:
   - component: {fileID: 7097368317258639407}
   - component: {fileID: 2400889913526386696}
   - component: {fileID: 8646823362148484020}
+  - component: {fileID: 6432381198541813709}
   m_Layer: 7
   m_Name: SquareLand
-  m_TagString: Untagged
+  m_TagString: Land
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -166,6 +167,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37096df14b0018e4c93f51cbbe0927fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _debug: 1
+--- !u!50 &6432381198541813709
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7097368317258639405}
+  m_BodyType: 2
+  m_Simulated: 0
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &7097368318065740799
 GameObject:
   m_ObjectHideFlags: 0

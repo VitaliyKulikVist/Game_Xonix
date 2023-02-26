@@ -22,15 +22,30 @@ namespace Assets.Scripts.Enemies.Storage {
 
 		public virtual void SetEnemyControllerType() {
 			EnemyController.SetEnemyType(_enemyType);
+
+			var convertToType = AssetReferencec as EnemyControllerAbstract<TEnums>;
+			if(convertToType!=null) {
+				convertToType.SetEnemyType(_enemyType);
+			}
 			//PrefabUtility.SavePrefabAsset(EnemyController.gameObject);
 		}
 
 		public virtual void SetEnemyMoveSpeed() {
 			EnemyController.SetEnemySpeed(_enemySpeed);
+
+			var convertToType = AssetReferencec as EnemyControllerAbstract<TEnums>;
+			if (convertToType != null) {
+				convertToType.SetEnemySpeed(_enemySpeed);
+			}
 		}
 
 		public virtual void SetEnemyAttackDistance() {
 			EnemyController.SetEnemyAttackDistance(_attackDistance);
+
+			var convertToType = AssetReferencec as EnemyControllerAbstract<TEnums>;
+			if (convertToType != null) {
+				convertToType.SetEnemyAttackDistance(_attackDistance);
+			}
 		}
 	}
 }

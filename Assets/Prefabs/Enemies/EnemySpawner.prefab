@@ -55,19 +55,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dependencyInjections: {fileID: 11400000, guid: 988b77d34458286428988d1576184ae5, type: 2}
   _enemyStorageSO: {fileID: 11400000, guid: 06538aed6c921f94ca0345113b5d5651, type: 2}
-  _gameStorageSettingsSO: {fileID: 11400000, guid: f8e323b4b754a3c4fbaaa1e425e0dfef, type: 2}
   _levelStorageSO: {fileID: 11400000, guid: b11cf0d0b3a5cc648a271742e49aff70, type: 2}
   _playerStorageSO: {fileID: 11400000, guid: b46a9289093da36409fc17564155d74a, type: 2}
+  _durationRandomSpawnEnemy: {x: 0, y: 0.5}
   _enemiesContainer: {fileID: 297112164325031506}
   _containerSea: {fileID: 5405994963597786048}
   _containerLand: {fileID: 6616960608518568863}
   _startingEnemiesCountPool: 30
   <IsValidate>k__BackingField: 0
-  _enemies: []
-  _currentLevel:
-    _enemies: 
-    _maxEnemies: 5
-    _timeSpawnEnemies: 0.5
+  _refreshStorageData: 0
 --- !u!223 &4237589324594902125
 Canvas:
   m_ObjectHideFlags: 0

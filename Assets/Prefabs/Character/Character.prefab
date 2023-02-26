@@ -278,6 +278,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 169076, guid: d096b2e176fd8744bb6feb2dd2b160bf, type: 3}
   m_PrefabInstance: {fileID: 5987919320502096856}
   m_PrefabAsset: {fileID: 0}
+--- !u!50 &620906033207583421
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5987919320502192044}
+  m_BodyType: 2
+  m_Simulated: 0
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &914055079415841098
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -316,6 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9da2f43b7cc5814da74dc7b4a4eedf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _debug: 1
 --- !u!4 &5987919320502488494 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 401014, guid: d096b2e176fd8744bb6feb2dd2b160bf, type: 3}

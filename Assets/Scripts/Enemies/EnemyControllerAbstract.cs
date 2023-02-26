@@ -74,13 +74,13 @@ namespace Assets.Scripts.Enemies {
 		}
 
 		#region Trigger reaction
-		public virtual void ReactionOnCharacter(Collider collider) {
+		public virtual void ReactionOnCharacter(Collider2D collider) {
 			collider.gameObject.GetComponent<CharacterTrigger>().HitEnemy(this);
 		}
-		public virtual void ReactionOnLand(Collider collider) {
+		public virtual void ReactionOnLand(Collider2D collider) {
 
 		}
-		public virtual void ReactionOnSea(Collider collider) {
+		public virtual void ReactionOnSea(Collider2D collider) {
 
 		}
 		#endregion

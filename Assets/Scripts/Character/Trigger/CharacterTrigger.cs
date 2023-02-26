@@ -7,6 +7,9 @@ using UnityEngine;
 namespace Assets.Scripts.Character.Trigger {
 	public class CharacterTrigger : MonoBehaviour {
 
+		[Header("Debug")]
+		[SerializeField] private bool _debug = false;
+
 		#region Variables
 		private CharacterController _characterController = default;
 		#endregion
@@ -20,15 +23,27 @@ namespace Assets.Scripts.Character.Trigger {
 
 		public void HitLandUnit(GridUnit<GridUnitLandType> gridUnit) {
 			_characterController.HitLandUnit(gridUnit);
+
+			if (_debug) {
+				Debug.Log($"<color=green>Hit Land Unit</color> {gridUnit.GetGridUnitType}");
+			}
 		}
 
 		public void HitSeaUnit(GridUnit<GridUnitSeaType> gridUnit) {
 			_characterController.HitSeaUnit(gridUnit);
+
+			if (_debug) {
+				Debug.Log($"<color=green>Hit Sea Unit</color> {gridUnit.GetGridUnitType}");
+			}
 		}
 
 		public void HitEnemy<TEnum>(EnemyControllerAbstract<TEnum> enemy)
-			where TEnum: System.Enum {
+			where TEnum : Enum {
 			_characterController.HitEnemt(enemy);
+
+			if (_debug) {
+				Debug.Log($"<color=green>Hit Enemy</color> {enemy.EnemyType}");
+			}
 		}
 	}
 }

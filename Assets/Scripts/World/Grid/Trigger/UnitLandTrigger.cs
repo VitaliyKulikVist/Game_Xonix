@@ -22,8 +22,8 @@ namespace Assets.Scripts.World.Grid.Trigger {
 		}
 		#endregion
 
-		protected override void OnTriggerEnter(Collider other) {
-			base.OnTriggerEnter(other);
+		protected override void OnTriggerEnter2D(Collider2D other) {
+			base.OnTriggerEnter2D(other);
 			if(isActiveAndEnabled) {
 				if (other.gameObject.tag.Equals(Tags.Character)) {
 					_gridUnit.ReactionToHitCharacter(other, _gridUnit);

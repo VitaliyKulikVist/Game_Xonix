@@ -184,10 +184,10 @@ MonoBehaviour:
   _width: 17
   _height: 27
   _offsetFirstUnit: {x: 30, y: 20}
-  _offsetByWidthAndHeigth: 63
+  _offsetByWidthAndHeigth: 64
   _poolSeaContainer: {fileID: 4882192210460348409}
   _poolLandContainer: {fileID: 1900490363359917471}
-  _onHandles: 1
+  _onHandles: 0
 --- !u!223 &3331191526793046369
 Canvas:
   m_ObjectHideFlags: 0
