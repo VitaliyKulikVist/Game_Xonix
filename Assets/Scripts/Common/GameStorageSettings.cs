@@ -6,6 +6,6 @@ namespace Assets.Scripts.Common {
     public class GameStorageSettings : ScriptableObject
     {
 		[field: Header("UI Block")]
-        [field: SerializeField, Range(0f, 2f)] public float UiDuration { get; } = 0.3f;
+        [field: SerializeField, Range(0f, 2f)] public float UiDuration { get; set; } = 0.3f;
 	}
 }

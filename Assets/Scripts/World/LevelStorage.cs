@@ -6,6 +6,7 @@ namespace Assets.Scripts.World {
 	[CreateAssetMenu(menuName = "ScriptableObjects/LevelStorage", fileName = "LevelStorage")]
 	public class LevelStorage : ScriptableObject, IValidateHalper {
 		[Header("Level Settings")]
+		[SerializeField, Range(1, 86399)] private int _levelDurationAtSecond = 60;
 		[SerializeField] private BaseLevelSettings _baseLevelSettings = default;
 
 		[Header("Levels Storage")]
@@ -16,6 +17,7 @@ namespace Assets.Scripts.World {
 
 		#region Get/Set
 		public BaseLevelSettings BaseLevelSettings { get => _baseLevelSettings; }
+		public int LevelDuration { get => _levelDurationAtSecond; }
 		#endregion
 
 		public Level GetNextLevel(int _currentLVL) {

@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 249317175501311644, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}
+      propertyPath: _enemyType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3534822097997080624, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}
       propertyPath: m_Name
       value: EnemyLand_3 Variant

@@ -1,7 +1,6 @@
 ﻿using System;
 using Assets.Scripts.Common;
 using Assets.Scripts.Common.Helpers;
-using Assets.Scripts.Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +9,6 @@ namespace Assets.Scripts.Ui {
 	public class GameWindow : MonoBehaviour {
 		[Header("Base")]
 		[SerializeField] private DependencyInjections _dependencyInjections = default;
-		[SerializeField] private PlayerStorage _playerStorage = default;
 
 		[Header("Components")]
 		[SerializeField] private RectTransform _panelContainer = default;
@@ -66,15 +64,8 @@ namespace Assets.Scripts.Ui {
 		}
 
 		private void ReactionFinishGame(LevelResult levelResult) {
-			if (levelResult == LevelResult.Win) {
-				ControllReactionContainer(true);
-				PrepareReaction(LevelResult.Win);
-			}
-
-			if (_playerStorage.ConcretePlayer.PlayerLive <= 0) {
-				ControllReactionContainer(true);
-				PrepareReaction(LevelResult.Lose);
-			}
+			ControllReactionContainer(true);
+			PrepareReaction(levelResult);
 		}
 
 		#endregion

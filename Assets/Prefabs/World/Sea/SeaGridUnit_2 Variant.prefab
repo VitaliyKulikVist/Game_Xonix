@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: dabdc4ec295b4bd4a941c915fc853a84, type: 3}
+    - target: {fileID: 542222282696347049, guid: 95d6ee82697294e4ebd112e1a6962aa2, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 542222283636519594, guid: 95d6ee82697294e4ebd112e1a6962aa2, type: 3}
       propertyPath: m_Name
       value: SeaGridUnit_2 Variant
@@ -106,6 +110,10 @@ PrefabInstance:
     - target: {fileID: 3202323808111628191, guid: 95d6ee82697294e4ebd112e1a6962aa2, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012679103824318390, guid: 95d6ee82697294e4ebd112e1a6962aa2, type: 3}
+      propertyPath: _gridUnitType
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2288699442377314811, guid: 95d6ee82697294e4ebd112e1a6962aa2, type: 3}

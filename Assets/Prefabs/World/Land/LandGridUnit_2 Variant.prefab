@@ -15,10 +15,18 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6460900192807886296, guid: cc3673e0617653c45a7bce8ac64e121f, type: 3}
+      propertyPath: _gridUnitType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7097368317258639407, guid: cc3673e0617653c45a7bce8ac64e121f, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: d985e991d3466d74ca3fe724819581f6, type: 3}
+    - target: {fileID: 7097368317258639407, guid: cc3673e0617653c45a7bce8ac64e121f, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7097368318065740798, guid: cc3673e0617653c45a7bce8ac64e121f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

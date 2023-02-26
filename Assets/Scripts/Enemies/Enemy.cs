@@ -37,13 +37,24 @@ namespace Assets.Scripts.Enemies {
 		#region Action
 		public static Action KillEnemies = default;
 		#endregion
+
+		#region Variables
+		protected bool _onDestroyed = false;
+		#endregion
+
 		protected virtual void Awake() {
 			_tempName = gameObject.name;
 		}
 
+		protected virtual void OnDestroy() {
+			_onDestroyed = true;
+			transform?.DOKill();
+			enemyContainer?.DOKill();
+		}
+
 		public void ResetEnemy() {
-			transform.DOKill();
-			enemyContainer.DOKill();
+			transform?.DOKill();
+			enemyContainer?.DOKill();
 
 			transform.position = Vector3.zero;
 			transform.rotation = Quaternion.identity;

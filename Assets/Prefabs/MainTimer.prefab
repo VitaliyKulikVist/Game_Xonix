@@ -27,7 +27,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -44,9 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d09243bb0877c647823bc44caf575f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dependencyInjectionSO: {fileID: 11400000, guid: e9eba5673a1a8e74e958509bc09fe429, type: 2}
   _playerStorageSO: {fileID: 11400000, guid: b46a9289093da36409fc17564155d74a, type: 2}
-  _gameStorageSettingsSO: {fileID: 11400000, guid: f8e323b4b754a3c4fbaaa1e425e0dfef, type: 2}
+  _levelStorageSO: {fileID: 11400000, guid: b11cf0d0b3a5cc648a271742e49aff70, type: 2}
   _formatTime: '{0}:{1}'
+  _formatTimeAfterHours: '{0}:{1}:{2}'
   _sec: 0
   _min: 0
+  _hor: 0

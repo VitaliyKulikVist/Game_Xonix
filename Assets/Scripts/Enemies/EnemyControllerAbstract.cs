@@ -23,15 +23,18 @@ namespace Assets.Scripts.Enemies {
 			KillEnemies -= DestroyEnemy;
 		}
 
-		public virtual void OnDestroy() {
-			transform.DOKill();
+		protected override void OnDestroy() {
+			base.OnDestroy();
+
 		}
 
 		public void HideEnemy() {
-			IsFree = true;
-			enemyContainer.gameObject.SetActive(false);
-			gameObject.name = $"HIDDEN {_tempName}";
-			ResetEnemy();
+			if(!_onDestroyed) {
+				IsFree = true;
+				enemyContainer?.gameObject.SetActive(false);
+				gameObject.name = $"HIDDEN {_tempName}";
+				ResetEnemy();
+			}
 		}
 
 		public virtual void ShowEnemy(Vector3 _startPosition, Vector3 _direction, TEnum enemyType) {

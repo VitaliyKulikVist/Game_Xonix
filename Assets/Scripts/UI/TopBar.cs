@@ -50,7 +50,7 @@ namespace Assets.Scripts.Ui {
 			GameManager.PausedLevelAction += PausedGame;
 			GameManager.LevelStartAction += StartGameReaction;
 
-			MainTimer.ReturnMinSecString += PrepareTextTimer;
+			MainTimer.ReturnHorMinSecString += PrepareTextTimer;
 		}
 
 		private void OnDisable() {
@@ -62,7 +62,7 @@ namespace Assets.Scripts.Ui {
 			GameManager.PausedLevelAction -= PausedGame;
 			GameManager.LevelStartAction -= StartGameReaction;
 
-			MainTimer.ReturnMinSecString -= PrepareTextTimer;
+			MainTimer.ReturnHorMinSecString -= PrepareTextTimer;
 		}
 
 		private void Show() {

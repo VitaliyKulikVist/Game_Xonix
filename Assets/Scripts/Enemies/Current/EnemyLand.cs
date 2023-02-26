@@ -20,6 +20,11 @@ namespace Assets.Scripts.Enemies.Current {
 
 		}
 
+		protected override void OnDestroy() {
+			base.OnDestroy();
+
+		}
+
 		public override void ShowEnemy(Vector3 _startPosition, Vector3 _direction, EnemyLandType enemyType) {
 			base.ShowEnemy(_startPosition, _direction, enemyType);
 			if (enemyType == _enemyType) {

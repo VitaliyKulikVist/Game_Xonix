@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 075c5114e939bc44aafadad2af6ab772, type: 3}
   m_Name: LevelStorage
   m_EditorClassIdentifier: 
+  _levelDurationAtSecond: 60
   _baseLevelSettings:
     _seaGridUnits:
     - <GridUnitSeaType>k__BackingField: 0
