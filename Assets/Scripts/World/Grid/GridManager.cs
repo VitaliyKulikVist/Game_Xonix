@@ -50,11 +50,7 @@ namespace Assets.Scripts.World.Grid {
 		private GridUnitLandType _tempGridUnitLandType = default;
 
 		private int _tempRecurcyCalculationLand = 500;
-		private int _tempRecurcyCalculationSea = 500;
-
-		private bool _onDestroyed = false;
-
-		
+		private int _tempRecurcyCalculationSea = 500;		
 		#endregion
 
 		private void Awake() {
@@ -65,8 +61,6 @@ namespace Assets.Scripts.World.Grid {
 		private void OnEnable() {
 			GameManager.LevelStartAction += ReactionStartGame;
 			GameManager.LevelFinishAction += ReactionFinishgame;
-
-			_onDestroyed = false;
 		}
 		private void OnDisable() {
 			GameManager.LevelStartAction -= ReactionStartGame;
@@ -80,7 +74,6 @@ namespace Assets.Scripts.World.Grid {
 			ResetAllVariable(() => 
 			{
 				ResetSpawnGridCorotine();
-				_onDestroyed = true;
 			});
 		}
 
@@ -348,7 +341,7 @@ namespace Assets.Scripts.World.Grid {
 
 #if UNITY_EDITOR
 		private void OnDrawGizmos() {
-			if (_onHandles && !_onDestroyed) {
+			if (_onHandles) {
 				if (_unitsLandDictionary != null && _unitsLandDictionary.Count > 0) {
 					foreach (var land in _unitsLandDictionary) {
 						Handles.color = Color.blue;
