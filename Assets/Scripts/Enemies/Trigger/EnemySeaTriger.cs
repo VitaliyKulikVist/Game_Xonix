@@ -15,7 +15,7 @@ namespace Assets.Scripts.Enemies.Trigger {
 				_enemyController.ReactionOnLand(other);
 
 				if (_debug) {
-					Debug.Log($"<color=yellow>Enemy trigger Land</color> {_enemyController.EnemyType} Hit {other.gameObject.name}");
+					Debug.Log($"<color=green>Enemy trigger Sea</color> {_enemyController.EnemyType} Hit {other.gameObject.name}");
 				}
 			}
 		}

@@ -18,9 +18,6 @@ namespace Assets.Scripts.Enemies.Trigger {
 		}
 
 		protected virtual void OnTriggerEnter2D(Collider2D other) {
-
-			Debug.Log($"<color=yellow>Enemy trigger</color> {_enemyController.EnemyType} Hit {other.gameObject.name}");
-
 			if (isActiveAndEnabled && other.gameObject.tag.Equals(Tags.Character)) {
 				_enemyController.ReactionOnCharacter(other);
 

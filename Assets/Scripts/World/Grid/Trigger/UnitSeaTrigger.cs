@@ -27,6 +27,10 @@ namespace Assets.Scripts.World.Grid.Trigger {
 			base.OnTriggerEnter2D(other);
 			if (isActiveAndEnabled && other.gameObject.tag.Equals(Tags.EnemyLand)) {
 				_gridUnit.ReactionToHitLandEnemy(other);
+
+				if (_debug) {
+					Debug.Log($"<color=green>On Trigger Enter Enemy Land</color> {_gridUnit.GetGridUnitType}\t\t {other.gameObject.name}");
+				}
 			}
 		}
 	}

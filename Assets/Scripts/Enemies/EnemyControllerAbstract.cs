@@ -10,7 +10,7 @@ namespace Assets.Scripts.Enemies {
 
 			HideEnemy();
 
-			LocalMotion();
+			//LocalMotion();
 			KillEnemies += DestroyEnemy;
 		}
 

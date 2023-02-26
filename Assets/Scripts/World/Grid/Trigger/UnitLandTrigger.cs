@@ -27,10 +27,17 @@ namespace Assets.Scripts.World.Grid.Trigger {
 			if(isActiveAndEnabled) {
 				if (other.gameObject.tag.Equals(Tags.Character)) {
 					_gridUnit.ReactionToHitCharacter(other, _gridUnit);
+
+					if (_debug) {
+						Debug.Log($"<color=green>On Trigger Enter Player Land</color> {_gridUnit.GetGridUnitType}\t\t {other.gameObject.name}");
+					}
 				}
 
 				else if (other.gameObject.tag.Equals(Tags.EnemySea)) {
 					_gridUnit.ReactionToHitSeaEnemy(other);
+					if (_debug) {
+						Debug.Log($"<color=green>On Trigger Enter Enemy Sea</color> {_gridUnit.GetGridUnitType}\t\t {other.gameObject.name}");
+					}
 				}
 			}
 		}

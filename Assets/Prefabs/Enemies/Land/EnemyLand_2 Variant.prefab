@@ -7,14 +7,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 249317175501311644, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}
-      propertyPath: _enemySpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 249317175501311644, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}
-      propertyPath: _attackDistance
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 3534822097997080624, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}
       propertyPath: m_Name
       value: EnemyLand_2 Variant
@@ -204,8 +196,8 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4781169943711624989}
-  m_BodyType: 2
-  m_Simulated: 0
+  m_BodyType: 1
+  m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
