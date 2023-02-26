@@ -35,7 +35,9 @@ namespace Assets.Scripts.Enemies {
 		}
 
 		public virtual void ShowEnemy(Vector3 _startPosition, Vector3 _direction, TEnum enemyType) {
-			Debug.Log($"<Color=red>Show Enemy</color> {enemyType}");
+			if(_debug) {
+				Debug.Log($"<Color=red>Show Enemy</color> {enemyType}");
+			}
 		}
 
 		public void HitPlayer() {
@@ -58,7 +60,6 @@ namespace Assets.Scripts.Enemies {
 		}
 
 		public virtual void MoveAfterAttack(float _yTarget) {
-			//EnemyRichPlayerAction?.Invoke(this);
 			Vector3 target = transform.TransformPoint(Vector3.forward * 40f);
 			target.y = _yTarget;
 			transform.DORotateQuaternion(Quaternion.LookRotation(target - transform.position), 1f);
@@ -68,7 +69,6 @@ namespace Assets.Scripts.Enemies {
 		}
 
 		public virtual void DestroyEnemy() {
-			//EnemyKilledAction?.Invoke(this);
 				enemyContainer.gameObject.SetActive(false);
 				Destroy(gameObject);
 		}

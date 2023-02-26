@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Common;
 using Assets.Scripts.Common.Helpers;
@@ -81,9 +82,9 @@ namespace Assets.Scripts.Enemies {
 		private void ReactionStartLevel() {
 			ControllVisabilityEnemy();
 
-			HideAllEnemy();
-
-			StartSpownEnemies();
+			HideAllEnemy(() => {
+				StartSpownEnemies();
+			});
 		}
 		private void ReactionFinishLevel(LevelResult levelResult) {
 			if (levelResult == LevelResult.Win) {
@@ -104,10 +105,9 @@ namespace Assets.Scripts.Enemies {
 		private void StartSpownEnemies() {
 			_currentLevel = _levelStorageSO.GetNextLevel(_playerStorageSO.ConcretePlayer.PlayerLevel);
 
-			if (_tempSpawnEnemyCoroutine != null) {
-				StopCoroutine(_tempSpawnEnemyCoroutine);
+			if (_tempSpawnEnemyCoroutine == null) {
+				_tempSpawnEnemyCoroutine = StartCoroutine(SpownEnemies());
 			}
-			_tempSpawnEnemyCoroutine = StartCoroutine(SpownEnemies());
 		}
 		private Vector3 GetRandomSeaPoints() {
 			List<Vector3> list = _tempGridManager.GetListAllSeaPosition();
@@ -158,6 +158,8 @@ namespace Assets.Scripts.Enemies {
 					yield return new WaitForSeconds(_durationSpawnEnemy);
 				}
 			}
+
+			_tempSpawnEnemyCoroutine = null!;
 		}
 		#endregion
 
@@ -189,13 +191,15 @@ namespace Assets.Scripts.Enemies {
 			}
 		}
 
-		private void AddSeaEnemy(EnemySeaType seaEnemyType) {
+		private void AddSeaEnemy(EnemySeaType seaEnemyType, Action callBack = null!) {
 			var enemyControllerAbstract = _enemyStorageSO.GetSeaEnemyByType(seaEnemyType).EnemyController;
 
 			var enemy = Instantiate(enemyControllerAbstract, _containerSea);
 			enemy.ResetEnemy();
 
 			_enemysSea.Add(enemy);
+
+			callBack?.Invoke();
 		}
 
 		private IEnumerator AddSeaEnemyAsync(EnemySeaType seaEnemyType) {
@@ -210,7 +214,7 @@ namespace Assets.Scripts.Enemies {
 					try {
 						gameObject = unitTask.Result;
 					}
-					catch (System.Exception ex) {
+					catch (Exception ex) {
 						Debug.LogError($"Sea enemy Game Object not Instantiate Error = {ex}");
 					}
 
@@ -218,7 +222,7 @@ namespace Assets.Scripts.Enemies {
 					try {
 						unit = gameObject.GetComponent<EnemySea>();
 					}
-					catch (System.Exception ex) {
+					catch (Exception ex) {
 						Debug.LogError($"Sea enemy can`t take component {nameof(EnemySea)} Error = {ex}");
 					}
 					finally {
@@ -243,13 +247,15 @@ namespace Assets.Scripts.Enemies {
 			}
 		}
 
-		private void AddLandEnemy(EnemyLandType enemyLandType) {
+		private void AddLandEnemy(EnemyLandType enemyLandType, Action callBack = null!) {
 			var enemyControllerAbstract = _enemyStorageSO.GetLandEnemyByType(enemyLandType).EnemyController;
 
 			var enemy = Instantiate(enemyControllerAbstract, _containerLand);
 			enemy.ResetEnemy();
 
 			_enemysLand.Add(enemy);
+
+			callBack?.Invoke();
 		}
 
 		private IEnumerator AddLandEnemyAsync(EnemyLandType enemyLandType) {
@@ -264,7 +270,7 @@ namespace Assets.Scripts.Enemies {
 					try {
 						gameObject = unitTask.Result;
 					}
-					catch (System.Exception ex) {
+					catch (Exception ex) {
 						Debug.LogError($"Land enemy Game Object not Instantiate Error = {ex}");
 					}
 
@@ -272,7 +278,7 @@ namespace Assets.Scripts.Enemies {
 					try {
 						unit = gameObject.GetComponent<EnemyLand>();
 					}
-					catch (System.Exception ex) {
+					catch (Exception ex) {
 						Debug.LogError($"Land enemy can`t take component {nameof(EnemyLand)} Error = {ex}");
 					}
 					finally {
@@ -298,24 +304,38 @@ namespace Assets.Scripts.Enemies {
 		}
 
 		private void SpawnSeaEnemy(Vector3 _startPosition, Vector3 _direction, EnemySeaType enemyType) {
-			if (_enemysSea.Find(enem => enem.IsFree && Equals(enem.EnemyType, enemyType)) == null) {
-				AddSeaEnemy(enemyType);
+			var tempSea = _enemysSea.Find(enem => enem.IsFree && enem.EnemyType == enemyType);
+
+			if (tempSea == null) {
+				AddSeaEnemy(enemyType, () => {
+					SpawnSeaEnemy(_startPosition, _direction, enemyType);
+				});
 			}
 
-			_enemysSea.Find(someEnemy => someEnemy.IsFree).ShowEnemy(_startPosition, _direction, enemyType);
+			else {
+				tempSea.ShowEnemy(_startPosition, _direction, enemyType);
+			}
 		}
 
 		private void SpawnLandEnemy(Vector3 _startPosition, Vector3 _direction, EnemyLandType enemyType) {
-			if (_enemysLand.Find(enem => enem.IsFree && Equals(enem.EnemyType, enemyType)) == null) {
-				AddLandEnemy(enemyType);
+			var tempLand = _enemysLand.Find(enem => enem.IsFree && enem.EnemyType == enemyType);
+
+			if (tempLand == null) {
+				AddLandEnemy(enemyType, () => {
+					SpawnLandEnemy(_startPosition, _direction, enemyType);
+				});
 			}
 
-			_enemysLand.Find(someEnemy => someEnemy.IsFree).ShowEnemy(_startPosition, _direction, enemyType);
+			else {
+				tempLand.ShowEnemy(_startPosition, _direction, enemyType);
+			}
 		}
 
-		private void HideAllEnemy() {
+		private void HideAllEnemy(Action callBack) {
 			_enemysSea.FindAll(enemy => !enemy.IsFree).ForEach(enemy => enemy.HideEnemy());
 			_enemysLand.FindAll(enemy => !enemy.IsFree).ForEach(enemy => enemy.HideEnemy());
+
+			callBack?.Invoke();
 		}
 
 		private void PrepareCamera() {

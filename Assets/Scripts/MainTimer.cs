@@ -11,12 +11,14 @@ namespace Assets.Scripts {
 
 		[Header("Format")]
 		[SerializeField] private string _formatTime = "{0}:{1}";
+		[SerializeField] private string _formatTimeAfterHours = "{0}:{1}:{2}";
 
 		[Header("Just Controll"), Tooltip("Вивів просто для візуального контролю роботоспособності")]
 		[SerializeField] private int _sec = 0;
 		[SerializeField] private int _min = 0;
+		[SerializeField] private int _hor = 0;
 
-		public static Action<int, int> ReturnMinSecInt = default;
+		public static Action<int, int, int> ReturnMinSecHorInt = default;
 		public static Action<string> ReturnMinSecString = default;
 
 		#region Validate
@@ -25,7 +27,7 @@ namespace Assets.Scripts {
 		#endregion
 
 		private void Update() {
-			if(Input.GetKeyDown(KeyCode.Tab)) {
+			if (Input.GetKeyDown(KeyCode.Tab)) {
 				GameManager.LevelFinishAction?.Invoke(LevelResult.Win);
 			}
 
@@ -51,20 +53,16 @@ namespace Assets.Scripts {
 		}
 
 		private void StartLevelReaction() {
-			if (_playerStorageSO.ConcretePlayer.PlayerLive > 0 &&
-				_playerStorageSO.ConcretePlayer.PlayerLive <= BasePlayerConstants.MaxPlayerLife) {
-				StartTimer();
-			}
-			else {
-				StopTimer();
-				ConvertIntTimeToString(0, 0);
-			}
+			ConvertIntTimeToString(0, 0, 0);
+			StartTimer();
 		}
 
 		private void StartTimer() {
-			if (tempCor == null) {
-				tempCor = StartCoroutine(Timer());
+			if (tempCor != null) {
+				StopCoroutine(tempCor);
 			}
+
+			tempCor = StartCoroutine(Timer());
 		}
 
 		private void StopTimer() {
@@ -73,35 +71,48 @@ namespace Assets.Scripts {
 			}
 			_sec = 0;
 			_min = 0;
+			_hor = 0;
 			tempCor = null;
 		}
 
 		private IEnumerator Timer() {
-			while (_playerStorageSO.ConcretePlayer.PlayerLive > 0 && !isPaused) 
-				{
+			while (_playerStorageSO.ConcretePlayer.PlayerLive > 0 && !isPaused) {
 				_sec += 1;
 
-				if (_sec == 60) 
-				{
+				if (_sec == 60) {
 					_min++;
 					_sec = 0;
 				}
 
-				ReturnMinSecInt?.Invoke(_min, _sec);
-				ConvertIntTimeToString(_min, _sec);
+				if (_min == 60) {
+					_hor++;
+					_min = 0;
+					_sec = 0;
+				}
+
+				ReturnMinSecHorInt?.Invoke(_min, _sec, _hor);
+				ConvertIntTimeToString(_min, _sec, _hor);
 				yield return new WaitForSecondsRealtime(1f);
 			}
 
 			tempCor = null;
 		}
-		private void ConvertIntTimeToString(int _min, int _sec) {
-			string tempString = String.Format(_formatTime, _min.ToString("D2"), _sec.ToString("D2"));
+		private void ConvertIntTimeToString(int _min, int _sec, int _hor) {
+			string tempString;
+			if (_hor <= 0) {
+					tempString = String.Format(_formatTime, _min.ToString("D2"), _sec.ToString("D2"));
+			}
+
+			else {
+				tempString = String.Format(_formatTimeAfterHours, _min.ToString("D2"), _sec.ToString("D2"), _hor.ToString("D2"));
+			}
+
 			ReturnMinSecString?.Invoke(tempString);
 		}
 		private void FinishLevelReaction(LevelResult _levelResult) {
 			if (_levelResult == LevelResult.Win) {
 				StopTimer();
-				ConvertIntTimeToString(0, 0);
+				ConvertIntTimeToString(0, 0, 0);
 			}
 		}
 

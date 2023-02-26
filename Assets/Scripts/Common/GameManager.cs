@@ -27,6 +27,7 @@ namespace Assets.Scripts.Common {
 		}
 
 		private void OnEnable() {
+			LevelStartAction += StartLevelReaction;
 			LevelFinishAction += FinishLevel;
 
 			DOTween.SetTweensCapacity(2500, 100);
@@ -35,6 +36,7 @@ namespace Assets.Scripts.Common {
 		}
 
 		private void OnDisable() {
+			LevelStartAction -= StartLevelReaction;
 			LevelFinishAction -= FinishLevel;
 
 			_playerStorageSO.SavePlayer();
@@ -67,6 +69,9 @@ namespace Assets.Scripts.Common {
 		}
 		#endregion
 
+		private void StartLevelReaction() {
+			_playerStorageSO.ConcretePlayer.ResetPlayerLive();
+		}
 		private void FinishLevel(LevelResult _levelResult) {
 			if (_levelResult == LevelResult.Win) {
 				_playerStorageSO.ConcretePlayer.AddPlayerLevel(1);

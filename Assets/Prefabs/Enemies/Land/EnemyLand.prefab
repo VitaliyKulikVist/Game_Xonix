@@ -92,3 +92,4 @@ MonoBehaviour:
   _enemySpeed: 0
   _attackDistance: 3
   enemyContainer: {fileID: 4544183104255318821}
+  _debug: 0

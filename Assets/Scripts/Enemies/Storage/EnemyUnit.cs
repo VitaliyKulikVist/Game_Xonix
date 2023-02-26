@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Assets.Scripts.Enemies.Storage {
 	[Serializable]
 	public abstract class EnemyUnit<TEnums>
-		where TEnums : System.Enum {
+		where TEnums : Enum {
 		[Header("Enemy parameters")]
 		[SerializeField] protected TEnums _enemyType = default;
 		[SerializeField] protected float _enemySpeed = 0f;

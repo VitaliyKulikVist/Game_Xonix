@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Enemies {
 	public class Enemy<TEnum> : MonoBehaviour
-		where TEnum : System.Enum {
+		where TEnum : Enum {
 
 		[Header("Base")]
 		[SerializeField] protected DependencyInjections _dependencyInjections = default;
@@ -19,6 +19,9 @@ namespace Assets.Scripts.Enemies {
 
 		[Header("Enemy Components")]
 		[SerializeField] protected RectTransform enemyContainer = default;
+
+		[Header("Debug")]
+		[SerializeField]protected bool _debug = false;
 
 		#region Variables
 		protected string _tempName = null!;

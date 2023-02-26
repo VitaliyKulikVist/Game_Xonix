@@ -27,7 +27,9 @@ namespace Assets.Scripts.Enemies.Current {
 
 				enemyContainer.gameObject.SetActive(true);
 
-				Debug.Log($"<Color=Green>Show Enemy Sea</color>  {enemyType}\t\t start = {_startPosition}\t\t move {_direction}");
+				if (_debug) {
+					Debug.Log($"<Color=Green>Show Enemy Sea</color>  {enemyType}\t\t start = {_startPosition}\t\t move {_direction}");
+				}
 			}
 		}
 
