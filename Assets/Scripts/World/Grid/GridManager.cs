@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Common;
+using Assets.Scripts.Player;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,8 +11,9 @@ namespace Assets.Scripts.World.Grid {
 	public class GridManager : MonoBehaviour {
 
 		[Header("Base")]
-		[SerializeField] private LevelStorage _levelStorage = default;
-		[SerializeField] private DependencyInjections _dependencyInjections = default;
+		[SerializeField] private LevelStorage _levelStorageSO = default;
+		[SerializeField] private PlayerStorage _playerStorageSO = default;
+		[SerializeField] private DependencyInjections _dependencyInjectionsSO = default;
 
 		[Header("Settings")]
 		[SerializeField] private int _width = 0;
@@ -40,10 +43,17 @@ namespace Assets.Scripts.World.Grid {
 		private GridUnitSea _tempGridUnitSea = null!;
 
 		private Coroutine _spawnGridCorotine = null!;
+
+		private Level _currentLevel = null!;
+		private GridUnitSeaType _tempGridUnitSeaType = default;
+		private GridUnitLandType _tempGridUnitLandType = default;
+
+		private int _tempRecurcyCalculationLand = 500;
+		private int _tempRecurcyCalculationSea = 500;
 		#endregion
 
 		private void Awake() {
-			_dependencyInjections.GridManager = this;
+			_dependencyInjectionsSO.GridManager = this;
 			_spawnGridCorotine = StartCoroutine(PrepareUnits());
 		}
 
@@ -64,15 +74,29 @@ namespace Assets.Scripts.World.Grid {
 
 		#region Reaction
 		private void ReactionStartGame() {
-			ResetAllVariable();
-			HideAllunit();
-			GenerateGrid();
+			ResetAllVariable(() => {
+				PrepareVariables();
+				HideAllunit();
+				GenerateGrid();
+			});
 		}
 
 		private void ReactionFinishgame(LevelResult levelResult) {
 			ResetAllVariable();
 		}
 		#endregion
+
+
+		private void PrepareVariables() {
+			_currentLevel = _levelStorageSO.GetNextLevel(_playerStorageSO.ConcretePlayer.PlayerLevel);
+
+			if (_currentLevel == null) {
+				throw new ArgumentNullException(nameof(_currentLevel));
+			}
+
+			_tempGridUnitSeaType = _currentLevel.SeaType;
+			_tempGridUnitLandType = _currentLevel.LandType;
+		}
 
 		private void GenerateGrid() {
 			_unitsSeaDictionary = new Dictionary<Vector3, GridUnitSea>();
@@ -86,18 +110,26 @@ namespace Assets.Scripts.World.Grid {
 					_tempOffset = (x == _width - 1 || y == _height - 1) || (x == 0 || y == 0);
 
 					if (_tempOffset) {
-						_tempGridUnitSea = ShowSeaUnit(_tempStartPosition, GridUnitSeaType.Sea_1, $"Sea {x} {y}");
+						_tempGridUnitSea = ShowSeaUnit(_tempStartPosition, _tempGridUnitSeaType, $"Sea {x} {y}");
 						if (_tempGridUnitSea == null) {
 							throw new ArgumentNullException(nameof(_tempGridUnitSea));
+						}
+
+						else {
+							ResetRecurcy();
 						}
 
 						_unitsSeaDictionary[_tempStartPosition] = _tempGridUnitSea;
 					}
 
 					else {
-						_tempGridUnitLand = ShowLandUnit(_tempStartPosition, GridUnitLandType.Land_1, $"Land {x} {y}");
+						_tempGridUnitLand = ShowLandUnit(_tempStartPosition, _tempGridUnitLandType, $"Land {x} {y}");
 						if (_tempGridUnitLand == null) {
 							throw new ArgumentNullException(nameof(_tempGridUnitLand));
+						}
+
+						else {
+							ResetRecurcy();
 						}
 						_unitsLandDictionary[_tempStartPosition] = _tempGridUnitLand;
 					}
@@ -163,16 +195,18 @@ namespace Assets.Scripts.World.Grid {
 			_spawnGridCorotine = null!;
 		}
 
-		private void AddGridSeaByType(GridUnitSeaType gridUnitSeaType) {
-			var gridUnitSea = _levelStorage.BaseLevelSettings.GetGridUnitSeaByType(gridUnitSeaType);
+		private GridUnitSea AddGridSeaByType(GridUnitSeaType gridUnitSeaType, Func<GridUnitSea> callBack) {
+			var gridUnitSea = _levelStorageSO.BaseLevelSettings.GetGridUnitSeaByType(gridUnitSeaType);
 			var unit = Instantiate(gridUnitSea, _poolSeaContainer);
 			unit.ResetUnit();
 
 			_gridUnitSeaList.Add(unit);
+
+			return callBack?.Invoke();
 		}
 
 		private IEnumerator AddGridSeaByTypeAsync(GridUnitSeaType gridUnitSeaType) {
-			var gridUnitSea = _levelStorage.BaseLevelSettings.GetAssetReferenceSeaByType(gridUnitSeaType);
+			var gridUnitSea = _levelStorageSO.BaseLevelSettings.GetAssetReferenceSeaByType(gridUnitSeaType);
 			var unitTask = gridUnitSea.InstantiateAsync(_poolSeaContainer);
 
 			yield return unitTask;
@@ -185,16 +219,18 @@ namespace Assets.Scripts.World.Grid {
 			}
 		}
 
-		private void AddGridLandByType(GridUnitLandType gridUnitLandType) {
-			var gridUnitLand = _levelStorage.BaseLevelSettings.GetGridUnitLandByType(gridUnitLandType);
+		private GridUnitLand AddGridLandByType(GridUnitLandType gridUnitLandType, Func<GridUnitLand> callBack) {
+			var gridUnitLand = _levelStorageSO.BaseLevelSettings.GetGridUnitLandByType(gridUnitLandType);
 			var unit = Instantiate(gridUnitLand, _poolLandContainer);
 			unit.ResetUnit();
 
 			_gridUnitLandList.Add(unit);
+
+			return callBack?.Invoke();
 		}
 
 		private IEnumerator AddGridLandByTypeAsync(GridUnitLandType gridUnitLandType) {
-			var gridUnitLand = _levelStorage.BaseLevelSettings.GetAssetReferenceLandByType(gridUnitLandType);
+			var gridUnitLand = _levelStorageSO.BaseLevelSettings.GetAssetReferenceLandByType(gridUnitLandType);
 			var unitTask = gridUnitLand.InstantiateAsync(_poolLandContainer);
 
 			yield return unitTask;
@@ -208,33 +244,61 @@ namespace Assets.Scripts.World.Grid {
 		}
 
 		private GridUnitLand ShowLandUnit(Vector3 _startPosition, GridUnitLandType gridUnitLandType, string name) {
-			bool check = _gridUnitLandList.Find(unit => unit.IsFree && unit.GetGridUnitType == gridUnitLandType) == null;
-			if (check) {
-				AddGridLandByType(gridUnitLandType);
+			_tempRecurcyCalculationLand--;
+			var tempLand = _gridUnitLandList.Find(unit => unit.IsFree && unit.GetGridUnitType == gridUnitLandType);
+
+			if (tempLand == null) {
+				return AddGridLandByType(gridUnitLandType, () => {
+					if (_tempRecurcyCalculationLand > 0) {
+						return ShowLandUnit(_startPosition, gridUnitLandType, name);
+					}
+
+					else if (_tempRecurcyCalculationLand <= 0) {
+						Debug.LogError($"Can`t Spasn Land Unit\t {gridUnitLandType}");
+
+						return null;
+					}
+
+					return null;
+				});
 			}
 
-			var unit = _gridUnitLandList.Find(unit => unit.IsFree && unit.GetGridUnitType == gridUnitLandType);
-			if (unit != null) {
-				unit.SetName(name);
-				unit.ShowUnit(_startPosition, gridUnitLandType);
+			else if (tempLand != null) {
+				tempLand.SetName(name);
+				tempLand.ShowUnit(_startPosition, gridUnitLandType);
 			}
 
-			return unit;
+			return tempLand;
 		}
 
 		private GridUnitSea ShowSeaUnit(Vector3 _startPosition, GridUnitSeaType gridUnitSeaType, string name) {
-			bool check = _gridUnitSeaList.Find(unit => unit.IsFree && unit.GetGridUnitType == gridUnitSeaType) == null;
-			if (check) {
-				AddGridSeaByType(gridUnitSeaType);
+			_tempRecurcyCalculationSea--;
+			var tempSea = _gridUnitSeaList.FirstOrDefault(unit => unit.IsFree && unit.GetGridUnitType == gridUnitSeaType);
+
+			if (tempSea == null) {
+				return AddGridSeaByType(gridUnitSeaType, () => {
+					if (_tempRecurcyCalculationSea > 0) {
+						return ShowSeaUnit(_startPosition, gridUnitSeaType, name);
+					}
+
+					else if (_tempRecurcyCalculationSea <= 0) {
+						Debug.LogError($"Can`t Spasn Sea Unit\t {gridUnitSeaType}");
+
+						return null;
+					}
+
+					return null;
+				});
 			}
 
-			var unit = _gridUnitSeaList.Find(unit => unit.IsFree && unit.GetGridUnitType == gridUnitSeaType);
-			if (unit != null) {
-				unit.SetName(name);
-				unit.ShowUnit(_startPosition, gridUnitSeaType);
+			else if (tempSea != null) {
+				tempSea.SetName(name);
+				tempSea.ShowUnit(_startPosition, gridUnitSeaType);
+
+				return tempSea;
 			}
 
-			return unit;
+			return null;
 		}
 
 		private void HideAllunit() {
@@ -244,17 +308,29 @@ namespace Assets.Scripts.World.Grid {
 
 		#endregion
 
-		private void ResetAllVariable() {
+		private void ResetAllVariable(Action callBack = null) {
 			_tempStartPosition = Vector3.zero;
 			_tempOffset = false;
 			_tempGridUnitLand = null!;
 			_tempGridUnitSea = null!;
+
+			_tempGridUnitSeaType = default;
+			_tempGridUnitLandType = default;
+
+			ResetRecurcy();
+
+			callBack?.Invoke();
 		}
 
 		private void ResetSpawnGridCorotine() {
 			if (_spawnGridCorotine != null) {
 				StopCoroutine(_spawnGridCorotine);
 			}
+		}
+
+		private void ResetRecurcy() {
+			_tempRecurcyCalculationLand = 500;
+			_tempRecurcyCalculationSea = 500;
 		}
 
 #if UNITY_EDITOR

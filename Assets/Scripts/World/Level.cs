@@ -10,12 +10,18 @@ namespace Assets.Scripts.World {
 		[field: SerializeField] public List<EnemySeaType> EnemiesSea { get; set; } = new List<EnemySeaType>();
 		[field: SerializeField] public List<EnemyLandType> EnemiesLand { get; set; } = new List<EnemyLandType>();
 
-		public object Clone() {
-			Level copyLevel = new Level();
-			copyLevel.EnemiesSea = this.EnemiesSea;
-			copyLevel.EnemiesLand = this.EnemiesLand;
+		[field: SerializeField] public GridUnitLandType LandType { get; set; } = GridUnitLandType.Land_1;
+		[field: SerializeField] public GridUnitSeaType SeaType { get; set; } = GridUnitSeaType.Sea_1;
 
-			return copyLevel;
+		public object Clone() {
+			Level tempCloneLevel = new Level();
+
+			tempCloneLevel.EnemiesSea = this.EnemiesSea;
+			tempCloneLevel.EnemiesLand = this.EnemiesLand;
+			tempCloneLevel.LandType = this.LandType;
+			tempCloneLevel.SeaType = this.SeaType;
+
+			return tempCloneLevel;
 		}
 	}
 }

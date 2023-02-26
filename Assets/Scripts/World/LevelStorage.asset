@@ -123,26 +123,50 @@ MonoBehaviour:
   _gameLevels:
   - <EnemiesSea>k__BackingField: 000000000100000002000000
     <EnemiesLand>k__BackingField: 000000000100000002000000
+    <LandType>k__BackingField: 0
+    <SeaType>k__BackingField: 0
   - <EnemiesSea>k__BackingField: 
     <EnemiesLand>k__BackingField: 0100000001000000
+    <LandType>k__BackingField: 0
+    <SeaType>k__BackingField: 1
   - <EnemiesSea>k__BackingField: 
     <EnemiesLand>k__BackingField: 010000000100000002000000
+    <LandType>k__BackingField: 0
+    <SeaType>k__BackingField: 2
   - <EnemiesSea>k__BackingField: 
     <EnemiesLand>k__BackingField: 01000000010000000200000002000000
+    <LandType>k__BackingField: 0
+    <SeaType>k__BackingField: 3
   - <EnemiesSea>k__BackingField: 
     <EnemiesLand>k__BackingField: 0100000001000000010000000200000002000000
+    <LandType>k__BackingField: 0
+    <SeaType>k__BackingField: 4
   - <EnemiesSea>k__BackingField: 
     <EnemiesLand>k__BackingField: 010000000100000002000000020000000200000001000000
+    <LandType>k__BackingField: 1
+    <SeaType>k__BackingField: 0
   - <EnemiesSea>k__BackingField: 01000000
     <EnemiesLand>k__BackingField: 0100000001000000020000000200000000000000
+    <LandType>k__BackingField: 2
+    <SeaType>k__BackingField: 0
   - <EnemiesSea>k__BackingField: 0100000001000000
     <EnemiesLand>k__BackingField: 010000000100000001000000020000000000000001000000
+    <LandType>k__BackingField: 3
+    <SeaType>k__BackingField: 0
   - <EnemiesSea>k__BackingField: 010000000000000000000000
     <EnemiesLand>k__BackingField: 00000000000000000000000000000000000000000000000000000000
+    <LandType>k__BackingField: 4
+    <SeaType>k__BackingField: 0
   - <EnemiesSea>k__BackingField: 01000000010000000100000002000000
     <EnemiesLand>k__BackingField: 0100000001000000010000000200000002000000020000000000000001000000
+    <LandType>k__BackingField: 5
+    <SeaType>k__BackingField: 5
   - <EnemiesSea>k__BackingField: 0100000001000000020000000200000002000000
     <EnemiesLand>k__BackingField: 010000000100000001000000020000000200000002000000020000000100000000000000
+    <LandType>k__BackingField: 6
+    <SeaType>k__BackingField: 1
   - <EnemiesSea>k__BackingField: 010000000100000001000000020000000100000002000000
     <EnemiesLand>k__BackingField: 02000000020000000200000002000000020000000000000000000000010000000100000002000000
+    <LandType>k__BackingField: 7
+    <SeaType>k__BackingField: 2
   <IsValidate>k__BackingField: 0

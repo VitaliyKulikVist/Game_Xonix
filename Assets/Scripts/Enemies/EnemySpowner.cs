@@ -50,11 +50,12 @@ namespace Assets.Scripts.Enemies {
 
 		private Vector3 _tempPlayerPosition = Vector3.zero;
 
+		private int _tempRecurcyCalculationEnemyLand = 500;
+		private int _tempRecurcyCalculationEnemySea = 500;
 		#endregion
 
 		private void Awake() {
 			_spownEnemiesCoroutine = StartCoroutine(PrepareEnemysAsync());
-			//PrepareEnemys();
 			PrepareCamera();
 		}
 		private void Start() {
@@ -71,16 +72,20 @@ namespace Assets.Scripts.Enemies {
 			GameManager.LevelFinishAction -= ReactionFinishLevel;
 
 			ResetCoroutine();
+			ResetVariables();
 		}
 
 		private void OnDestroy() {
 			ResetCoroutine();
+			ResetVariables();
 		}
 
 
 		#region Reaction
 		private void ReactionStartLevel() {
 			ControllVisabilityEnemy();
+
+			ResetVariables();
 
 			HideAllEnemy(() => {
 				StartSpownEnemies();
@@ -176,19 +181,6 @@ namespace Assets.Scripts.Enemies {
 			}
 
 			_spownEnemiesCoroutine = null!;
-		}
-
-		private void PrepareEnemys() {
-			for (int i = 0; i < _startingEnemiesCountPool; i++) {
-
-				for (int sea = 0; sea < typeof(EnemySeaType).GetEnumValues().Length; sea++) {
-					AddSeaEnemy((EnemySeaType)sea);
-				}
-
-				for (int land = 0; land < typeof(EnemyLandType).GetEnumValues().Length; land++) {
-					AddLandEnemy((EnemyLandType)land);
-				}
-			}
 		}
 
 		private void AddSeaEnemy(EnemySeaType seaEnemyType, Action callBack = null!) {
@@ -303,12 +295,22 @@ namespace Assets.Scripts.Enemies {
 			}
 		}
 
+
+
 		private void SpawnSeaEnemy(Vector3 _startPosition, Vector3 _direction, EnemySeaType enemyType) {
+			_tempRecurcyCalculationEnemySea--;
 			var tempSea = _enemysSea.Find(enem => enem.IsFree && enem.EnemyType == enemyType);
 
 			if (tempSea == null) {
 				AddSeaEnemy(enemyType, () => {
-					SpawnSeaEnemy(_startPosition, _direction, enemyType);
+					if (_tempRecurcyCalculationEnemySea > 0) {
+						SpawnSeaEnemy(_startPosition, _direction, enemyType);
+					}
+
+					else {
+						Debug.LogError($"Can`t Spasn Sea Enemy\t {enemyType}");
+						return;
+					}
 				});
 			}
 
@@ -318,11 +320,19 @@ namespace Assets.Scripts.Enemies {
 		}
 
 		private void SpawnLandEnemy(Vector3 _startPosition, Vector3 _direction, EnemyLandType enemyType) {
+			_tempRecurcyCalculationEnemyLand--;
 			var tempLand = _enemysLand.Find(enem => enem.IsFree && enem.EnemyType == enemyType);
 
 			if (tempLand == null) {
 				AddLandEnemy(enemyType, () => {
-					SpawnLandEnemy(_startPosition, _direction, enemyType);
+					if (_tempRecurcyCalculationEnemyLand > 0) {
+						SpawnLandEnemy(_startPosition, _direction, enemyType);
+					}
+
+					else {
+						Debug.LogError($"Can`t Spasn Land Enemy\t {enemyType}");
+						return;
+					}
 				});
 			}
 
@@ -356,6 +366,11 @@ namespace Assets.Scripts.Enemies {
 			else if (_tempSpawnEnemyCoroutine != null) {
 				StopCoroutine(_tempSpawnEnemyCoroutine);
 			}
+		}
+
+		private void ResetVariables() {
+			_tempRecurcyCalculationEnemyLand = 500;
+			_tempRecurcyCalculationEnemySea = 500;
 		}
 
 		public void OnValidate() {

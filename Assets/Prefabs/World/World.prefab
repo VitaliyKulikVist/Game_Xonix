@@ -178,12 +178,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0d87634612eeed499cde0bd3f0341a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelStorage: {fileID: 11400000, guid: b11cf0d0b3a5cc648a271742e49aff70, type: 2}
-  _dependencyInjections: {fileID: 11400000, guid: 988b77d34458286428988d1576184ae5, type: 2}
+  _levelStorageSO: {fileID: 11400000, guid: b11cf0d0b3a5cc648a271742e49aff70, type: 2}
+  _playerStorageSO: {fileID: 11400000, guid: b46a9289093da36409fc17564155d74a, type: 2}
+  _dependencyInjectionsSO: {fileID: 11400000, guid: 988b77d34458286428988d1576184ae5, type: 2}
   _width: 17
   _height: 27
   _offsetFirstUnit: {x: 30, y: 20}
-  _offsetByWidthAndHeigth: 64
+  _offsetByWidthAndHeigth: 63
   _poolSeaContainer: {fileID: 4882192210460348409}
   _poolLandContainer: {fileID: 1900490363359917471}
   _onHandles: 0

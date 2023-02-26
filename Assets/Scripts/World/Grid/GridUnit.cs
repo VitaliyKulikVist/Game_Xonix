@@ -17,6 +17,9 @@ namespace Assets.Scripts.World.Grid {
 		[SerializeField] protected Color _defaultColor = Color.white;
 		[SerializeField] protected Color _activeColor = Color.red;
 
+		[Header("Debug")]
+		[SerializeField] protected bool _debug = true;
+
 		#region Get\Set
 		public TEnum GetGridUnitType { get => _gridUnitType; }
 		public bool IsFree { get; set; } = false;
@@ -68,12 +71,9 @@ namespace Assets.Scripts.World.Grid {
 		}
 
 		public virtual void ShowUnit(Vector3 _startPosition, TEnum enemyType) {
-
-			IsFree = false;
-			transform.position = _startPosition;
-
-			gameObject.name = _tempName;
-			_container.gameObject.SetActive(true);
+			if(_debug) {
+				Debug.Log($"<Color=red>Show Unit </color> {enemyType}");
+			}
 		}
 
 		public void HideUnit() {

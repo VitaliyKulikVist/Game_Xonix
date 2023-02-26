@@ -4,11 +4,19 @@ using UnityEngine;
 
 namespace Assets.Scripts.World.Grid {
 	public class GridUnitSea : GridUnit<GridUnitSeaType> {
-		public override void ShowUnit(UnityEngine.Vector3 _startPosition, GridUnitSeaType enemyType) {
+		public override void ShowUnit(Vector3 _startPosition, GridUnitSeaType enemyType) {
 			base.ShowUnit(_startPosition, enemyType);
+			if (_gridUnitType == enemyType) {
 
-			if (_gridUnitType != enemyType) {
-				return;
+				IsFree = false;
+				transform.position = _startPosition;
+
+				gameObject.name = _tempName;
+				_container.gameObject.SetActive(true);
+
+				if (_debug) {
+					Debug.Log($"<Color=green>Show Unit </color>\tstart= {_startPosition}\ttype= {enemyType}");
+				}
 			}
 		}
 
