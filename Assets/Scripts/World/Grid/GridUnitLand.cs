@@ -11,7 +11,6 @@ namespace Assets.Scripts.World.Grid {
 				IsFree = false;
 				transform.position = _startPosition;
 
-				gameObject.name = _tempName;
 				_container.gameObject.SetActive(true);
 
 				if (_debug) {

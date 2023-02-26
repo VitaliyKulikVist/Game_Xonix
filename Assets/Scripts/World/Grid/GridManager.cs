@@ -50,6 +50,8 @@ namespace Assets.Scripts.World.Grid {
 
 		private int _tempRecurcyCalculationLand = 500;
 		private int _tempRecurcyCalculationSea = 500;
+
+		private bool _onDestroyed = false;
 		#endregion
 
 		private void Awake() {
@@ -60,6 +62,8 @@ namespace Assets.Scripts.World.Grid {
 		private void OnEnable() {
 			GameManager.LevelStartAction += ReactionStartGame;
 			GameManager.LevelFinishAction += ReactionFinishgame;
+
+			_onDestroyed = false;
 		}
 		private void OnDisable() {
 			GameManager.LevelStartAction -= ReactionStartGame;
@@ -70,6 +74,7 @@ namespace Assets.Scripts.World.Grid {
 
 		private void OnDestroy() {
 			ResetSpawnGridCorotine();
+			_onDestroyed = true;
 		}
 
 		#region Reaction
@@ -110,7 +115,7 @@ namespace Assets.Scripts.World.Grid {
 					_tempOffset = (x == _width - 1 || y == _height - 1) || (x == 0 || y == 0);
 
 					if (_tempOffset) {
-						_tempGridUnitSea = ShowSeaUnit(_tempStartPosition, _tempGridUnitSeaType, $"Sea {x} {y}");
+						_tempGridUnitSea = ShowSeaUnit(_tempStartPosition, _tempGridUnitSeaType, $"{_tempGridUnitSeaType} [{x}] [{y}]");
 						if (_tempGridUnitSea == null) {
 							throw new ArgumentNullException(nameof(_tempGridUnitSea));
 						}
@@ -123,7 +128,7 @@ namespace Assets.Scripts.World.Grid {
 					}
 
 					else {
-						_tempGridUnitLand = ShowLandUnit(_tempStartPosition, _tempGridUnitLandType, $"Land {x} {y}");
+						_tempGridUnitLand = ShowLandUnit(_tempStartPosition, _tempGridUnitLandType, $"{_tempGridUnitLandType} [{x}] [{y}]");
 						if (_tempGridUnitLand == null) {
 							throw new ArgumentNullException(nameof(_tempGridUnitLand));
 						}
@@ -335,14 +340,19 @@ namespace Assets.Scripts.World.Grid {
 
 #if UNITY_EDITOR
 		private void OnDrawGizmos() {
-			if (_onHandles) {
-				foreach (var land in _unitsLandDictionary) {
-					Handles.color = Color.blue;
-					Handles.Label(land.Key, land.Value.gameObject.name);
+			if (_onHandles && !_onDestroyed) {
+				if (_unitsLandDictionary != null && _unitsLandDictionary.Count > 0) {
+					foreach (var land in _unitsLandDictionary) {
+						Handles.color = Color.blue;
+						Handles.Label(land.Key, land.Value.gameObject.name);
+					}
 				}
-				foreach (var sea in _unitsSeaDictionary) {
-					Handles.color = Color.green;
-					Handles.Label(sea.Key, sea.Value.gameObject.name);
+
+				if (_unitsSeaDictionary != null && _unitsSeaDictionary.Count > 0) {
+					foreach (var sea in _unitsSeaDictionary) {
+						Handles.color = Color.green;
+						Handles.Label(sea.Key, sea.Value.gameObject.name);
+					}
 				}
 			}
 		}

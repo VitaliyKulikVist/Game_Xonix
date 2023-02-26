@@ -221,3 +221,4 @@ MonoBehaviour:
   _spriteRendererUnit: {fileID: 7097368317258639407}
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
   _activeColor: {r: 1, g: 0, b: 0, a: 1}
+  _debug: 0

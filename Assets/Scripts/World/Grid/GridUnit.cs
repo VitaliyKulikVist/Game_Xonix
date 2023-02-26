@@ -29,9 +29,6 @@ namespace Assets.Scripts.World.Grid {
 		private Coroutine _tempCoroutine = null;
 		protected string _tempName = null!;
 		#endregion
-		private void Awake() {
-			_tempName = gameObject.name;
-		}
 
 		private void OnEnable() {
 			HideUnit();
@@ -41,6 +38,7 @@ namespace Assets.Scripts.World.Grid {
 
 			_gridUnitType = gridUnitType;
 		}
+
 		#region Color controll
 		private void ChangeColor(bool switcher) {
 			_spriteRendererUnit.color = switcher ? _activeColor : _defaultColor;
@@ -96,7 +94,9 @@ namespace Assets.Scripts.World.Grid {
 		#endregion
 
 		public void SetName(string _name) {
+			_tempName = _name;
 			gameObject.name = _name;
+			
 		}
 	}
 }
