@@ -78,7 +78,7 @@ namespace Assets.Scripts.Enemies {
 
 		#region Trigger reaction
 		public virtual void ReactionOnCharacter(Collider2D collider) {
-			collider.gameObject.GetComponent<CharacterTrigger>().HitEnemy(this);
+			collider.gameObject.GetComponent<PlayerTrigger>().HitEnemy(this);
 		}
 		public virtual void ReactionOnLand(Collider2D collider) {
 

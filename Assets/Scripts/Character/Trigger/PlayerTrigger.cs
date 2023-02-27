@@ -5,17 +5,17 @@ using Assets.Scripts.World.Grid;
 using UnityEngine;
 
 namespace Assets.Scripts.Character.Trigger {
-	public class CharacterTrigger : MonoBehaviour {
+	public class PlayerTrigger : MonoBehaviour {
 
 		[Header("Debug")]
 		[SerializeField] private bool _debug = false;
 
 		#region Variables
-		private CharacterController _characterController = default;
+		private PlayerController _characterController = default;
 		#endregion
 
 		private void OnEnable() {
-			_characterController = GetComponentInParent<CharacterController>();
+			_characterController = GetComponentInParent<PlayerController>();
 			if (_characterController == null) {
 				throw new ArgumentNullException(nameof(_characterController));
 			}

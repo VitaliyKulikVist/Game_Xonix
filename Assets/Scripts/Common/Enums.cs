@@ -51,4 +51,13 @@
 		Sea_5,
 		Sea_6
 	}
+
+	public enum TypeSwipe {
+		None,
+		Click,
+		LeftSwipe,
+		RightSwipe,
+		UpSwipe,
+		DownSwipe
+	}
 }

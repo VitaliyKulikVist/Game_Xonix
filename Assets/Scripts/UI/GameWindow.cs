@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Ui {
 	public class GameWindow : MonoBehaviour {
-		[Header("Base")]
-		[SerializeField] private DependencyInjections _dependencyInjections = default;
 
 		[Header("Components")]
 		[SerializeField] private RectTransform _panelContainer = default;
@@ -26,26 +24,7 @@ namespace Assets.Scripts.Ui {
 		[SerializeField] private string _textWin = "You WIN!!";
 		[SerializeField] private string _textLose = "You Lose(";
 
-		[Header("Controll Settings")]
-		[SerializeField] private DynamicJoystick _dynamicJoystick = default;
-
-		#region Actions
-		public static Action<float, float> OnDragHorizontalDeltaAction = default;
-		public static Action OnEndDragHorizontalAction = default;
-
-		public static Action<Vector3> PointerDownAction = default;
-		public static Action<Vector3> PointerUpAction = default;
-		public static Action<Vector3, Vector3> OnDragAction = default;
-		public static Action<bool> OnHoldAction = default;
-		#endregion
-
-		#region Get\Set
-		public DragState CurrencyDragState { get; private set; } = default;
-		#endregion
-
 		private void Awake() {
-			_dependencyInjections.DynamicJoystick = _dynamicJoystick;
-
 			PrepareButton();
 		}
 
@@ -57,6 +36,15 @@ namespace Assets.Scripts.Ui {
 			GameManager.LevelStartAction -= ReactiononStartGame;
 			GameManager.LevelFinishAction -= ReactionFinishGame;
 		}
+		private void PrepareButton() {
+
+			_reactionButton.onClick.RemoveAllListeners();
+			_reactionButton.onClick.AddListener(() => {
+				GameManager.LevelStartAction?.Invoke();
+			});
+		}
+
+
 
 		#region Reaction
 		private void ReactiononStartGame() {
@@ -67,16 +55,7 @@ namespace Assets.Scripts.Ui {
 			ControllReactionContainer(true);
 			PrepareReaction(levelResult);
 		}
-
 		#endregion
-
-		private void PrepareButton() {
-
-			_reactionButton.onClick.RemoveAllListeners();
-			_reactionButton.onClick.AddListener(() => {
-				GameManager.LevelStartAction?.Invoke();
-			});
-		}
 
 		private void ChangeColorButton(bool _win) {
 			_reactionButtonImage.color = _win ? _colorButtonAfterWin : _colorButtonAfterLose;

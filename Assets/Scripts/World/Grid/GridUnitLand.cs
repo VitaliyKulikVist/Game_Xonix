@@ -22,7 +22,7 @@ namespace Assets.Scripts.World.Grid {
 		public override void ReactionToHitCharacter(Collider2D colliderHitObject, GridUnit<GridUnitLandType> gridUnit) {
 			base.ReactionToHitCharacter(colliderHitObject, gridUnit);
 
-			colliderHitObject.gameObject.GetComponent<CharacterTrigger>().HitLandUnit(gridUnit);
+			colliderHitObject.gameObject.GetComponent<PlayerTrigger>().HitLandUnit(gridUnit);
 		}
 	}
 }

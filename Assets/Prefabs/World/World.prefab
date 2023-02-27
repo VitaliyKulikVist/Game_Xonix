@@ -26,7 +26,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4882192210460348409}
   - {fileID: 1900490363359917471}
@@ -64,7 +63,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6065573450327327730}
   m_RootOrder: 0
@@ -100,7 +98,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6065573450327327730}
   m_RootOrder: 1
@@ -141,7 +138,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6198200304908938191}
   m_Father: {fileID: 0}
@@ -184,7 +180,7 @@ MonoBehaviour:
   _width: 17
   _height: 27
   _offsetFirstUnit: {x: 30, y: 20}
-  _offsetByWidthAndHeigth: 64
+  _offsetByWidthAndHeigth: 63
   _poolSeaContainer: {fileID: 4882192210460348409}
   _poolLandContainer: {fileID: 1900490363359917471}
   _onHandles: 0
@@ -273,7 +269,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 187198632754289554}
   - {fileID: 6065573450327327730}
@@ -313,7 +308,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6198200304908938191}
   m_RootOrder: 0

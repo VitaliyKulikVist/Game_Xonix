@@ -30,6 +30,9 @@ namespace Assets.Scripts.World.Grid {
 		[Header("On Draw Gizmos settings")]
 		[SerializeField] private bool _onHandles = false;
 #endif
+		#region Get\Set
+		public int GetWidthAndHeigth { get => _offsetByWidthAndHeigth; }
+		#endregion
 
 		#region Variable 
 		private Dictionary<Vector3, GridUnitSea> _unitsSeaDictionary = default;
@@ -50,7 +53,7 @@ namespace Assets.Scripts.World.Grid {
 		private GridUnitLandType _tempGridUnitLandType = default;
 
 		private int _tempRecurcyCalculationLand = 500;
-		private int _tempRecurcyCalculationSea = 500;		
+		private int _tempRecurcyCalculationSea = 500;
 		#endregion
 
 		private void Awake() {
@@ -71,8 +74,7 @@ namespace Assets.Scripts.World.Grid {
 		}
 
 		private void OnDestroy() {
-			ResetAllVariable(() => 
-			{
+			ResetAllVariable(() => {
 				ResetSpawnGridCorotine();
 			});
 		}
@@ -337,6 +339,20 @@ namespace Assets.Scripts.World.Grid {
 		private void ResetRecurcy() {
 			_tempRecurcyCalculationLand = 500;
 			_tempRecurcyCalculationSea = 500;
+		}
+
+		public List<Vector3> GetListAllGridVectors() {
+			List<Vector3> tempList = new List<Vector3>();
+
+			foreach (var sea in _unitsSeaDictionary) {
+				tempList.Add(sea.Key);
+			}
+
+			foreach (var land in _unitsLandDictionary) {
+				tempList.Add(land.Key);
+			}
+
+			return tempList;
 		}
 
 #if UNITY_EDITOR

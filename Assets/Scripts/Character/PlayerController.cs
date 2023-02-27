@@ -1,21 +1,28 @@
-﻿using Assets.Scripts.Common;
+﻿using System.Collections;
+using System.Linq;
+using Assets.Scripts.Common;
 using Assets.Scripts.Common.Helpers;
 using Assets.Scripts.Enemies;
+using Assets.Scripts.Ui;
 using Assets.Scripts.World.Grid;
+using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Character {
-	public class CharacterController : MonoBehaviour, IValidateHalper {
+	public class PlayerController : MonoBehaviour, IValidateHalper {
 		[Header("Base")]
 		[SerializeField] private DependencyInjections _dependencyInjections = default;
 
 		[Header("Components")]
 		[SerializeField] private RectTransform _container = default;
 
+		[Header("Settings Spawn")]
+		[SerializeField] private Vector3 _startSpawnPoint = new Vector3(-500f, 30f, 0f);
+
 		[Header("Settings move")]
-		[SerializeField] private float _speedMoveCharacter = 50f;
-		[SerializeField] private float _speedMovePoint = 5f;
-		[SerializeField] private float _distanceMove = .05f;
+		[SerializeField] private float _speedMovePlayer = 0.3f;
+		[SerializeField] private float _speedMovePoint = 0.3f;
 
 		[Header("Settings rotation")]
 		[SerializeField] private float _rotationModif = 90f;
@@ -29,12 +36,13 @@ namespace Assets.Scripts.Character {
 
 		#region Variable
 		private bool _canMove = false;
-		private DynamicJoystick _dynamicJoystick = default;
 
 		private Vector3 _tempVectorDirection = default;
 		private float _tempAngleDirection = 0f;
 		private Quaternion tempAngleAxisDirection = default;
 		private GridManager _gridManager = null;
+		private Coroutine _tempMoveCorotine = null;
+		private bool _onHold = false;
 		#endregion
 
 		private void Awake() {
@@ -44,52 +52,97 @@ namespace Assets.Scripts.Character {
 			PrepareCamera();
 			_dependencyInjections.PlayerPosition = _container;
 		}
-		private void Start() {
-			_dynamicJoystick = _dependencyInjections.DynamicJoystick;
-			_gridManager = _dependencyInjections.GridManager;
-		}
 		private void OnEnable() {
+			_gridManager = _dependencyInjections.GridManager;
+
 			GameManager.LevelStartAction += ReactionStartGame;
 			GameManager.LevelFinishAction += ReactionFinishGame;
 			GameManager.PausedLevelAction += ReactionPaused;
 			GameManager.PlayLevelAction += ReactionPlay;
+
+			SwipeController.GoodSwipeAction += ChackSwipe;
+			SwipeController.OnHoldActionAction += OnGold;
 		}
 		private void OnDisable() {
 			GameManager.LevelStartAction -= ReactionStartGame;
 			GameManager.LevelFinishAction -= ReactionFinishGame;
 			GameManager.PausedLevelAction -= ReactionPaused;
 			GameManager.PlayLevelAction -= ReactionPlay;
+
+			SwipeController.GoodSwipeAction -= ChackSwipe;
+			SwipeController.OnHoldActionAction -= OnGold;
 		}
+
 		private void FixedUpdate() {
 			if (_canMove) {
-				//Vector3 direction = Vector3.up * _dynamicJoystick.Vertical + Vector3.right * _dynamicJoystick.Horizontal;
-
-				_container.position = Vector3.MoveTowards(_container.position, _movePoint.position, _speedMoveCharacter * Time.fixedDeltaTime);
-
-				var dist = Vector3.Distance(_container.position, _movePoint.position);
-
-				if (dist <= _distanceMove) {
-
-					_movePoint.position += new Vector3(_dynamicJoystick.Horizontal * _speedMovePoint, _dynamicJoystick.Vertical * _speedMovePoint, 0f);
-
-					//if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f) {
-					//	_movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal") * _speedMovePoint, 0f, 0f);
-					//}
-
-					//if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f) {
-					//	_movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical") * _speedMovePoint, 0f);
-					//}
-				}
-
-				if (dist >= _distanceDontControllRotation) {
-					_tempVectorDirection = _movePoint.position - _container.position;
-					_tempAngleDirection = Mathf.Atan2(_tempVectorDirection.y, _tempVectorDirection.x) * Mathf.Rad2Deg - _rotationModif;
-					tempAngleAxisDirection = Quaternion.AngleAxis(_tempAngleDirection, Vector3.forward);
-
-					_container.rotation = Quaternion.Slerp(_container.rotation, tempAngleAxisDirection, Time.fixedDeltaTime * _rotationSpeed);
-				}
+				RotationCharacter();
 			}
 		}
+		
+		#region Character Controll
+		private void ChackSwipe(TypeSwipe typeSwipe) {
+			if (!_canMove ) {
+				return;
+			}
+
+			if (_tempMoveCorotine == null) {
+				_tempMoveCorotine = StartCoroutine(Move(typeSwipe));
+			}
+		}
+		private IEnumerator Move(TypeSwipe typeSwipe) {
+			while (_onHold) {
+				_movePoint.DOComplete();
+				_movePoint.DOMove(GetMositionMove(typeSwipe, _gridManager.GetWidthAndHeigth), _speedMovePoint).SetEase(Ease.Flash).OnComplete(() => {
+
+					_container.DOComplete();
+					_container.DOMove(_movePoint.position, _speedMovePlayer).SetEase(Ease.Flash);
+				});
+				yield return new WaitForSeconds(_speedMovePoint + _speedMovePlayer);
+			}
+
+			if (!_onHold) {
+				_movePoint.DOComplete();
+				_container.DOComplete();
+				_tempMoveCorotine = null;
+			}
+		}
+
+		private void OnGold(bool isHold) {
+			_onHold = isHold;
+		}
+
+		private Vector3 GetMositionMove(TypeSwipe typeSwipe, float intervel = 50f) {
+			Vector3 _point = _movePoint.position;
+			switch (typeSwipe) {
+				case TypeSwipe.None:
+					return _point;
+				case TypeSwipe.Click:
+					return _point;
+				case TypeSwipe.LeftSwipe:
+					return new Vector3(_point.x - intervel, _point.y, 0f);
+				case TypeSwipe.RightSwipe:
+					return new Vector3(_point.x + intervel, _point.y, 0f);
+				case TypeSwipe.UpSwipe:
+					return new Vector3(_point.x, _point.y + intervel, 0f);
+				case TypeSwipe.DownSwipe:
+					return new Vector3(_point.x, _point.y - intervel, 0f);
+				default:
+					return _point;
+			}
+		}
+
+		private void RotationCharacter() {
+			var dist = Vector3.Distance(_container.position, _movePoint.position);
+			if (dist >= _distanceDontControllRotation) {
+				_tempVectorDirection = _movePoint.position - _container.position;
+				_tempAngleDirection = Mathf.Atan2(_tempVectorDirection.y, _tempVectorDirection.x) * Mathf.Rad2Deg - _rotationModif;
+				tempAngleAxisDirection = Quaternion.AngleAxis(_tempAngleDirection, Vector3.forward);
+
+				_container.rotation = Quaternion.Slerp(_container.rotation, tempAngleAxisDirection, Time.fixedDeltaTime * _rotationSpeed);
+			}
+		}
+		#endregion
+
 
 		#region Resets
 		private void ResetPlayer() {
@@ -103,7 +156,7 @@ namespace Assets.Scripts.Character {
 		}
 
 		private void ResetMovePoint() {
-			_movePoint.position = new Vector3(0f, -19f, 0f);
+			_movePoint.localPosition = new Vector3(0f, -19f, 0f);
 		}
 
 		private void ResetRotation() {
@@ -135,21 +188,22 @@ namespace Assets.Scripts.Character {
 
 		#region hit reaction
 		public void HitLandUnit(GridUnit<GridUnitLandType> gridUnit) {
-			Debug.Log($"Character hit to land\t{gridUnit.gameObject.name}");
+			//Debug.Log($"Character hit to land\t{gridUnit.gameObject.name}");
 
 		}
 
 		public void HitSeaUnit(GridUnit<GridUnitSeaType> gridUnit) {
-			Debug.Log($"Character hit to Sea\t{gridUnit.gameObject.name}");
+			//Debug.Log($"Character hit to Sea\t{gridUnit.gameObject.name}");
 
 		}
 
 		public void HitEnemt<TEnum>(EnemyControllerAbstract<TEnum> enemy)
 			where TEnum : System.Enum {
-			Debug.Log($"Character hit to Enemy\t{enemy.gameObject.name}");
+			//Debug.Log($"Character hit to Enemy\t{enemy.gameObject.name}");
 		}
 		#endregion
 
+		#region Prepare
 		private void PrepareCamera() {
 			var canvas = gameObject.GetComponent<Canvas>();
 
@@ -158,14 +212,23 @@ namespace Assets.Scripts.Character {
 				&& canvas.worldCamera == null) {
 				canvas.worldCamera = Camera.main;
 			}
-		}
-		private void PreparePlayerPosition() {
-			ResetPlayer();
-			transform.position = GetRandomLandPosition();
+
+			else {
+				Debug.LogError("Can`t take canvas");
+			}
 		}
 
-		private Vector3 GetRandomLandPosition() {
-			var ss = _gridManager.GetListAllLandPosition();
+		private void PreparePlayerPosition() {
+			ResetPlayer();
+
+			_container.position = _startSpawnPoint;
+			_movePoint.position = _movePoint.localPosition + _startSpawnPoint;
+		}
+
+		#endregion
+
+		private Vector3 GetRandomSeaPosition() {
+			var ss = _gridManager.GetListAllSeaPosition();
 			if (ss != null && ss.Count > 0) {
 
 				return ss[Random.Range(0, ss.Count)];
