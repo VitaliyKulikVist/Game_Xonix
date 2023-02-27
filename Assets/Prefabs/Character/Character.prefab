@@ -92,6 +92,9 @@ MonoBehaviour:
   _dependencyInjections: {fileID: 11400000, guid: 988b77d34458286428988d1576184ae5, type: 2}
   _container: {fileID: 7815201394783789854}
   _startSpawnPoint: {x: -500, y: 30, z: 0}
+  _layerStopsMovement:
+    serializedVersion: 2
+    m_Bits: 256
   _speedMovePlayer: 0.1
   _speedMovePoint: 0.2
   _rotationModif: -90

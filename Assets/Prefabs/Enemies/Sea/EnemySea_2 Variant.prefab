@@ -257,6 +257,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5236896479692349468, guid: 274250d0111de8e47aeab1e5a943839e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -30
+      objectReference: {fileID: 0}
     - target: {fileID: 8989069204203094803, guid: 274250d0111de8e47aeab1e5a943839e, type: 3}
       propertyPath: m_Name
       value: EnemySea_2 Variant

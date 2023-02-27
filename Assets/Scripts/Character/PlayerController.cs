@@ -6,6 +6,7 @@ using Assets.Scripts.Enemies;
 using Assets.Scripts.Ui;
 using Assets.Scripts.World.Grid;
 using DG.Tweening;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -21,6 +22,7 @@ namespace Assets.Scripts.Character {
 		[SerializeField] private Vector3 _startSpawnPoint = new Vector3(-500f, 30f, 0f);
 
 		[Header("Settings move")]
+		[SerializeField] private LayerMask _layerStopsMovement = default;
 		[SerializeField] private float _speedMovePlayer = 0.3f;
 		[SerializeField] private float _speedMovePoint = 0.3f;
 
@@ -72,16 +74,19 @@ namespace Assets.Scripts.Character {
 			SwipeController.GoodSwipeAction -= ChackSwipe;
 			SwipeController.OnHoldActionAction -= OnGold;
 		}
+		private void OnDestroy() {
+			ResetDoTween();
+		}
 
 		private void FixedUpdate() {
 			if (_canMove) {
 				RotationCharacter();
 			}
 		}
-		
+
 		#region Character Controll
 		private void ChackSwipe(TypeSwipe typeSwipe) {
-			if (!_canMove ) {
+			if (!_canMove) {
 				return;
 			}
 
@@ -91,12 +96,23 @@ namespace Assets.Scripts.Character {
 		}
 		private IEnumerator Move(TypeSwipe typeSwipe) {
 			while (_onHold) {
-				_movePoint.DOComplete();
-				_movePoint.DOMove(GetMositionMove(typeSwipe, _gridManager.GetWidthAndHeigth), _speedMovePoint).SetEase(Ease.Flash).OnComplete(() => {
 
-					_container.DOComplete();
-					_container.DOMove(_movePoint.position, _speedMovePlayer).SetEase(Ease.Flash);
-				});
+				Vector3 moveTo = GetMositionMove(typeSwipe, _gridManager.GetWidthAndHeigth);
+
+				var _tempColider = Physics2D.OverlapCircle(moveTo, 3f, _layerStopsMovement);
+
+				if(_tempColider !=null) {
+					Debug.Log(_tempColider.gameObject.transform.position);
+				}
+				
+				if (!_tempColider) {
+					_movePoint.DOComplete();
+					_movePoint.DOMove(moveTo, _speedMovePoint).SetEase(Ease.Flash).OnComplete(() => {
+
+						_container.DOComplete();
+						_container.DOMove(_movePoint.position, _speedMovePlayer).SetEase(Ease.Flash);
+					});
+				}
 				yield return new WaitForSeconds(_speedMovePoint + _speedMovePlayer);
 			}
 
@@ -153,6 +169,12 @@ namespace Assets.Scripts.Character {
 			_container.position = Vector3.zero;
 			_container.rotation = Quaternion.identity;
 			_container.localScale = Vector3.one;
+		}
+
+		private void ResetDoTween() {
+			transform?.DOKill();
+			_container?.DOKill();
+			_movePoint?.DOKill();
 		}
 
 		private void ResetMovePoint() {

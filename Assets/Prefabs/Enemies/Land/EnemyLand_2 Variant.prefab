@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: _enemyType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1309148378248713229, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20
+      objectReference: {fileID: 0}
     - target: {fileID: 3534822097997080624, guid: 0089f5fb84c02784b9ea0e9205cac81d, type: 3}
       propertyPath: m_Name
       value: EnemyLand_2 Variant
